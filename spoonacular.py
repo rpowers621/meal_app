@@ -1,5 +1,6 @@
-import requests
 import os
+import requests
+from bs4 import BeautifulSoup
 from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
@@ -11,6 +12,10 @@ BASE_URL = "https://api.spoonacular.com/"
 HEADER = {"Content-Type": "application/json"}
 # this is the number of recipes returned
 NUM_RECIPES = 5
+
+SIZE = "100x100"
+
+IMG_URL = f"https://spoonacular.com/cdn/ingredients_{SIZE}/"
 
 
 def search_rep_by_ingred(str):
@@ -35,7 +40,7 @@ def search_rep_by_ingred(str):
 
 def get_rep_info(id):
 
-    recep_info = f"recipes/{id}/information?apiKey={API_KEY}&number={NUM_RECIPES}"
+    recep_info = f"recipes/{id}/information?apiKey={API_KEY}"
 
     response = requests.get(url=BASE_URL + recep_info, headers=HEADER)
     response_data = response.json()
@@ -53,15 +58,16 @@ def get_rep_info(id):
     for i in range(length):
         try:
 
-            ingredients[response_data["extendedIngredients"][i]["id"]] = response_data[
-                "extendedIngredients"
-            ][i]["name"]
+            ingredients[response_data["extendedIngredients"][i]["id"]] = {
+                "name": response_data["extendedIngredients"][i]["name"],
+                "image": IMG_URL + response_data["extendedIngredients"][i]["image"],
+            }
 
         except KeyError:
             print(KeyError)
             break
 
-    return (
+    print(
         recep_img,
         servings,
         ready_in_mins,
@@ -72,6 +78,21 @@ def get_rep_info(id):
     )
 
 
+def get_price_breakdown_cost(id):
+
+    price_breakdown = (
+        f"recipes/{id}/priceBreakdownWidget?apiKey={API_KEY}&defaultCss=true"
+    )
+
+    widget_header = {"Content-Type": "text/html", "Accept": "text/html"}
+
+    response = requests.get(url=BASE_URL + price_breakdown, headers=widget_header)
+    html_doc = response.text
+    img = BeautifulSoup(html_doc, "html.parser")
+    print(img.prettify())
+
+
 ingreds = "apples,flour,sugar"
 # search_rep_by_ingred(ingreds)
 get_rep_info(716429)
+# get_price_breakdown_cost(716429)
