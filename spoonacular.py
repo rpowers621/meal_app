@@ -67,7 +67,7 @@ def get_rep_info(id):
             print(KeyError)
             break
 
-    print(
+    return (
         recep_img,
         servings,
         ready_in_mins,
@@ -92,7 +92,37 @@ def get_price_breakdown_cost(id):
     print(img.prettify())
 
 
+def get_recep_instructions(id):
+
+    analyze_instructions = (
+        f"recipes/{id}/analyzedInstructions?apiKey={API_KEY}&stepBreakdown=true"
+    )
+
+    response = requests.get(url=BASE_URL + analyze_instructions, headers=HEADER)
+    response_data = response.json()
+
+    instructions = {}
+
+    length = len(response_data)
+
+    for i in range(length):
+        try:
+            len2 = len(response_data[i]["steps"])
+            for j in range(len2):
+                try:
+                    instructions[f"step{j+1}"] = response_data[i]["steps"][j]["step"]
+                except KeyError:
+                    print(KeyError)
+                    break
+        except KeyError:
+            print(KeyError)
+            break
+
+    return instructions
+
+
 ingreds = "apples,flour,sugar"
 # search_rep_by_ingred(ingreds)
-get_rep_info(716429)
+# get_rep_info(716429)
 # get_price_breakdown_cost(716429)
+# get_recep_instructions(4632)
