@@ -1,6 +1,7 @@
 import os
 import requests
 from bs4 import BeautifulSoup
+import io
 from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
@@ -35,7 +36,7 @@ def search_rep_by_ingred(str):
             print(KeyError)
             break
 
-    print(recipe_ids)
+    return recipe_ids
 
 
 def get_rep_info(id):
@@ -78,18 +79,18 @@ def get_rep_info(id):
     )
 
 
-def get_price_breakdown_cost(id):
+def get_nutritional_breakdown_png(id):
 
-    price_breakdown = (
-        f"recipes/{id}/priceBreakdownWidget?apiKey={API_KEY}&defaultCss=true"
-    )
+    price_breakdown = f"recipes/{id}/nutritionWidget.png?apiKey={API_KEY}"
 
-    widget_header = {"Content-Type": "text/html", "Accept": "text/html"}
+    img_header = {"Accept": "image/png", "Content-Type": "image/png"}
 
-    response = requests.get(url=BASE_URL + price_breakdown, headers=widget_header)
-    html_doc = response.text
-    img = BeautifulSoup(html_doc, "html.parser")
-    print(img.prettify())
+    response = requests.get(url=BASE_URL + price_breakdown, headers=img_header)
+    if response.status_code == 200:
+        with open("static/nutritional_breakdown.png", "wb") as f:
+            f.write(response.content)
+
+    return "True"
 
 
 def get_recep_instructions(id):
@@ -124,5 +125,5 @@ def get_recep_instructions(id):
 ingreds = "apples,flour,sugar"
 # search_rep_by_ingred(ingreds)
 # get_rep_info(716429)
-# get_price_breakdown_cost(716429)
+get_nutritional_breakdown_png(716429)
 # get_recep_instructions(4632)
