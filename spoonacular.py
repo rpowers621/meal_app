@@ -19,7 +19,7 @@ SIZE = "100x100"
 IMG_URL = f"https://spoonacular.com/cdn/ingredients_{SIZE}/"
 
 
-def search_rep_by_ingred(str):
+def search_recipe_by_ingred(str):
 
     by_ingred = f"recipes/findByIngredients?apiKey={API_KEY}&ingredients={str}&number={NUM_RECIPES}"
 
@@ -39,7 +39,7 @@ def search_rep_by_ingred(str):
     return recipe_ids
 
 
-def get_rep_info(id):
+def get_recipe_info(id):
 
     recep_info = f"recipes/{id}/information?apiKey={API_KEY}"
 
@@ -93,7 +93,7 @@ def get_nutritional_breakdown_png(id):
     return "True"
 
 
-def get_recep_instructions(id):
+def get_recipe_instructions(id):
 
     analyze_instructions = (
         f"recipes/{id}/analyzedInstructions?apiKey={API_KEY}&stepBreakdown=true"
@@ -122,8 +122,53 @@ def get_recep_instructions(id):
     return instructions
 
 
-ingreds = "apples,flour,sugar"
-# search_rep_by_ingred(ingreds)
-# get_rep_info(716429)
-get_nutritional_breakdown_png(716429)
-# get_recep_instructions(4632)
+def get_recipe_by_cuisine(str):
+
+    cuisine_search = (
+        f"recipes/complexSearch?apiKey={API_KEY}&cuisine={str}&number={NUM_RECIPES}"
+    )
+
+    response = requests.get(url=BASE_URL + cuisine_search, headers=HEADER)
+    response_data = response.json()
+
+    recipe_ids_by_cuisine = {}
+    length = len(response_data["results"])
+
+    for i in range(length):
+        try:
+            recipe_ids_by_cuisine[response_data["results"][i]["id"]] = response_data[
+                "results"
+            ][i]["title"]
+        except KeyError:
+            print(KeyError)
+            break
+
+    return recipe_ids_by_cuisine
+
+
+# gluten-free, ketogenic, vegetarian, vegan
+def get_recipe_by_diet(str):
+
+    diet_search = (
+        f"recipes/complexSearch?apiKey={API_KEY}&diet={str}&number={NUM_RECIPES}"
+    )
+
+    response = requests.get(url=BASE_URL + diet_search, headers=HEADER)
+    response_data = response.json()
+
+    recipe_ids_by_diet = {}
+    length = len(response_data["results"])
+
+    for i in range(length):
+        try:
+            recipe_ids_by_diet[response_data["results"][i]["id"]] = response_data[
+                "results"
+            ][i]["title"]
+        except KeyError:
+            print(KeyError)
+            break
+
+    print(recipe_ids_by_diet)
+
+
+get_recipe_by_diet("vegan")
