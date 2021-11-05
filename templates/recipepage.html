@@ -1,0 +1,61 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+    <h1>Recipe Page!</h1>
+    <div class="row">
+        <div class="col">
+            <p> Serving Size: {{servings}}</p>
+            <br>
+            <p> Ready in: {{ready_in_mins}} minutes</p>
+            <br>
+            <h4>Dish Type</h4>
+            {%for i in range(length)%}
+            <p>{{dish_types[i]}}</p>
+            {%endfor%}
+            <BR></BR>
+            <a href="{{source_url}}"> Link to Recipe's Original Website </a>
+        </div>
+        <div class="col">
+            <img src="{{recipe_img}}" alt="">
+        </div>
+    </div>
+
+    <br>
+
+    <br>
+
+    <br>
+
+
+    <br>
+
+
+
+    <br>
+    <h2>Ingredients</h2>
+    <div class="row">
+
+        {%for key, value in ingredients.items()%}
+        <div class="col">
+            <img src="{{value}}" alt="" style="height: 50px; width: 50px;">
+            <p style="font-size: x-small;">{{key}}</p>
+        </div>
+
+        {%endfor%}
+    </div>
+
+
+    <br>
+    <h2>Instructions: </h2>
+    {%for key, value in instructions.items()%}
+
+    <p>{{key}}: {{value}}</p>
+    {%endfor%}
+
+</body>
+
+</html>
