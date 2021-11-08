@@ -1,7 +1,31 @@
+html { 
+
+  }
+
+body{
+ margin-left: 85px;
+ margin-right: 85px;
+ margin-top: 50px;
+ 
+}
+#title{
+    height: 100px;
+    width: 100%;
+    background-color: F7DC6F ; 
+    color: white;
+    margin: auto !important;
+}
 .row{
     display: flex;
 
 }
 .col{
     flex: 50%
+}
+.ingred{
+   background-color: FF5733 ;
+}
+#nutrition{
+    width: 50px;
+    height: 50px;
 }

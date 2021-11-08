@@ -34,7 +34,7 @@ def search_recipe_by_ingred(str):
             print(KeyError)
             break
 
-    return recipe_ids
+    print(recipe_ids)
 
 
 def get_recipe_info(id):
@@ -45,6 +45,7 @@ def get_recipe_info(id):
     response_data = response.json()
 
     recipe_img = response_data["image"]
+    recipe_title = response_data["title"]
     servings = response_data["servings"]
     ready_in_mins = response_data["readyInMinutes"]
     source_url = response_data["sourceUrl"]
@@ -66,6 +67,7 @@ def get_recipe_info(id):
 
     return (
         recipe_img,
+        recipe_title,
         servings,
         ready_in_mins,
         source_url,
@@ -167,4 +169,4 @@ def get_recipe_by_diet(str):
     print(recipe_ids_by_diet)
 
 
-get_recipe_by_diet("vegan")
+search_recipe_by_ingred("chicken,tomato")

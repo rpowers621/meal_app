@@ -5,7 +5,7 @@
 </head>
 
 <body>
-    <h1>Recipe Page!</h1>
+    <h1 id="title">{{recipe_title}}</h1>
     <div class="row">
         <div class="col">
             <p> Serving Size: {{servings}}</p>
@@ -16,6 +16,7 @@
             {%for i in range(length)%}
             <p>{{dish_types[i]}}</p>
             {%endfor%}
+
             <BR></BR>
             <a href="{{source_url}}"> Link to Recipe's Original Website </a>
         </div>
@@ -23,39 +24,33 @@
             <img src="{{recipe_img}}" alt="">
         </div>
     </div>
-
-    <br>
-
-    <br>
-
-    <br>
-
-
-    <br>
-
-
-
     <br>
     <h2>Ingredients</h2>
     <div class="row">
 
         {%for key, value in ingredients.items()%}
         <div class="col">
-            <img src="{{value}}" alt="" style="height: 50px; width: 50px;">
-            <p style="font-size: x-small;">{{key}}</p>
-        </div>
+            <div class="ingred">
+                <img src="{{value}}" alt="" style="height: 50px; width: 50px;">
+                <p style="font-size: x-small;">{{key}}</p>
+            </div>
 
+        </div>
+        {%endfor%}
+        <div class="col">
+
+        </div>
+    </div>
+    <div>
+        <h2>Instructions: </h2>
+        {%for key, value in instructions.items()%}
+
+        <p>{{key}}: {{value}}</p>
         {%endfor%}
     </div>
-
-
-    <br>
-    <h2>Instructions: </h2>
-    {%for key, value in instructions.items()%}
-
-    <p>{{key}}: {{value}}</p>
-    {%endfor%}
-
+    <div class="row">
+        <img src="static/nutritional_breakdown.png" alt="" style="height: 200px; width: 200px;">
+    </div>
 </body>
 
 </html>

@@ -12,11 +12,12 @@ app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
 @app.route("/")
 def main():
-    recipe_ids = search_recipe_by_ingred("chicken, tomatoes")
-    recipe_id = 716426
+    # recipe_ids = search_recipe_by_ingred("chicken, tomatoes")
+    recipe_id = 715394
 
     (
         recipe_img,
+        recipe_title,
         servings,
         ready_in_mins,
         source_url,
@@ -24,13 +25,14 @@ def main():
         ingredients,
     ) = get_recipe_info(recipe_id)
 
-    # get_nutritional_breakdown_png(recipe_id)
+    get_nutritional_breakdown_png(recipe_id)
 
     instructions = get_recipe_instructions(recipe_id)
 
     return render_template(
         "recipepage.html",
         recipe_img=recipe_img,
+        recipe_title=recipe_title,
         servings=servings,
         ready_in_mins=ready_in_mins,
         source_url=source_url,
