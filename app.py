@@ -13,7 +13,7 @@ app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 @app.route("/")
 def main():
     # recipe_ids = search_recipe_by_ingred("chicken, tomatoes")
-    recipe_id = 715394
+    recipe_id = 782601
 
     (
         recipe_img,

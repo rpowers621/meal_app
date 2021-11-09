@@ -56,10 +56,10 @@ def get_recipe_info(id):
     ingredients = {}
     for i in range(length):
         try:
-
-            ingredients[response_data["extendedIngredients"][i]["name"]] = (
-                IMG_URL + response_data["extendedIngredients"][i]["image"]
-            )
+            if response_data["extendedIngredients"][i]["image"]:
+                ingredients[response_data["extendedIngredients"][i]["name"]] = (
+                    IMG_URL + response_data["extendedIngredients"][i]["image"]
+                )
 
         except KeyError:
             print(KeyError)

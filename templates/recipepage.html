@@ -10,15 +10,15 @@
     </header>
 
 
-    <div class="row" style="background: url('{{recipe_img}}') no-repeat center center fixed;background-size: cover; height: 55%;overflow: hidden; width: 100%;
+    <div class="row" style="background: url('{{recipe_img}}') no-repeat center center fixed;background-size: cover; height: 60%;overflow: hidden; width: 100%;
         color:white; text-shadow: 2px 2px black;">
-        <div class="col">
+        <div class="col" id="left-side">
             <h1>{{recipe_title}}</h1>
-            <br>
+
             <h4> Serving Size: {{servings}}</h4>
-            <br>
+
             <h4> Ready in: {{ready_in_mins}} minutes</h4>
-            <br>
+
             <h4>Dish Type</h4>
             {%for i in range(length)%}
             <p>{{dish_types[i]}}</p>
