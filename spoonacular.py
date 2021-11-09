@@ -34,7 +34,7 @@ def search_recipe_by_ingred(str):
             print(KeyError)
             break
 
-    print(recipe_ids)
+    return recipe_ids
 
 
 def get_recipe_info(id):
@@ -153,7 +153,6 @@ def get_recipe_by_diet(str):
     response = requests.get(url=BASE_URL + diet_search, headers=HEADER)
     response_data = response.json()
 
-    print(response)
     recipe_ids_by_diet = {}
     length = len(response_data["results"])
 
@@ -166,7 +165,29 @@ def get_recipe_by_diet(str):
             print(KeyError)
             break
 
-    print(recipe_ids_by_diet)
+    return recipe_ids_by_diet
 
 
-search_recipe_by_ingred("chicken,tomato")
+def search_recipe_by_calories(str):
+    calorie_search = f"mealplanner/generate?apiKey={API_KEY}&targetCalories={str}&timeFrame=day&number={NUM_RECIPES}"
+
+    response = requests.get(url=BASE_URL + calorie_search, headers=HEADER)
+    response_data = response.json()
+
+    recipe_ids_by_calories = {}
+    length = len(response_data["meals"])
+
+    for i in range(length):
+        try:
+            recipe_ids_by_calories[response_data["meals"][i]["id"]] = response_data[
+                "meals"
+            ][i]["title"]
+        except KeyError:
+            print(KeyError)
+            break
+
+    print(recipe_ids_by_calories)
+
+
+# search_recipe_by_ingred("chicken,tomato")
+search_recipe_by_calories(600)
