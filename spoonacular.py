@@ -186,8 +186,4 @@ def search_recipe_by_calories(str):
             print(KeyError)
             break
 
-    print(recipe_ids_by_calories)
-
-
-# search_recipe_by_ingred("chicken,tomato")
-search_recipe_by_calories(600)
+    return recipe_ids_by_calories

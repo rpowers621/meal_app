@@ -6,17 +6,18 @@
 
 <body>
     <header>
-        Culinary Army
+        The Culinary Army
     </header>
 
 
-    <div class="row">
+    <div class="row" style="background: url('{{recipe_img}}') no-repeat center center fixed;background-size: cover; height: 55%;overflow: hidden; width: 100%;
+        color:white; text-shadow: 2px 2px black;">
         <div class="col">
             <h1>{{recipe_title}}</h1>
             <br>
-            <p> Serving Size: {{servings}}</p>
+            <h4> Serving Size: {{servings}}</h4>
             <br>
-            <p> Ready in: {{ready_in_mins}} minutes</p>
+            <h4> Ready in: {{ready_in_mins}} minutes</h4>
             <br>
             <h4>Dish Type</h4>
             {%for i in range(length)%}
@@ -28,34 +29,33 @@
             <br>
 
         </div>
-        <div class="col">
-            <img src="{{recipe_img}}" alt="" id="recipe_pic">
-        </div>
+
     </div>
     <br>
-    <h2 style="margin-left: 4em;">Ingredients</h2>
-    <div class="row">
+    <div class="half">
+        <h2 style="margin-left: 3em;">Ingredients</h2>
+        <div class="row">
 
-        {%for key, value in ingredients.items()%}
-        <div class="col">
-            <div class="ingred">
-                <img src="{{value}}" alt="" style="height: 50px; width: 50px;">
-                <p style="font-size: x-small;">{{key}}</p>
+            {%for key, value in ingredients.items()%}
+            <div class="col">
+                <div class="ingred">
+                    <img src="{{value}}" alt="" style="height: 50px; width: 50px;">
+                    <p style="font-size: x-small;">{{key}}</p>
+                </div>
+
             </div>
-
+            {%endfor%}
         </div>
-        {%endfor%}
-    </div>
-    <div class="instructions">
-        <h2>Instructions: </h2>
-        {%for key, value in instructions.items()%}
+        <div class="instructions">
+            <h2>Instructions: </h2>
+            {%for key, value in instructions.items()%}
 
-        <p>{{key}}: {{value}}</p>
-        {%endfor%}
+            <p>{{key}}: {{value}}</p>
+            {%endfor%}
+        </div>
     </div>
-
     <footer>
-        <a href="./nutritionbreakdown.html">Checkout this Recipe's Nutrition Breakdown</a>
+        <a href="nutritionbreakdown.html">Checkout this Recipe's Nutrition Breakdown</a>
     </footer>
 </body>
 

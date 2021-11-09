@@ -5,19 +5,23 @@ html {
 body{
  
  margin-top: 1em;
+ font-family:'Courier New', Courier, monospace;
+
  
 }
 header{
     padding: 30px;
     text-align: center;
-    background-color: F7DC6F ; 
+    background:radial-gradient(#F7DC6F  50%, #DC6FF7 );
     color: white;
-    font-size: 30px;
+    font-size: 60px;
+    text-shadow: 2px 2px black;
+    font-weight: bolder;
+
     
 }
 .row{
-    margin-left: 4em;
-    margin-right: 4em;
+
     display: flex;
 
 }
@@ -25,8 +29,7 @@ header{
     flex: 50%
 }
 .ingred{
-   padding: 2em;
-   background-color: F7DC6F;
+   padding: 1em;
 }
 #nutrition{
     width: 50px;
@@ -39,9 +42,16 @@ header{
 footer{
     text-align: center;
     padding: 2em;
-    background-color: F7DC6F;
+    background:radial-gradient(#F7DC6F  50%, #DC6FF7 );
     color: white;
+    
 }
 #recipe_pic{
     margin-top: 4em;
+}
+.half{
+    background-color:whitesmoke;
+}
+a{
+    color: black;
 }
