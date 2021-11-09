@@ -3,19 +3,21 @@ html {
   }
 
 body{
- margin-left: 85px;
- margin-right: 85px;
- margin-top: 50px;
+ 
+ margin-top: 1em;
  
 }
-#title{
-    height: 100px;
-    width: 100%;
+header{
+    padding: 30px;
+    text-align: center;
     background-color: F7DC6F ; 
     color: white;
-    margin: auto !important;
+    font-size: 30px;
+    
 }
 .row{
+    margin-left: 4em;
+    margin-right: 4em;
     display: flex;
 
 }
@@ -23,9 +25,23 @@ body{
     flex: 50%
 }
 .ingred{
-   background-color: FF5733 ;
+   padding: 2em;
+   background-color: F7DC6F;
 }
 #nutrition{
     width: 50px;
     height: 50px;
+}
+.instructions{
+    margin-left: 4em;
+    margin-right: 4em;
+}
+footer{
+    text-align: center;
+    padding: 2em;
+    background-color: F7DC6F;
+    color: white;
+}
+#recipe_pic{
+    margin-top: 4em;
 }
