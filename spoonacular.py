@@ -1,7 +1,5 @@
 import os
 import requests
-from bs4 import BeautifulSoup
-import io
 from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
@@ -46,11 +44,11 @@ def get_recipe_info(id):
     response = requests.get(url=BASE_URL + recep_info, headers=HEADER)
     response_data = response.json()
 
-    recep_img = response_data["image"]
+    recipe_img = response_data["image"]
+    recipe_title = response_data["title"]
     servings = response_data["servings"]
     ready_in_mins = response_data["readyInMinutes"]
     source_url = response_data["sourceUrl"]
-    summary = response_data["summary"]
     dish_types = response_data["dishTypes"]
 
     length = len(response_data["extendedIngredients"])
@@ -58,22 +56,21 @@ def get_recipe_info(id):
     ingredients = {}
     for i in range(length):
         try:
-
-            ingredients[response_data["extendedIngredients"][i]["id"]] = {
-                "name": response_data["extendedIngredients"][i]["name"],
-                "image": IMG_URL + response_data["extendedIngredients"][i]["image"],
-            }
+            if response_data["extendedIngredients"][i]["image"]:
+                ingredients[response_data["extendedIngredients"][i]["name"]] = (
+                    IMG_URL + response_data["extendedIngredients"][i]["image"]
+                )
 
         except KeyError:
             print(KeyError)
             break
 
     return (
-        recep_img,
+        recipe_img,
+        recipe_title,
         servings,
         ready_in_mins,
         source_url,
-        summary,
         dish_types,
         ingredients,
     )
@@ -90,7 +87,7 @@ def get_nutritional_breakdown_png(id):
         with open("static/nutritional_breakdown.png", "wb") as f:
             f.write(response.content)
 
-    return "True"
+    # return "True"
 
 
 def get_recipe_instructions(id):
@@ -111,7 +108,7 @@ def get_recipe_instructions(id):
             len2 = len(response_data[i]["steps"])
             for j in range(len2):
                 try:
-                    instructions[f"step{j+1}"] = response_data[i]["steps"][j]["step"]
+                    instructions[f"step {j+1}"] = response_data[i]["steps"][j]["step"]
                 except KeyError:
                     print(KeyError)
                     break
@@ -168,7 +165,25 @@ def get_recipe_by_diet(str):
             print(KeyError)
             break
 
-    print(recipe_ids_by_diet)
+    return recipe_ids_by_diet
 
 
-get_recipe_by_diet("vegan")
+def search_recipe_by_calories(str):
+    calorie_search = f"mealplanner/generate?apiKey={API_KEY}&targetCalories={str}&timeFrame=day&number={NUM_RECIPES}"
+
+    response = requests.get(url=BASE_URL + calorie_search, headers=HEADER)
+    response_data = response.json()
+
+    recipe_ids_by_calories = {}
+    length = len(response_data["meals"])
+
+    for i in range(length):
+        try:
+            recipe_ids_by_calories[response_data["meals"][i]["id"]] = response_data[
+                "meals"
+            ][i]["title"]
+        except KeyError:
+            print(KeyError)
+            break
+
+    return recipe_ids_by_calories
