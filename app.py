@@ -30,7 +30,8 @@ def main():
     instructions = get_recipe_instructions(recipe_id)
 
     return render_template(
-        "recipepage.html",
+        # "recipepage.html",
+        "mealboard.html",
         recipe_img=recipe_img,
         recipe_title=recipe_title,
         servings=servings,
