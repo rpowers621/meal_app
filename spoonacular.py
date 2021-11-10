@@ -34,7 +34,7 @@ def search_recipe_by_ingred(str):
             print(KeyError)
             break
 
-    return recipe_ids
+    print(recipe_ids)
 
 
 def get_recipe_info(id):
@@ -187,3 +187,6 @@ def search_recipe_by_calories(str):
             break
 
     return recipe_ids_by_calories
+
+
+search_recipe_by_ingred("apples,flour,sugar")

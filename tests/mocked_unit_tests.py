@@ -1,7 +1,11 @@
 import unittest
-from unittest.mock import MagicMock, _patch
+from unittest.mock import MagicMock, patch
 import sys
 import os
+
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
 
 from spoonacular import search_recipe_by_ingred
 
@@ -22,8 +26,16 @@ class SearchRecipeByIngredTests(unittest.TestCase):
             ]
             mock_requests_get.return_value = mock_response
 
-            self.assertEqual(search_recipe_by_ingred("apples,flour,sugar"), None)
-            self.assertEqual(search_recipe_by_ingred("apples,flour,sugar"), 73420)
+            self.assertEqual(
+                search_recipe_by_ingred("apples,flour,sugar"),
+                {
+                    640352: "Cranberry Apple Crisp",
+                    632660: "Apricot Glazed Apple Tart",
+                    641803: "Easy & Delish! ~ Apple Crumble",
+                    73420: "Apple Or Peach Strudel",
+                    157103: "Apple Cinnamon Blondies",
+                },
+            )
 
 
 if __name__ == "__main__":
