@@ -7,28 +7,40 @@ const itemsFromBackend = [
   { id: uuid(), content: "Second task" },
   { id: uuid(), content: "Third task" },
   { id: uuid(), content: "Fourth task" },
-  { id: uuid(), content: "Fifth task" },
-  { id: uuid(), content: "Fifth task" },
-  { id: uuid(), content: "Fifth task" },
-  { id: uuid(), content: "Fifth task" },
   { id: uuid(), content: "Fifth task" }
 ];
 
 const columnsFromBackend = {
   [uuid()]: {
-    name: "Requested",
+    name: "Suggested",
     items: itemsFromBackend
   },
   [uuid()]: {
-    name: "To do",
+    name: "Monday",
     items: []
   },
   [uuid()]: {
-    name: "In Progress",
+    name: "Tuesday",
     items: []
   },
   [uuid()]: {
-    name: "Done",
+    name: "Wednesday",
+    items: []
+  },
+  [uuid()]: {
+    name: "Thursday",
+    items: []
+  },
+  [uuid()]: {
+    name: "Friday",
+    items: []
+  },
+  [uuid()]: {
+    name: "Saturday",
+    items: []
+  },
+  [uuid()]: {
+    name: "Sunday",
     items: []
   }
 };
@@ -70,7 +82,7 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
-function App() {
+function Mealboard() {
   const [columns, setColumns] = useState(columnsFromBackend);
   return (
     <div style={{ display: "flex", justifyContent: "center", height: "100%" }}>
@@ -88,7 +100,7 @@ function App() {
               key={columnId}
             >
               <h2>{column.name}</h2>
-              <div style={{ margin: 8 }}>
+              <div style={{ margin: 0 }}>
                 <Droppable droppableId={columnId} key={columnId}>
                   {(provided, snapshot) => {
                     return (
@@ -99,8 +111,8 @@ function App() {
                           background: snapshot.isDraggingOver
                             ? "lightblue"
                             : "lightgrey",
-                          padding: 4,
-                          width: 250,
+                          padding: 0,
+                          width: 150,
                           minHeight: 500
                         }}
                       >
@@ -150,4 +162,4 @@ function App() {
   );
 }
 
-export default App;
+export default Mealboard;
