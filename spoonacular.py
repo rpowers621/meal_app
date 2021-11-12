@@ -23,7 +23,7 @@ def search_recipe_by_ingred(str):
 
     response = requests.get(url=BASE_URL + by_ingred, headers=HEADER)
     response_data = response.json()
-    print(response_data)
+
     recipe_ids = {}
     length = len(response_data)
 

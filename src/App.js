@@ -1,6 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import{BrowserRouter as Router, NavLink, Link, Route, Switch} from 'react-router-dom';
+import Mealboard from './Pages/Mealboard';
+import Login from './Pages/Login';
 
 
 function textInputForms(placeholder) {
@@ -10,18 +12,15 @@ function textInputForms(placeholder) {
 
 function App() {
   return (
-    <div className="App">
-      <h1>Meal Planner</h1>
-      <form>
-      <label for="fname">Email:</label>
-      <input type="text" id="fname" name="fname"></input>
-      <label for="lname">Password:</label>
-      <input type="text" id="lname" name="lname"></input>
-      </form>
-      <button type="button">Login in</button>
+    <Router>
+      <Switch>
+        <Route path="/mealboard"> <Mealboard /> </Route>
+        <Route path="/login"><Login/></Route>
+      </Switch>
+      <NavLink to="/mealboard"> Mealboard </NavLink>
+      <NavLink to="/login"> login </NavLink>
 
-
-    </div>
+    </Router>
   );
 }
 

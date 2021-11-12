@@ -3,15 +3,27 @@ import os
 import random
 from flask import Flask, render_template
 from dotenv import find_dotenv, load_dotenv
+import flask
 
 from spoonacular import *
 
 app = Flask(__name__)
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
+app = flask.Flask(__name__, static_folder="./build/static")
+bp = flask.Blueprint("bp", __name__, template_folder="./build")
 
-@app.route("/")
-def main():
+
+@bp.route("/index")
+def mealboard():
+    return flask.render_template("index.html")
+
+
+app.register_blueprint(bp)
+
+
+@app.route("/recipepage")
+def recipe_page():
     # recipe_ids = search_recipe_by_ingred("chicken, tomatoes")
     recipe_id = 782601
 
@@ -30,8 +42,7 @@ def main():
     instructions = get_recipe_instructions(recipe_id)
 
     return render_template(
-        # "recipepage.html",
-        "mealboard.html",
+        "recipepage.html",
         recipe_img=recipe_img,
         recipe_title=recipe_title,
         servings=servings,

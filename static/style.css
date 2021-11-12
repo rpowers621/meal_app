@@ -1,7 +1,3 @@
-html { 
-
-  }
-
 body{
  margin-top: 1em;
  font-family:'Courier New', Courier, monospace;
@@ -16,8 +12,9 @@ header{
     font-weight: bolder;
 }
 .box{
-    width: 45%;
+    width: 35%;
     height: 100%;
+    max-width: 35%;
 }
 .row{
     display: flex;
@@ -55,29 +52,36 @@ footer{
 a{
     color: white;
 }
-#left-side{
-    margin-left: 4em;
-    font-size: 20px;
-    padding: 0;
-    font-weight: bolder;
-}
+
 .recipe_search_box{
     height:100%;
     background:radial-gradient(#F7DC6F  50%, #CAF845);
     border-style: solid;
     border-color: darkblue;
-
+    min-width: 230px;
+    max-width: 230px;
 }
 .input-ingreds{
-    margin-left: 2em;
-    font-size: 12px;
+    margin-left: 1em;
+    font-size: 9px;
 }
 .by_ingreds,.by_calories, .by_cuisine, .by_diet{
-    padding: 1em;
+
 }
 .result-box{
     height:100%;
     background:radial-gradient( #CAF845 50%, #F7DC6F );
     border-style: solid;
     border-color: darkblue;
+    min-width: 175px;
+    max-width: 175px;
+}
+#sub{
+    margin-left: 6.5em;
+}
+.drop-diet, .drop-cuisine{
+    margin-left: 3em;
+}
+.label-header{
+    font-size: 12px;
 }
