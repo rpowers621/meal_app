@@ -3,28 +3,44 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 as uuid } from 'uuid';
 
 const itemsFromBackend = [
-  { id: uuid(), content: "First task" },
-  { id: uuid(), content: "Second task" },
-  { id: uuid(), content: "Third task" },
-  { id: uuid(), content: "Fourth task" },
-  { id: uuid(), content: "Fifth task" }
+  { id: uuid(), content: "First meal" },
+  { id: uuid(), content: "Second meal" },
+  { id: uuid(), content: "Third meal" },
+  { id: uuid(), content: "Fourth meal" },
+  { id: uuid(), content: "Fifth meal" }
 ];
 
 const columnsFromBackend = {
   [uuid()]: {
-    name: "Requested",
+    name: "Suggested",
     items: itemsFromBackend
   },
   [uuid()]: {
-    name: "To do",
+    name: "Monday",
     items: []
   },
   [uuid()]: {
-    name: "In Progress",
+    name: "Tuesday",
     items: []
   },
   [uuid()]: {
-    name: "Done",
+    name: "Wednesday",
+    items: []
+  },
+  [uuid()]: {
+    name: "Thursday",
+    items: []
+  },
+  [uuid()]: {
+    name: "Friday",
+    items: []
+  },
+  [uuid()]: {
+    name: "Saturday",
+    items: []
+  },
+  [uuid()]: {
+    name: "Sunday",
     items: []
   }
 };
@@ -66,10 +82,10 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
-function App() {
+function Mealboard() {
   const [columns, setColumns] = useState(columnsFromBackend);
   return (
-    <div style={{ display: "flex", justifyContent: "center", height: "100%" }}>
+    <div style={{ display: "flex", justifyContent: "right", height: "100%" }}>
       <DragDropContext
         onDragEnd={result => onDragEnd(result, columns, setColumns)}
       >
@@ -84,7 +100,7 @@ function App() {
               key={columnId}
             >
               <h2>{column.name}</h2>
-              <div style={{ margin: 8 }}>
+              <div style={{ margin: 10 }}>
                 <Droppable droppableId={columnId} key={columnId}>
                   {(provided, snapshot) => {
                     return (
@@ -95,9 +111,9 @@ function App() {
                           background: snapshot.isDraggingOver
                             ? "lightblue"
                             : "lightgrey",
-                          padding: 4,
-                          width: 250,
-                          minHeight: 500
+                          padding: 0,
+                          width: 150,
+                          minHeight: 600
                         }}
                       >
                         {column.items.map((item, index) => {
@@ -146,5 +162,5 @@ function App() {
   );
 }
 
-export default App;
+export default Mealboard;
 
