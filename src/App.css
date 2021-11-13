@@ -59,7 +59,7 @@ body{
  
  }
  .col{
-     flex: 50%
+     flex: 100%
  }
  .ingred{
     padding: 1em;
@@ -102,9 +102,6 @@ body{
  .input-ingreds{
      margin-left: 1em;
      font-size: 9px;
- }
- .by_ingreds,.by_calories, .by_cuisine, .by_diet{
- 
  }
  .result-box{
      height:100%;

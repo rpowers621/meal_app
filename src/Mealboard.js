@@ -6,12 +6,95 @@ import { v4 as uuid } from 'uuid';
 
 function Mealboard() {
 
-
+    
     
     const [searchType, setSearchType] = useState('');
     const [searchCriteria, setSearchCriteria] = useState('');
     const [suggestions, setSuggestions] = useState(''); 
 
+
+    const mealSugesstions = [
+        { id: uuid(), content: "First meal" },
+        { id: uuid(), content: "Second meal" },
+        { id: uuid(), content: "Third meal" },
+        { id: uuid(), content: "Fourth meal" },
+        { id: uuid(), content: "Fifth meal" }
+      ];
+
+
+      const mealColumns = {
+        [uuid()]: {
+          name: "Suggested",
+          items: mealSugesstions
+        },
+        [uuid()]: {
+          name: "Monday",
+          items: []
+        },
+        [uuid()]: {
+          name: "Tuesday",
+          items: []
+        },
+        [uuid()]: {
+          name: "Wednesday",
+          items: []
+        },
+        [uuid()]: {
+          name: "Thursday",
+          items: []
+        },
+        [uuid()]: {
+          name: "Friday",
+          items: []
+        },
+        [uuid()]: {
+          name: "Saturday",
+          items: []
+        },
+        [uuid()]: {
+          name: "Sunday",
+          items: []
+        }
+      };
+
+      const [columns, setColumns] = useState(mealColumns);
+
+      const onDragEnd = (result, columns, setColumns) => {
+        if (!result.destination) return;
+        const { source, destination } = result;
+      
+        if (source.droppableId !== destination.droppableId) {
+          const sourceColumn = columns[source.droppableId];
+          const destColumn = columns[destination.droppableId];
+          const sourceItems = [...sourceColumn.items];
+          const destItems = [...destColumn.items];
+          const [removed] = sourceItems.splice(source.index, 1);
+          destItems.splice(destination.index, 0, removed);
+          setColumns({
+            ...columns,
+            [source.droppableId]: {
+              ...sourceColumn,
+              items: sourceItems
+            },
+            [destination.droppableId]: {
+              ...destColumn,
+              items: destItems
+            }
+          });
+        } else {
+          const column = columns[source.droppableId];
+          const copiedItems = [...column.items];
+          const [removed] = copiedItems.splice(source.index, 1);
+          copiedItems.splice(destination.index, 0, removed);
+          setColumns({
+            ...columns,
+            [source.droppableId]: {
+              ...column,
+              items: copiedItems
+            }
+          });
+        }
+      };  
 
     function add(e){
         setSearchCriteria([...searchCriteria, e]);
@@ -42,9 +125,10 @@ function Mealboard() {
           });
     }
     return(
-        <> 
+       
             <div className="box">
                 <div className="row">
+                
                     <div className="col">
                         <div className="recipe_search_box">
                             <h1>Search For Recipes</h1>
@@ -52,37 +136,37 @@ function Mealboard() {
                                 <div className="by_ingreds">
                                     <input onChange={() => setSearchType('ingredients') }type="checkbox" name="ingreds"
                                         value="Search by Ingredients"/>
-                                    <label className="label-header" for="ingreds">Search by Ingredients</label>
+                                    <label className="label-header" htmlFor="ingreds">Search by Ingredients</label>
                                     <br/>
                                     <div className="row">
                                         <div className="input-ingreds">
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="chicken"/>
-                                            <label for="">Chicken</label>
+                                            <label htmlFor="">Chicken</label>
 
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="pork"/>
-                                            <label for="">Pork</label>
+                                            <label htmlFor="">Pork</label>
 
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="beef"/>
-                                            <label for="">Beef</label>
+                                            <label htmlFor="">Beef</label>
 
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="fish"/>
-                                            <label for="">Fish</label>
+                                            <label htmlFor="">Fish</label>
                                         </div>
                                     </div>
                                     <br/>
                                     <div className="row">
                                         <div className="input-ingreds">
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="lettuce"/>
-                                            <label for="">Lettuce</label>
+                                            <label htmlFor="">Lettuce</label>
 
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="Rice"/>
-                                            <label for="">Rice</label>
+                                            <label htmlFor="">Rice</label>
 
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="Apple"/>
-                                            <label for="">Apple</label>
+                                            <label htmlFor="">Apple</label>
 
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="Garlic"/>
-                                            <label for="">Garlic</label>
+                                            <label htmlFor="">Garlic</label>
 
                                         </div>
 
@@ -91,36 +175,36 @@ function Mealboard() {
                                     <div className="row">
                                         <div className="input-ingreds">
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="Egg"/>
-                                            <label for="">Egg</label>
+                                            <label htmlFor="">Egg</label>
 
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="Corn"/>
-                                            <label for="">Corn</label>
+                                            <label htmlFor="">Corn</label>
 
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="Cheese"/>
-                                            <label for="">Cheese</label>
+                                            <label htmlFor="">Cheese</label>
 
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="Mushroom"/>
-                                            <label for="">Mushroom</label>
+                                            <label htmlFor="">Mushroom</label>
                                         </div>
                                     </div>
                                     <br/>
                                     <div className="row">
                                         <div className="input-ingreds">
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="butter"/>
-                                            <label for="">Butter</label>
+                                            <label htmlFor="">Butter</label>
 
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="Flour"/>
-                                            <label for="">Flour</label>
+                                            <label htmlFor="">Flour</label>
 
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="onion"/>
-                                            <label for="">Onion</label>
+                                            <label htmlFor="">Onion</label>
 
                                             <input onChange={(e) => add(e.target.value)} id="ingreds" type="checkbox" value="Orange"/>
-                                            <label for="">Orange</label>
+                                            <label htmlFor="">Orange</label>
                                         </div>
                                     </div>
                                     <br/>
-                                    <label for="">Enter Ingredient</label>
+                                    <label htmlFor="">Enter Ingredient</label>
                                     <input  onChange={(e) => add(e.target.value)} id="ingreds" type="text"/>
                                     <button onClick={send}>Add</button>
 
@@ -130,9 +214,9 @@ function Mealboard() {
                                 <div className="by_calories">
                                     <input onChange={() => setSearchType('calories')} type="checkbox" name="calories"
                                         value="Search by Calories"/>
-                                    <label className="label-header" for="calories">Search by Calories</label>
+                                    <label className="label-header" htmlFor="calories">Search by Calories</label>
                                     <br/>
-                                    <label for="">Enter Calories Amount</label>
+                                    <label htmlFor="">Enter Calories Amount</label>
                                     <input onChange={(e) => add(e.target.value)} id="calories" type="text"/>
                                     <button onClick={send}>Add</button>
                                 </div>
@@ -140,7 +224,7 @@ function Mealboard() {
                                 <div className="by_diet">
                                     <input onChange={() => setSearchType('diet')} type="checkbox" name="diet"
                                         value="Search by Diet"/>
-                                    <label className="label-header" for="diet">Search by Diet</label>
+                                    <label className="label-header" htmlFor="diet">Search by Diet</label>
                                     <br/>
                                     <div className="drop-diet">
                                         <select onChange={(e) => add(e.target.value)}  id="diet" name="" placeholder=" ">
@@ -163,7 +247,7 @@ function Mealboard() {
                                 <div className="by_cuisine">
                                     <input onChange={() => setSearchType('cuisine')} type="checkbox" name="cuisine"
                                         value="Search by Cuisine"/>
-                                    <label className="label-header" for="cuisine">Search by Cuisine</label>
+                                    <label className="label-header" htmlFor="cuisine">Search by Cuisine</label>
                                     <br/>
                                     <div className="drop-cuisine">
                                         <select onChange={(e) => add(e.target.value)} id="cuisine" name="">
@@ -197,14 +281,86 @@ function Mealboard() {
                                     </div>
                                     <button onClick={send}>Add</button>
                                     <button onClick={refresh}> refresh</button>
-                        </div>
                                 </div>
-                                
+                        </div>  
                     </div>
+                    <div className="col">
+                        <div style={{ display: "flex", flexDirection: "row", width: 60, height: 100}}>
+                            <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
+                                {Object.entries(columns).map(([columnId, column], index) => {
+                                    return (
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                alignItems: "center"
+                                            }}
+                                            key={columnId}>
+                                            <h2>{column.name}</h2>
+                                            <div style={{ margin: 0 }}>
+                                                <Droppable droppableId={columnId} key={columnId}>
+                                                    {(provided, snapshot) => {
+                                                    return (
+                                                        <div
+                                                            {...provided.droppableProps}
+                                                            ref={provided.innerRef}
+                                                            style={{
+                                                                background: snapshot.isDraggingOver
+                                                                    ? "lightblue"
+                                                                    : "lightgrey",
+                                                                padding: 0,
+                                                                width: 150,
+                                                                minHeight: 500
+                                                            }}>
+                                                        {column.items.map((item, index) => {
+                                                        return (
+                                                            <Draggable
+                                                            key={item.id}
+                                                            draggableId={item.id}
+                                                            index={index}
+                                                            >
+                                                            {(provided, snapshot) => {
+                                                                return (
+                                                                <div
+                                                                    ref={provided.innerRef}
+                                                                    {...provided.draggableProps}
+                                                                    {...provided.dragHandleProps}
+                                                                    style={{
+                                                                    userSelect: "none",
+                                                                    padding: 16,
+                                                                    margin: "0 0 8px 0",
+                                                                    minHeight: "50px",
+                                                                    backgroundColor: snapshot.isDragging
+                                                                        ? "#263B4A"
+                                                                        : "#456C86",
+                                                                    color: "white",
+                                                                    ...provided.draggableProps.style
+                                                                    }}
+                                                                >
+                                                                    {item.content}
+                                                                </div>
+                                                                );
+                                                            }}
+                                                            </Draggable>
+                                                        );
+                                                        })}
+                                                        {provided.placeholder}
+                                                    </div>
+                                                    );
+                                                }}
+                                                </Droppable>
+                                            </div>
+                                        </div>
+                                        );
+                                    })}
+                            </DragDropContext>
+                        </div>
+                    </div>                      
                 </div>
             </div>
-        </>
     );
+
+    
 }
 
 export default Mealboard;
