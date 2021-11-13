@@ -9,6 +9,7 @@ function App() {
   
   return (
     <Router>
+    <Login />
     <div className="App">
       <h2>Plan your Mealboard!</h2>
 
@@ -17,7 +18,7 @@ function App() {
       <hr />
 
       <Switch>
-        <Route path ="/mealboard" component={About} />
+        <Route path ="/mealboard" component={Mealboard} />
       </Switch>
     </div>
   </Router>

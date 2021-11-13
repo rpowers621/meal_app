@@ -5,12 +5,19 @@ const clientId = process.env.REACT_APP_clientId;
 
 function Login() {
 
+    const [username, setusername] = useState();
+    const [useremail, setuseremail] = useState();
+    const [userimage, setuserimage] = useState();
+
     const [showloginButton, setShowloginButton] = useState(true);
     const [showlogoutButton, setShowlogoutButton] = useState(false);
     const onLoginSuccess = (res) => {
         console.log('Login Success:', res.profileObj);
         setShowloginButton(false);
         setShowlogoutButton(true);
+        setusername(res.profileObj.name);
+        setuseremail(res.profileObj.email);
+        setuserimage(res.profileObj.imageUrl);
     };
 
     const onLoginFailure = (res) => {
@@ -26,6 +33,11 @@ function Login() {
 
     return (
         <div>
+            <div className="User Info">
+                <img src={userimage} />
+                <p>{username}</p>
+                <p>{useremail}</p>
+            </div>
             { showloginButton ?
                 <GoogleLogin
                     clientId={clientId}
