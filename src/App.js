@@ -5,10 +5,6 @@ import Mealboard from './Mealboard';
 import Login from './Login';
 
 
-function textInputForms(placeholder) {
-  <label>placeholder</label>
-}
-
 
 function App() {
   return (
