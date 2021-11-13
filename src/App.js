@@ -1,27 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
+import Login from './Login';
+import Mealboard from './Mealboard';
+import { BrowserRouter as Router, Route, Link, NavLink, Switch } from 'react-router-dom';
 
-
-function textInputForms(placeholder) {
-  <label>placeholder</label>
-}
 
 
 function App() {
+  
   return (
+    <Router>
+    <Login />
     <div className="App">
-      <h1>Meal Planner</h1>
-      <form>
-      <label for="fname">Email:</label>
-      <input type="text" id="fname" name="fname"></input>
-      <label for="lname">Password:</label>
-      <input type="text" id="lname" name="lname"></input>
-      </form>
-      <button type="button">Login in</button>
+      <h2>Plan your Mealboard!</h2>
 
+      <NavLink exact activeClassName="Active" to="/mealboard">Mealboard</NavLink>
 
+      <hr />
+
+      <Switch>
+        <Route path ="/mealboard" component={Mealboard} />
+      </Switch>
     </div>
+  </Router>
   );
 }
 
