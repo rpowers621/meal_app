@@ -127,7 +127,7 @@ def get_recipe_by_cuisine(str):
 
     response = requests.get(url=BASE_URL + cuisine_search, headers=HEADER)
     response_data = response.json()
-
+    print(response_data)
     recipe_ids_by_cuisine = {}
     length = len(response_data["results"])
 
@@ -187,6 +187,3 @@ def search_recipe_by_calories(str):
             break
 
     return recipe_ids_by_calories
-
-
-search_recipe_by_ingred("apples,flour,sugar")
