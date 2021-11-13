@@ -1,8 +1,8 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import{BrowserRouter as Router, NavLink, Link, Route, Switch} from 'react-router-dom';
-import Mealboard from './Pages/Mealboard';
-import Login from './Pages/Login';
+import Mealboard from './Mealboard';
+import Login from './Login';
 
 
 function textInputForms(placeholder) {
