@@ -3,11 +3,11 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 as uuid } from 'uuid';
 
 const itemsFromBackend = [
-  { id: uuid(), content: "First task" },
-  { id: uuid(), content: "Second task" },
-  { id: uuid(), content: "Third task" },
-  { id: uuid(), content: "Fourth task" },
-  { id: uuid(), content: "Fifth task" }
+  { id: uuid(), content: "First meal" },
+  { id: uuid(), content: "Second meal" },
+  { id: uuid(), content: "Third meal" },
+  { id: uuid(), content: "Fourth meal" },
+  { id: uuid(), content: "Fifth meal" }
 ];
 
 const columnsFromBackend = {
