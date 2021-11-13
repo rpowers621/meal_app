@@ -1,13 +1,8 @@
 import unittest
 from unittest.mock import MagicMock, patch
-import sys
-import os
 
 
 from spoonacular import *
-
-INPUT = "INPUT"
-EXPECTED_OUTPUT = "EXPECTED_OUTPUT"
 
 
 class SearchRecipeByIngredTests(unittest.TestCase):

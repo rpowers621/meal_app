@@ -127,7 +127,7 @@ def get_recipe_by_cuisine(str):
 
     response = requests.get(url=BASE_URL + cuisine_search, headers=HEADER)
     response_data = response.json()
-    print(response_data)
+
     recipe_ids_by_cuisine = {}
     length = len(response_data["results"])
 
@@ -154,16 +154,19 @@ def get_recipe_by_diet(str):
     response_data = response.json()
 
     recipe_ids_by_diet = {}
-    length = len(response_data["results"])
+    if response_data is not None:
+        length = len(response_data["results"])
 
-    for i in range(length):
-        try:
-            recipe_ids_by_diet[response_data["results"][i]["id"]] = response_data[
-                "results"
-            ][i]["title"]
-        except KeyError:
-            print(KeyError)
-            break
+        for i in range(length):
+            try:
+                recipe_ids_by_diet[response_data["results"][i]["id"]] = response_data[
+                    "results"
+                ][i]["title"]
+            except KeyError:
+                print(KeyError)
+                break
+
+        return recipe_ids_by_diet
 
     return recipe_ids_by_diet
 
@@ -175,6 +178,7 @@ def search_recipe_by_calories(str):
     response_data = response.json()
 
     recipe_ids_by_calories = {}
+
     length = len(response_data["meals"])
 
     for i in range(length):
@@ -186,4 +190,7 @@ def search_recipe_by_calories(str):
             print(KeyError)
             break
 
-    return recipe_ids_by_calories
+    print(recipe_ids_by_calories)
+
+
+search_recipe_by_calories("50")
