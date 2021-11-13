@@ -7,9 +7,7 @@ const itemsFromBackend = [
   { id: uuid(), content: "Second meal" },
   { id: uuid(), content: "Third meal" },
   { id: uuid(), content: "Fourth meal" },
-  { id: uuid(), content: "Fifth meal" },
-  { id: uuid(), content: "Sixth meal" }
-
+  { id: uuid(), content: "Fifth meal" }
 ];
 
 const columnsFromBackend = {
