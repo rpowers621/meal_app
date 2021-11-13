@@ -34,7 +34,7 @@ def search_recipe_by_ingred(str):
             print(KeyError)
             break
 
-    print(recipe_ids)
+    return recipe_ids
 
 
 def get_recipe_info(id):

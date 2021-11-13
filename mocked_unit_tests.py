@@ -1,11 +1,8 @@
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import Mock, patch
 import sys
 import os
 
-current = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
 
 from spoonacular import search_recipe_by_ingred
 
@@ -16,7 +13,7 @@ EXPECTED_OUTPUT = "EXPECTED_OUTPUT"
 class SearchRecipeByIngredTests(unittest.TestCase):
     def test_search_recipe_by_ingred(self):
         with patch("spoonacular.requests.get") as mock_requests_get:
-            mock_response = MagicMock()
+            mock_response = Mock()
 
             mock_response.json.side_effect = [
                 {},
@@ -28,6 +25,7 @@ class SearchRecipeByIngredTests(unittest.TestCase):
 
             self.assertEqual(
                 search_recipe_by_ingred("apples,flour,sugar"),
+                {},
                 {
                     640352: "Cranberry Apple Crisp",
                     632660: "Apricot Glazed Apple Tart",
