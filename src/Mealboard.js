@@ -85,7 +85,7 @@ const onDragEnd = (result, columns, setColumns) => {
 function Mealboard() {
   const [columns, setColumns] = useState(columnsFromBackend);
   return (
-    <div style={{ display: "flex", justifyContent: "center", height: "100%" }}>
+    <div style={{ display: "flex", justifyContent: "left", height: "100%" }}>
       <DragDropContext
         onDragEnd={result => onDragEnd(result, columns, setColumns)}
       >
