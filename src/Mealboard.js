@@ -6,26 +6,85 @@ import { v4 as uuid } from 'uuid';
 
 function Mealboard() {
 
-    
+    var mealSugestionsStart = [
+        { id: uuid(), content: "1" },
+        { id: uuid(), content: "2" },
+        { id: uuid(), content: "3"},
+        { id: uuid(), content: "4" },
+        { id: uuid(), content: "5" }
+      ];
     
     const [searchType, setSearchType] = useState('');
     const [searchCriteria, setSearchCriteria] = useState('');
-    const [suggestions, setSuggestions] = useState(''); 
+    const [suggestions, setSuggestions] = useState([]); 
+    const [meals, setMeals] = useState([]);
+    const [meal_ids, setMeal_ids] = useState([]);
+    const [mealSugestions, setMealSuggestions] = useState(mealSugestionsStart); 
 
 
-    const mealSugesstions = [
-        { id: uuid(), content: "First meal" },
-        { id: uuid(), content: "Second meal" },
-        { id: uuid(), content: "Third meal" },
-        { id: uuid(), content: "Fourth meal" },
-        { id: uuid(), content: "Fifth meal" }
-      ];
+
+    function add(e){
+        setSearchCriteria([...searchCriteria, e]);
+    }
+
+    function refresh(){
+        setSearchCriteria('');
+        setSearchType('');
+        setMeal_ids('');
+        setMeals('');
+    }
 
 
-      const mealColumns = {
+
+    function send(){
+        
+        console.log(searchType);
+        console.log(searchCriteria);
+        fetch("/getsuggestions", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify( {'searchCritria': searchCriteria,"searchType": searchType }),
+          }).then((response) => response.json()).then((data) => {
+            console.log(data);
+            setSuggestions(data.suggestions);
+            
+            
+            console.log(suggestions);
+            makeMeals();
+          });
+        } 
+    function makeMeals(){
+    
+        for(var [key , value] of Object.entries(suggestions)){
+            meals.push(value);
+            meal_ids.push(key)
+        }
+        setMeals(meals);
+        setMeal_ids(meal_ids);
+        console.log(meals);
+        console.log(meal_ids);
+       
+        var update = [
+            { id: uuid(), content: meals[0] },
+            { id: uuid(), content: meals[1]},
+            { id: uuid(), content: meals[2] },
+            { id: uuid(), content: meals[3] },
+            { id: uuid(), content: meals[4] }
+          ];
+        setMealSuggestions(update);
+        console.log(mealSugestions);
+    }
+   
+
+  
+
+
+      var mealColumns = {
         [uuid()]: {
           name: "Suggested",
-          items: mealSugesstions
+          items: mealSugestions
         },
         [uuid()]: {
           name: "Monday",
@@ -96,34 +155,9 @@ function Mealboard() {
         }
       };  
 
-    function add(e){
-        setSearchCriteria([...searchCriteria, e]);
-    }
-
-    function refresh(){
-        setSearchCriteria('');
-        setSearchType('');
-    }
-
-    function send(){
-        
-        console.log(searchType);
-        console.log(searchCriteria);
-
-        fetch('/getsuggestions', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 'search': searchType }),
-          }).then((response) => response.json()).then((data) => {
-            // eslint-disable-next-line no-console
-            console.log(data);
-            setSuggestions(data.suggestions);
-           
-            console.log(suggestions);
-          });
-    }
+    
+    
+    
     return(
        
             <div className="box">
@@ -132,7 +166,7 @@ function Mealboard() {
                     <div className="col">
                         <div className="recipe_search_box">
                             <h1>Search For Recipes</h1>
-
+            
                                 <div className="by_ingreds">
                                     <input onChange={() => setSearchType('ingredients') }type="checkbox" name="ingreds"
                                         value="Search by Ingredients"/>
@@ -358,9 +392,7 @@ function Mealboard() {
                     </div>                      
                 </div>
             </div>
-    );
-
+    );  
     
 }
-
 export default Mealboard;

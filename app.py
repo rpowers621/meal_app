@@ -1,7 +1,6 @@
 import json
 import os
-import random
-from flask import Flask, render_template
+from flask import Flask, request, render_template
 from dotenv import find_dotenv, load_dotenv
 import flask
 
@@ -26,12 +25,17 @@ def index():
     return flask.render_template("index.html")
 
 
-@app.route("/getsuggestions", methods=["POST"])
+@bp.route("/getsuggestions", methods=["POST"])
 def getSuggestions():
+    searchType = flask.request.json.get("searchType")
+    searchCritria = flask.request.json.get("searchCritria")
+    if searchType == "ingredients":
+        recipe_ids = search_recipe_by_ingred(searchCritria)
 
-    search = flask.request.json.get["search"]
+    print(searchType)
+    print(searchCritria)
 
-    return flask.jsonify({"suggestions": "success"})
+    return flask.jsonify({"suggestions": recipe_ids})
 
 
 @app.route("/recipepage")
@@ -70,6 +74,5 @@ def recipe_page():
 app.register_blueprint(bp)
 
 if __name__ == "__main__":
-    app.run(
-        host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 5000)), debug=True
-    )
+    app.run(port=int(os.getenv("PORT", 5000)), debug=True)
+# host=os.getenv("IP", "0.0.0.0"),
