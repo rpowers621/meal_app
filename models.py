@@ -23,6 +23,4 @@ class Recipe(db.Model):
     recipe_id = db.Column(db.Integer, primary_key=True)
     recipe_name = db.Column(db.String(120), nullable=False)
 
-
-
 db.create_all()
