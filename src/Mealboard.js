@@ -1,27 +1,24 @@
 
 import {React ,useState} from 'react'
 import './App.css' 
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { v4 as uuid } from 'uuid';
+
+
 
 function Mealboard() {
 
-    var mealSugestionsStart = [
-        { id: uuid(), content: "1" },
-        { id: uuid(), content: "2" },
-        { id: uuid(), content: "3"},
-        { id: uuid(), content: "4" },
-        { id: uuid(), content: "5" }
-      ];
+ 
+      
     
     const [searchType, setSearchType] = useState('');
     const [searchCriteria, setSearchCriteria] = useState('');
-    const [suggestions, setSuggestions] = useState([]); 
-    const [meals, setMeals] = useState([]);
-    const [meal_ids, setMeal_ids] = useState([]);
-    const [mealSugestions, setMealSuggestions] = useState(mealSugestionsStart); 
+    const [suggestions, setSuggestions] = useState(["test"]); 
+    const [meals, setMeals] = useState("");
+    const [meal_ids, setMeal_ids] = useState("");
+
+ 
 
 
+  
 
     function add(e){
         setSearchCriteria([...searchCriteria, e]);
@@ -32,14 +29,14 @@ function Mealboard() {
         setSearchType('');
         setMeal_ids('');
         setMeals('');
+        
     }
 
+    
 
 
     function send(){
         
-        console.log(searchType);
-        console.log(searchCriteria);
         fetch("/getsuggestions", {
             method: 'POST',
             headers: {
@@ -48,116 +45,23 @@ function Mealboard() {
             body: JSON.stringify( {'searchCritria': searchCriteria,"searchType": searchType }),
           }).then((response) => response.json()).then((data) => {
             console.log(data);
-            setSuggestions(data.suggestions);
-            
-            
+
+
+            setSuggestions(data);
             console.log(suggestions);
-            makeMeals();
-          });
-        } 
-    function makeMeals(){
-    
-        for(var [key , value] of Object.entries(suggestions)){
-            meals.push(value);
-            meal_ids.push(key)
-        }
-        setMeals(meals);
-        setMeal_ids(meal_ids);
-        console.log(meals);
-        console.log(meal_ids);
+            console.log(Object.entries(data));
+
+            for(const [key , value] of Object.entries(data)){
+                setMeals([...meals, value]);
+                setMeal_ids([...meal_ids, key]);
+            }
+          
+
+        });
+    return; 
        
-        var update = [
-            { id: uuid(), content: meals[0] },
-            { id: uuid(), content: meals[1]},
-            { id: uuid(), content: meals[2] },
-            { id: uuid(), content: meals[3] },
-            { id: uuid(), content: meals[4] }
-          ];
-        setMealSuggestions(update);
-        console.log(mealSugestions);
-    }
-   
-
-  
-
-
-      var mealColumns = {
-        [uuid()]: {
-          name: "Suggested",
-          items: mealSugestions
-        },
-        [uuid()]: {
-          name: "Monday",
-          items: []
-        },
-        [uuid()]: {
-          name: "Tuesday",
-          items: []
-        },
-        [uuid()]: {
-          name: "Wednesday",
-          items: []
-        },
-        [uuid()]: {
-          name: "Thursday",
-          items: []
-        },
-        [uuid()]: {
-          name: "Friday",
-          items: []
-        },
-        [uuid()]: {
-          name: "Saturday",
-          items: []
-        },
-        [uuid()]: {
-          name: "Sunday",
-          items: []
-        }
-      };
-
-      const [columns, setColumns] = useState(mealColumns);
-
-      const onDragEnd = (result, columns, setColumns) => {
-        if (!result.destination) return;
-        const { source, destination } = result;
-      
-        if (source.droppableId !== destination.droppableId) {
-          const sourceColumn = columns[source.droppableId];
-          const destColumn = columns[destination.droppableId];
-          const sourceItems = [...sourceColumn.items];
-          const destItems = [...destColumn.items];
-          const [removed] = sourceItems.splice(source.index, 1);
-          destItems.splice(destination.index, 0, removed);
-          setColumns({
-            ...columns,
-            [source.droppableId]: {
-              ...sourceColumn,
-              items: sourceItems
-            },
-            [destination.droppableId]: {
-              ...destColumn,
-              items: destItems
-            }
-          });
-        } else {
-          const column = columns[source.droppableId];
-          const copiedItems = [...column.items];
-          const [removed] = copiedItems.splice(source.index, 1);
-          copiedItems.splice(destination.index, 0, removed);
-          setColumns({
-            ...columns,
-            [source.droppableId]: {
-              ...column,
-              items: copiedItems
-            }
-          });
-        }
-      };  
-
-    
-    
-    
+    } 
+ 
     return(
        
             <div className="box">
@@ -241,6 +145,7 @@ function Mealboard() {
                                     <label htmlFor="">Enter Ingredient</label>
                                     <input  onChange={(e) => add(e.target.value)} id="ingreds" type="text"/>
                                     <button onClick={send}>Add</button>
+                         
 
                                     <br/>
                                 </div>
@@ -314,82 +219,59 @@ function Mealboard() {
                                         </select>
                                     </div>
                                     <button onClick={send}>Add</button>
+                        
                                     <button onClick={refresh}> refresh</button>
+                                    
+                            
                                 </div>
                         </div>  
                     </div>
-                    <div className="col">
-                        <div style={{ display: "flex", flexDirection: "row", width: 60, height: 100}}>
-                            <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
-                                {Object.entries(columns).map(([columnId, column], index) => {
-                                    return (
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                                flexDirection: "column",
-                                                alignItems: "center"
-                                            }}
-                                            key={columnId}>
-                                            <h2>{column.name}</h2>
-                                            <div style={{ margin: 0 }}>
-                                                <Droppable droppableId={columnId} key={columnId}>
-                                                    {(provided, snapshot) => {
-                                                    return (
-                                                        <div
-                                                            {...provided.droppableProps}
-                                                            ref={provided.innerRef}
-                                                            style={{
-                                                                background: snapshot.isDraggingOver
-                                                                    ? "lightblue"
-                                                                    : "lightgrey",
-                                                                padding: 0,
-                                                                width: 150,
-                                                                minHeight: 500
-                                                            }}>
-                                                        {column.items.map((item, index) => {
-                                                        return (
-                                                            <Draggable
-                                                            key={item.id}
-                                                            draggableId={item.id}
-                                                            index={index}
-                                                            >
-                                                            {(provided, snapshot) => {
-                                                                return (
-                                                                <div
-                                                                    ref={provided.innerRef}
-                                                                    {...provided.draggableProps}
-                                                                    {...provided.dragHandleProps}
-                                                                    style={{
-                                                                    userSelect: "none",
-                                                                    padding: 16,
-                                                                    margin: "0 0 8px 0",
-                                                                    minHeight: "50px",
-                                                                    backgroundColor: snapshot.isDragging
-                                                                        ? "#263B4A"
-                                                                        : "#456C86",
-                                                                    color: "white",
-                                                                    ...provided.draggableProps.style
-                                                                    }}
-                                                                >
-                                                                    {item.content}
-                                                                </div>
-                                                                );
-                                                            }}
-                                                            </Draggable>
-                                                        );
-                                                        })}
-                                                        {provided.placeholder}
-                                                    </div>
-                                                    );
-                                                }}
-                                                </Droppable>
-                                            </div>
-                                        </div>
-                                        );
-                                    })}
-                            </DragDropContext>
+                    <div className='col'>
+                        <div className="suggestion-box">
+                            <h3>Suggestion Box</h3>
+                            <p> {meals[0]}</p>
+                            <p>{meals[1]}</p>
+                            <p>{meals[2]}</p>
+                            <p>{meals[2]}</p>
+                            <p>{meals[2]}</p>
+                
                         </div>
-                    </div>                      
+                    </div>
+                    <div className='col'>
+                        <div className="monday">
+                            <h3>Monday</h3>
+                        </div>
+                    </div>
+                    <div className='col'>
+                        <div className="tuesday">
+                            <h3>Tuesday</h3>
+                        </div>
+                    </div>
+                    <div className='col'>
+                        <div className="wednesday">
+                            <h3>Wednesday</h3>
+                        </div>
+                    </div>
+                    <div className='col'>
+                        <div className="thursday">
+                            <h3>Thursday</h3>
+                        </div>
+                    </div>
+                    <div className='col'>
+                        <div className="friday">
+                            <h3>Friday</h3>
+                        </div>
+                    </div>
+                    <div className='col'>
+                        <div className="saturday">
+                            <h3>Saturday</h3>
+                        </div>
+                    </div>
+                    <div className='col'>
+                        <div className="sunday">
+                            <h3>Sunday</h3>
+                        </div>
+                     </div>      
                 </div>
             </div>
     );  

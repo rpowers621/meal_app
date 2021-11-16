@@ -31,11 +31,18 @@ def getSuggestions():
     searchCritria = flask.request.json.get("searchCritria")
     if searchType == "ingredients":
         recipe_ids = search_recipe_by_ingred(searchCritria)
-
+    if searchType == "calories":
+        recipe_ids = search_recipe_by_calories(searchCritria)
+    if searchType == "diet":
+        recipe_ids = get_recipe_by_diet(searchCritria)
+    if searchType == "cuisine":
+        recipe_ids = get_recipe_by_cuisine(searchCritria)
     print(searchType)
     print(searchCritria)
+    ids = recipe_ids.keys()
+    titles = recipe_ids.values()
 
-    return flask.jsonify({"suggestions": recipe_ids})
+    return flask.jsonify(recipe_ids)
 
 
 @app.route("/recipepage")
