@@ -4,7 +4,7 @@ import './App.css'
 
 
 
-function Mealboard() {
+function Recipebox() {
 
  
       
@@ -74,7 +74,7 @@ function Mealboard() {
                                 <div className="by_ingreds">
                                     <input onChange={() => setSearchType('ingredients') }type="checkbox" name="ingreds"
                                         value="Search by Ingredients"/>
-                                    <label className="label-header" htmlFor="ingreds">Search by Ingredients</label>
+                                    <label id ="ingredients" className="label-header" htmlFor="ingreds">Search by Ingredients</label>
                                     <br/>
                                     <div className="row">
                                         <div className="input-ingreds">
@@ -142,9 +142,9 @@ function Mealboard() {
                                         </div>
                                     </div>
                                     <br/>
-                                    <label htmlFor="">Enter Ingredient</label>
-                                    <input  onChange={(e) => add(e.target.value)} id="ingreds" type="text"/>
-                                    <button onClick={send}>Add</button>
+                                    <label   htmlFor="">Enter Ingredient</label>
+                                    <input  data-testid="Enter_Ingredient" onChange={(e) => add(e.target.value)} id="ingreds" type="text"/>
+                                    <button onClick={send}>Add Ingredients</button>
                          
 
                                     <br/>
@@ -157,7 +157,7 @@ function Mealboard() {
                                     <br/>
                                     <label htmlFor="">Enter Calories Amount</label>
                                     <input onChange={(e) => add(e.target.value)} id="calories" type="text"/>
-                                    <button onClick={send}>Add</button>
+                                    <button onClick={send}>Add </button>
                                 </div>
 
                                 <div className="by_diet">
@@ -277,4 +277,4 @@ function Mealboard() {
     );  
     
 }
-export default Mealboard;
+export default Recipebox;
