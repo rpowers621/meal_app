@@ -6,22 +6,22 @@ import { BrowserRouter as Router, Route, Link, NavLink, Switch } from 'react-rou
 
 
 function App() {
-  
+
   return (
     <Router>
-    <Login />
-    <div className="App">
-      <h2>Plan your Mealboard!</h2>
+      <Login />
+      <div className="App">
+        <h2>Plan your Mealboard!</h2>
 
-      <NavLink exact activeClassName="Active" to="/mealboard">Mealboard</NavLink>
+        <NavLink exact activeClassName="Active" to="/mealboard">Mealboard</NavLink>
 
-      <hr />
+        <hr />
 
-      <Switch>
-        <Route path ="/mealboard" component={Mealboard} />
-      </Switch>
-    </div>
-  </Router>
+        <Switch>
+          <Route path="/mealboard" component={Mealboard} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
