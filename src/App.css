@@ -50,19 +50,16 @@ body{
      font-weight: bolder;
  }
  .box{
-     width: 100%;
+     width: 35%;
      height: 100%;
-     max-width: 100%;
+     max-width: 35%;
  }
  .row{
      display: flex;
-     padding:0;
  
  }
  .col{
-     flex:25%;
-     padding: 0;
-     margin: 0;
+     flex: 100%
  }
  .ingred{
     padding: 1em;

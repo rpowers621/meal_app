@@ -1,57 +1,49 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+/* base styles */
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: "Quicksand";
+  color: #333;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-
-/* .login-form {
-  
-} */
-
-form {
-  width: 70%;
+.navbar {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  max-width: 600px;
   margin: 0 auto;
+  border-bottom: 1px solid #f2f2f2;
+}
+.navbar h1 {
+  color: #f1356d;
+}
+.navbar .links {
+  margin-left: auto;
+}
+.navbar a {
+  margin-left: 16px;
+  text-decoration: none;
+  padding: 6px;
+}
+.navbar a:hover {
+  color: #f1356d;
+}
+.content {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
 }
 
-label,
-input {
-  /* In order to define widths */
-  display: inline-block;
+.g-signin{
+  position: absolute;
+  top: 8%;
+  right: 5%;
+  margin-top: -50px;
+  margin-left: -50px;
 }
 
-label {
-  width: 30%;
-  /* Positions the label text beside the input */
-  text-align: right;
-}
-
-label+input {
-  width: 30%;
-  /* Large margin-right to force the next element to the new-line
-           and margin-left to create a gutter between the label and input */
-  margin: 0 30% 0 4%;
-}
-
-
-/* Only the submit button is matched by this selector,
-       but to be sure you could use an id or class for that button */
-
-input+input {
-  float: right;
-}
-
-input {
-  border: 0;
-  outline: 0;
-  background: transparent;
-  border-bottom: 1px solid black;
+.user-info {
+  position: absolute;
+  top: 150%;
+  right: -70%;
 }
