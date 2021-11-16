@@ -1,10 +1,12 @@
 
-import {React ,useState} from 'react'
+import {React ,useState,} from 'react'
+import { BrowserRouter as Router, Link, Switch, Route, useHistory } from 'react-router-dom';
 import './App.css' 
+import Recipepage from './Recipepage';
 
 
 
-function Mealboard() {
+function Recipebox() {
 
  
       
@@ -14,6 +16,7 @@ function Mealboard() {
     const [suggestions, setSuggestions] = useState(["test"]); 
     const [meals, setMeals] = useState("");
     const [meal_ids, setMeal_ids] = useState("");
+    const [recipeData, setRecipeData]= useState("");
 
  
 
@@ -61,6 +64,29 @@ function Mealboard() {
     return; 
        
     } 
+    function recipe_page(){
+        console.log("rp");
+        fetch("/recipepage", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify( {"id": meal_ids[0] }),
+          }).then((response) => response.json()).then((data) => {
+            console.log(data);
+            setRecipeData(data);
+          });
+
+    }
+    const history = useHistory();
+    function route(){
+       let path = '/Recipepage';
+       history.push(
+          { pathname: path,
+            state: {detail: recipeData}
+        });
+
+    }
  
     return(
        
@@ -229,12 +255,12 @@ function Mealboard() {
                     <div className='col'>
                         <div className="suggestion-box">
                             <h3>Suggestion Box</h3>
-                            <p> {meals[0]}</p>
-                            <p>{meals[1]}</p>
-                            <p>{meals[2]}</p>
-                            <p>{meals[2]}</p>
-                            <p>{meals[2]}</p>
-                
+                       <button onClick={recipe_page}> {meals[0]}</button> 
+                       <button onClick={recipe_page}> {meals[1]}</button> 
+                       <button onClick={recipe_page}> {meals[2]}</button> 
+                       <button onClick={recipe_page}> {meals[3]}</button> 
+                       <button onClick={recipe_page}> {meals[4]}</button> 
+                    <button onClick={route}>Go to Recipe page!</button>         
                         </div>
                     </div>
                     <div className='col'>
@@ -277,4 +303,4 @@ function Mealboard() {
     );  
     
 }
-export default Mealboard;
+export default Recipebox;
