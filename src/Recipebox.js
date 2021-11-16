@@ -6,18 +6,11 @@ import './App.css'
 
 function Recipebox() {
 
- 
-      
-    
     const [searchType, setSearchType] = useState('');
     const [searchCriteria, setSearchCriteria] = useState('');
     const [suggestions, setSuggestions] = useState(["test"]); 
     const [meals, setMeals] = useState("");
     const [meal_ids, setMeal_ids] = useState("");
-
- 
-
-
   
 
     function add(e){
@@ -31,8 +24,6 @@ function Recipebox() {
         setMeals('');
         
     }
-
-    
 
 
     function send(){
@@ -55,7 +46,6 @@ function Recipebox() {
                 setMeals([...meals, value]);
                 setMeal_ids([...meal_ids, key]);
             }
-          
 
         });
     return; 
