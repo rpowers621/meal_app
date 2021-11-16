@@ -5,6 +5,7 @@ from dotenv import find_dotenv, load_dotenv
 import flask
 from flask_sqlalchemy import SQLAlchemy
 
+
 from spoonacular import *
 
 app = Flask(__name__)
