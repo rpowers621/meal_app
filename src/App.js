@@ -1,21 +1,26 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import{BrowserRouter as Router, NavLink, Link, Route, Switch} from 'react-router-dom';
-import Mealboard from './Mealboard';
+import React from 'react';
 import Login from './Login';
+import Mealboard from './Mealboard';
+import { BrowserRouter as Router, Route, Link, NavLink, Switch } from 'react-router-dom';
 
 
 
 function App() {
+
   return (
     <Router>
-      <Switch>
-        <Route path="/mealboard"> <Mealboard /> </Route>
-        <Route path="/login"><Login/></Route>
-      </Switch>
-      <NavLink to="/mealboard"> Mealboard </NavLink>
-      <NavLink to="/login"> login </NavLink>
+      <Login />
+      <div className="App">
+        <h2>Plan your Mealboard!</h2>
 
+        <NavLink exact activeClassName="Active" to="/mealboard">Mealboard</NavLink>
+
+        <hr />
+
+        <Switch>
+          <Route path="/mealboard" component={Mealboard} />
+        </Switch>
+      </div>
     </Router>
   );
 }
