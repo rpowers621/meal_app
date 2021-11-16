@@ -36,3 +36,87 @@
     transform: rotate(360deg);
   }
 }
+body{
+  margin-top: 1em;
+  font-family:'Courier New', Courier, monospace;
+ }
+ header{
+     padding: 30px;
+     text-align: center;
+     background:radial-gradient(#F7DC6F  50%, #CAF845);
+     color: white;
+     font-size: 60px;
+     text-shadow: 2px 2px black;
+     font-weight: bolder;
+ }
+ .box{
+     width: 35%;
+     height: 100%;
+     max-width: 35%;
+ }
+ .row{
+     display: flex;
+ 
+ }
+ .col{
+     flex: 100%
+ }
+ .ingred{
+    padding: 1em;
+    margin-left: 4em;
+ }
+ #nutrition{
+     width: 50px;
+     height: 50px;
+ }
+ .instructions{
+     margin-left: 4em;
+     margin-right: 4em;
+ }
+ footer{
+     text-align: center;
+     padding: 2em;
+     background:radial-gradient(#F7DC6F  50%, #CAF845 );
+     color: white;
+     text-shadow: 2px 2px black;
+     font-size: large;
+ }
+ #recipe_pic{
+     margin-top: 4em;
+ }
+ .half{
+     background-color:whitesmoke;
+ }
+ a{
+     color: white;
+ }
+ 
+ .recipe_search_box{
+     height:100%;
+     background:radial-gradient(#F7DC6F  50%, #CAF845);
+     border-style: solid;
+     border-color: darkblue;
+     min-width: 230px;
+     max-width: 230px;
+ }
+ .input-ingreds{
+     margin-left: 1em;
+     font-size: 9px;
+ }
+ .result-box{
+     height:100%;
+     background:radial-gradient( #CAF845 50%, #F7DC6F );
+     border-style: solid;
+     border-color: darkblue;
+     min-width: 175px;
+     max-width: 175px;
+ }
+ #sub{
+     margin-left: 6.5em;
+ }
+ .drop-diet, .drop-cuisine{
+     margin-left: 3em;
+ }
+ .label-header{
+     font-size: 12px;
+ }

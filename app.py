@@ -1,17 +1,45 @@
 import json
 import os
-import random
-from flask import Flask, render_template
+from flask import Flask, request, render_template
 from dotenv import find_dotenv, load_dotenv
+import flask
+
 
 from spoonacular import *
 
 app = Flask(__name__)
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
+app = flask.Flask(__name__, static_folder="./build/static")
+bp = flask.Blueprint("bp", __name__, template_folder="./build")
 
-@app.route("/")
-def main():
+load_dotenv(find_dotenv())
+
+url = os.getenv("DATABASE_URL")
+if url and url.startswith("postgres://"):
+    url = url.replace("postgres://", "postgresql://", 1)
+
+
+@bp.route("/index", methods=["GET", "POST"])
+def index():
+    return flask.render_template("index.html")
+
+
+@bp.route("/getsuggestions", methods=["POST"])
+def getSuggestions():
+    searchType = flask.request.json.get("searchType")
+    searchCritria = flask.request.json.get("searchCritria")
+    if searchType == "ingredients":
+        recipe_ids = search_recipe_by_ingred(searchCritria)
+
+    print(searchType)
+    print(searchCritria)
+
+    return flask.jsonify({"suggestions": recipe_ids})
+
+
+@app.route("/recipepage")
+def recipe_page():
     # recipe_ids = search_recipe_by_ingred("chicken, tomatoes")
     recipe_id = 782601
 
@@ -43,8 +71,8 @@ def main():
     )
 
 
-app.run(
-    # host=os.getenv("IP", "0.0.0.0"),
-    # port=int(os.getenv("PORT", 8080)),
-    debug=True
-)
+app.register_blueprint(bp)
+
+if __name__ == "__main__":
+    app.run(port=int(os.getenv("PORT", 5000)), debug=True)
+# host=os.getenv("IP", "0.0.0.0"),
