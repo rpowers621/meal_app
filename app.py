@@ -29,6 +29,7 @@ user_recipes = db.Table(
     "user_recipes",
     db.Column("user_id", db.Integer, db.ForeignKey("user.user_id")),
     db.Column("recipe_id", db.Integer, db.ForeignKey("recipe.recipe_id")),
+    db.Column('day', db.Integer)
 )
 
 
