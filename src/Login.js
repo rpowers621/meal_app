@@ -38,7 +38,7 @@ function Login() {
                 <p>{username}</p>
                 <p>{useremail}</p>
             </div>
-            { showloginButton ?
+            {showloginButton ?
                 <GoogleLogin
                     clientId={clientId}
                     buttonText="Sign In"
@@ -48,7 +48,7 @@ function Login() {
                     isSignedIn={true}
                 /> : null}
 
-            { showlogoutButton ?
+            {showlogoutButton ?
                 <GoogleLogout
                     clientId={clientId}
                     buttonText="Sign Out"

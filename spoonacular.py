@@ -190,7 +190,4 @@ def search_recipe_by_calories(str):
             print(KeyError)
             break
 
-    print(recipe_ids_by_calories)
-
-
-search_recipe_by_calories("50")
+    return recipe_ids_by_calories
