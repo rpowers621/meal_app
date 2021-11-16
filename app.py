@@ -3,12 +3,13 @@ import os
 import random
 from flask import Flask, render_template
 from dotenv import find_dotenv, load_dotenv
-
+from flask_sqlalchemy import SQLAlchemy
 from spoonacular import *
 
 app = Flask(__name__)
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
+db = SQLAlchemy(app)
 
 @app.route("/")
 def main():
@@ -42,6 +43,7 @@ def main():
         instructions=instructions,
     )
 
+from models import GoogleUser, Recipe
 
 app.run(
     # host=os.getenv("IP", "0.0.0.0"),

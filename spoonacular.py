@@ -16,7 +16,6 @@ SIZE = "100x100"
 
 IMG_URL = f"https://spoonacular.com/cdn/ingredients_{SIZE}/"
 
-
 def search_recipe_by_ingred(str):
 
     by_ingred = f"recipes/findByIngredients?apiKey={API_KEY}&ingredients={str}&number={NUM_RECIPES}"
