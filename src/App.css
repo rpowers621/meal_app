@@ -57,6 +57,7 @@ body{
  .row{
      display: flex;
      padding:0;
+     color: black;
  
  }
  .col{
@@ -142,3 +143,7 @@ body{
  .label-header{
      font-size: 12px;
  }
+ 
+.recipe-button:focus{
+  background-color: red;
+}

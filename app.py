@@ -105,5 +105,6 @@ def recipe_page():
 app.register_blueprint(bp)
 
 if __name__ == "__main__":
-    app.run(port=int(os.getenv("PORT", 5000)), debug=True)
-# host=os.getenv("IP", "0.0.0.0"),
+    app.run(
+        host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 5000)), debug=True
+    )

@@ -2,7 +2,12 @@ import './App.css'
 import { React, useEffect, useState } from 'react'
 import { useLocation } from 'react-router';
 
+
 function Recipepage() {
+
+    const placeholder = {"step1" : ""};
+
+    
     const [title, setTitle]= useState('');
     const [servingSize, setServingSize]= useState('');
     const [readyMins, setReadyMins] =useState('');
@@ -10,6 +15,7 @@ function Recipepage() {
     const [sourceURL, setSoureURL] =useState('');
     const [dishType, setDishType]= useState('');
     const [ingredients, setIngredients] =useState('');
+    const [instruction, setInstruction]= useState(placeholder);
 
 
 
@@ -24,15 +30,14 @@ function Recipepage() {
         setSoureURL(location.state.detail.source_url);
         setDishType(location.state.detail.dish_type);
         setIngredients(location.state.detail.ingredients);
-
-
-
-
+        setInstruction(location.state.detail.instruction);
     }, [location]);
+
+  
 
     return (
         <div>
-            <div className="row" style={{backgroundImage: `url(" + require +{sourceURL} + ")`,backgroundPosition: 'center',backgroundSize: 'cover',
+            <div className="row" style={{backgroundImage: "url(" + {recipeImg} + ")",backgroundPosition: 'center',backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat'}}>
                 <div className="col" id="left-side">
                     <h1>{title}</h1>
@@ -41,27 +46,19 @@ function Recipepage() {
 
                     <h4> Ready in: {readyMins} minutes</h4>
 
-                    <h4>Dish Type : {dishType}</h4>
+                
                  
                     
-                    <a href={recipeImg}> Link to Recipe's Original Website </a>
+                    <a href={sourceURL} style={{color : 'black'}}> Link to Recipe's Original Website </a>
                   
 
                 </div>
 
-            </div >
-           
-            <div className="half">
-                <h2 >Ingredients</h2>
-                <div className="row">
-                
-                </div>
-                <div className="instructions">
-                    <h2>Instructions: </h2>
-                 </div> 
             </div>
+           
+          
             <footer>
-                <a href="nutritionbreakdown.html">Checkout this Recipe's Nutrition Breakdown</a>
+                <p></p>
             </footer>
         </div >
     );
