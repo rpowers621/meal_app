@@ -76,7 +76,6 @@ def getSuggestions():
 
     return flask.jsonify(recipe_ids)
 
-
 @bp.route("/recipepage", methods=["POST"])
 def recipe_page():
     # recipe_ids = search_recipe_by_ingred("chicken, tomatoes")
