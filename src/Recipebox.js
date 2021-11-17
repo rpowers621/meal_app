@@ -1,9 +1,14 @@
 
-import {React ,useState} from 'react'
+import {React ,useState,} from 'react'
+import {useHistory } from 'react-router-dom';
 import './App.css' 
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> recipe_box
 function Recipebox() {
 
  
@@ -14,6 +19,7 @@ function Recipebox() {
     const [suggestions, setSuggestions] = useState(["test"]); 
     const [meals, setMeals] = useState("");
     const [meal_ids, setMeal_ids] = useState("");
+    const [recipeData, setRecipeData]= useState("");
 
  
 
@@ -48,8 +54,6 @@ function Recipebox() {
 
 
             setSuggestions(data);
-            console.log(suggestions);
-            console.log(Object.entries(data));
 
             for(const [key , value] of Object.entries(data)){
                 setMeals([...meals, value]);
@@ -61,6 +65,30 @@ function Recipebox() {
     return; 
        
     } 
+    const history = useHistory();
+    function recipe_page(){
+      
+        fetch("/recipepage", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify( {"id": meal_ids[0] }),
+          }).then((response) => response.json()).then((data) => {
+            console.log(data);
+            setRecipeData(data);
+          });
+
+    }
+
+    function route(){
+       let path = '/Recipepage';
+       history.push(
+          { pathname: path,
+            state: {detail: recipeData}
+        });
+
+    }
  
     return(
        
@@ -142,9 +170,15 @@ function Recipebox() {
                                         </div>
                                     </div>
                                     <br/>
+<<<<<<< HEAD
                                     <label   htmlFor="">Enter Ingredient</label>
                                     <input  data-testid="Enter_Ingredient" onChange={(e) => add(e.target.value)} id="ingreds" type="text"/>
                                     <button onClick={send}>Add Ingredients</button>
+=======
+                                    <label htmlFor="">Enter Ingredient</label>
+                                    <input  onChange={(e) => add(e.target.value)} id="ingreds" type="text"/>
+                                    <button onClick={send}>Add Ingredient(s)</button>
+>>>>>>> recipe_box
                          
 
                                     <br/>
@@ -157,7 +191,11 @@ function Recipebox() {
                                     <br/>
                                     <label htmlFor="">Enter Calories Amount</label>
                                     <input onChange={(e) => add(e.target.value)} id="calories" type="text"/>
+<<<<<<< HEAD
                                     <button onClick={send}>Add </button>
+=======
+                                    <button onClick={send}>Add Calories</button>
+>>>>>>> recipe_box
                                 </div>
 
                                 <div className="by_diet">
@@ -180,7 +218,7 @@ function Recipebox() {
                                             <option value="Whole30">Whole30</option>
                                         </select>
                                     </div>
-                                    <button onClick={send}>Add</button>
+                                    <button onClick={send}>Add Diet</button>
                                 </div>
 
                                 <div className="by_cuisine">
@@ -218,23 +256,23 @@ function Recipebox() {
                                             <option value="Vietnamese">Vietnamese</option>
                                         </select>
                                     </div>
-                                    <button onClick={send}>Add</button>
+                                    <button onClick={send}>Add Cuisine</button>
                         
                                     <button onClick={refresh}> refresh</button>
                                     
-                            
+                                    <p>Please first select how you'd like to search, then press add to see a suggestion!</p>
                                 </div>
                         </div>  
                     </div>
                     <div className='col'>
                         <div className="suggestion-box">
                             <h3>Suggestion Box</h3>
-                            <p> {meals[0]}</p>
-                            <p>{meals[1]}</p>
-                            <p>{meals[2]}</p>
-                            <p>{meals[2]}</p>
-                            <p>{meals[2]}</p>
-                
+                       <button className="recipe-button"onClick={recipe_page}> {meals[0]}</button> 
+                       <button className="recipe-button"onClick={recipe_page}> {meals[1]}</button> 
+                       <button className="recipe-button"onClick={recipe_page}> {meals[2]}</button> 
+                       <button className="recipe-button"onClick={recipe_page}> {meals[3]}</button> 
+                       <button className="recipe-button"onClick={recipe_page}> {meals[4]}</button> 
+                    <button  onClick={route}>Go to Recipe page!</button>         
                         </div>
                     </div>
                     <div className='col'>

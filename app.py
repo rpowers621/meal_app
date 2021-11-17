@@ -75,37 +75,61 @@ def getSuggestions():
     return flask.jsonify(recipe_ids)
 
 
-@app.route("/recipepage")
+@bp.route("/recipepage", methods=["POST"])
 def recipe_page():
     # recipe_ids = search_recipe_by_ingred("chicken, tomatoes")
-    recipe_id = 782601
+    print("Hi hello")
+    recipe_id = flask.request.json.get("id")
 
-    (
-        recipe_img,
-        recipe_title,
-        servings,
-        ready_in_mins,
-        source_url,
-        dish_types,
-        ingredients,
-    ) = get_recipe_info(recipe_id)
+    if recipe_id:
 
-    get_nutritional_breakdown_png(recipe_id)
+        (
+            recipe_img,
+            recipe_title,
+            servings,
+            ready_in_mins,
+            source_url,
+            dish_types,
+            ingredients,
+        ) = get_recipe_info(recipe_id)
 
-    instructions = get_recipe_instructions(recipe_id)
+        get_nutritional_breakdown_png(recipe_id)
 
-    return render_template(
-        "recipepage.html",
-        recipe_img=recipe_img,
-        recipe_title=recipe_title,
-        servings=servings,
-        ready_in_mins=ready_in_mins,
-        source_url=source_url,
-        dish_types=dish_types,
-        length=len(dish_types),
-        ingredients=ingredients,
-        instructions=instructions,
-    )
+        instructions = get_recipe_instructions(recipe_id)
+
+    else:
+        (
+            recipe_img,
+            recipe_title,
+            servings,
+            ready_in_mins,
+            source_url,
+            dish_types,
+            ingredients,
+            instructions,
+        ) = (
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+        )
+    DATA = {
+        "recipe_img": recipe_img,
+        "recipe_title": recipe_title,
+        "servings": servings,
+        "ready_in_mins": ready_in_mins,
+        "source_url": source_url,
+        "dish_types": dish_types,
+        "ingredients": ingredients,
+        "instructions": instructions,
+    }
+    data = json.dumps(DATA)
+
+    return data
 
 
 app.register_blueprint(bp)
