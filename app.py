@@ -11,7 +11,7 @@ from spoonacular import *
 app = Flask(__name__)
 
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 app = flask.Flask(__name__, static_folder="./build/static")
 bp = flask.Blueprint("bp", __name__, template_folder="./build")
@@ -22,7 +22,7 @@ url = os.getenv("DATABASE_URL")
 if url and url.startswith("postgres://"):
     url = url.replace("postgres://", "postgresql://", 1)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = url
+app.config["SQLALCHEMY_DATABASE_URI"] = url
 
 db = SQLAlchemy(app)
 
@@ -30,7 +30,7 @@ user_recipes = db.Table(
     "user_recipes",
     db.Column("user_id", db.Integer, db.ForeignKey("user.user_id")),
     db.Column("recipe_id", db.Integer, db.ForeignKey("recipe.recipe_id")),
-    db.Column('day', db.Integer)
+    db.Column("day", db.Integer),
 )
 
 

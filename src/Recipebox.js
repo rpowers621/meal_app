@@ -3,16 +3,7 @@ import {React ,useState,} from 'react'
 import {useHistory } from 'react-router-dom';
 import './App.css' 
 
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> recipe_box
 function Recipebox() {
-
- 
-      
     
     const [searchType, setSearchType] = useState('');
     const [searchCriteria, setSearchCriteria] = useState('');
@@ -170,15 +161,9 @@ function Recipebox() {
                                         </div>
                                     </div>
                                     <br/>
-<<<<<<< HEAD
                                     <label   htmlFor="">Enter Ingredient</label>
                                     <input  data-testid="Enter_Ingredient" onChange={(e) => add(e.target.value)} id="ingreds" type="text"/>
                                     <button onClick={send}>Add Ingredients</button>
-=======
-                                    <label htmlFor="">Enter Ingredient</label>
-                                    <input  onChange={(e) => add(e.target.value)} id="ingreds" type="text"/>
-                                    <button onClick={send}>Add Ingredient(s)</button>
->>>>>>> recipe_box
                          
 
                                     <br/>
@@ -191,11 +176,7 @@ function Recipebox() {
                                     <br/>
                                     <label htmlFor="">Enter Calories Amount</label>
                                     <input onChange={(e) => add(e.target.value)} id="calories" type="text"/>
-<<<<<<< HEAD
                                     <button onClick={send}>Add </button>
-=======
-                                    <button onClick={send}>Add Calories</button>
->>>>>>> recipe_box
                                 </div>
 
                                 <div className="by_diet">
@@ -261,12 +242,14 @@ function Recipebox() {
                                     <button onClick={refresh}> refresh</button>
                                     
                                     <p>Please first select how you'd like to search, then press add to see a suggestion!</p>
+                                    <p> To get another recipe deselect and start again!</p>
                                 </div>
                         </div>  
                     </div>
                     <div className='col'>
                         <div className="suggestion-box">
                             <h3>Suggestion Box</h3>
+                            <p> To view a Recipe please slect recipe and click Go to Recipe Page! </p>
                        <button className="recipe-button"onClick={recipe_page}> {meals[0]}</button> 
                        <button className="recipe-button"onClick={recipe_page}> {meals[1]}</button> 
                        <button className="recipe-button"onClick={recipe_page}> {meals[2]}</button> 

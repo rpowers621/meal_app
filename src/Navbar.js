@@ -8,7 +8,7 @@ const Navbar = () => {
             backgroundColor: '#f1356d',
             borderRadius: '8px'
           }}>Home</a>
-          <a href="/mealboard" style={{
+          <a href="/recipebox" style={{
             color: "white",
             backgroundColor: '#f1356d',
             borderRadius: '8px'
