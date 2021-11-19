@@ -1,6 +1,8 @@
 import React from 'react';
 import Login from './Login';
-import Mealboard from './Mealboard';
+import Navbar from './Navbar';
+import Recipebox from "./Recipebox";
+import Recipepage from "./Recipepage";
 import { BrowserRouter as Router, Route, Link, NavLink, Switch } from 'react-router-dom';
 
 
@@ -9,16 +11,14 @@ function App() {
   
   return (
     <Router>
-    <Login />
+    <Navbar />
+    <div className="g-signin">
+      <Login />
+    </div>
     <div className="App">
-      <h2>Plan your Mealboard!</h2>
-
-      <NavLink exact activeClassName="Active" to="/mealboard">Mealboard</NavLink>
-
-      <hr />
-
       <Switch>
-        <Route path ="/mealboard" component={Mealboard} />
+        <Route path ="/Recipebox"><Recipebox /></Route>
+        <Route path ="/Recipepage"><Recipepage /></Route>
       </Switch>
     </div>
   </Router>

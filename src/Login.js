@@ -33,7 +33,7 @@ function Login() {
 
     return (
         <div>
-            <div className="User Info">
+            <div className="user-info">
                 <img src={userimage} />
                 <p>{username}</p>
                 <p>{useremail}</p>
