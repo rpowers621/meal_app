@@ -1,15 +1,16 @@
 import {React ,useState,} from 'react'
-import {useHistory } from 'react-router-dom';
+import {useHistory, ReactDOM} from 'react-router-dom';
 import './App.css' 
 
 function Recipebox() {
     
     const [searchType, setSearchType] = useState('');
-    const [searchCriteria, setSearchCriteria] = useState('');
-    const [suggestions, setSuggestions] = useState(["test"]); 
+    const [searchCriteria, setSearchCriteria] = useState(''); 
     const [meals, setMeals] = useState("");
     const [meal_ids, setMeal_ids] = useState("");
     const [recipeData, setRecipeData]= useState("");
+    const [day,setDay] = useState('');
+    
 
  
 
@@ -42,13 +43,10 @@ function Recipebox() {
           }).then((response) => response.json()).then((data) => {
             console.log(data);
 
-
-            setSuggestions(data);
-
             for(var [key , value] of Object.entries(data)){
                 setMeals([...meals, value]);
                 setMeal_ids([...meal_ids, key]);
-                setTimeout(()=> { console.log(meals)}, 1000);
+               
                 console.log(meals);
             }
          
@@ -58,15 +56,16 @@ function Recipebox() {
        
     } 
 
-   
-    function recipe_page(){
+    const history = useHistory();
+    function recipe_page(e){
+        console.log(e);
       
         fetch("/recipepage", {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify( {"id": meal_ids[0] }),
+            body: JSON.stringify( {"id": e }),
           }).then((response) => response.json()).then((data) => {
             console.log(data);
             setRecipeData(data);
@@ -81,6 +80,15 @@ function Recipebox() {
             state: {detail: recipeData}
         });
 
+    }
+
+    function addToBoard(e){
+        console.log(e);
+    }
+
+    function addToDay(e){
+        console.log(e);
+        //heroReactDOM.render(<p></p>)
     }
  
     return(
@@ -252,47 +260,88 @@ function Recipebox() {
                         <div className="suggestion-box">
                             <h3>Suggestion Box</h3>
                             <p> To view a Recipe please slect recipe and click Go to Recipe Page! </p>
-                       <button className="recipe-button"onClick={recipe_page}> {meals[0]}</button> 
-                       <button className="recipe-button"onClick={recipe_page}> {meals[1]}</button> 
-                       <button className="recipe-button"onClick={recipe_page}> {meals[2]}</button> 
-                       <button className="recipe-button"onClick={recipe_page}> {meals[3]}</button> 
-                       <button className="recipe-button"onClick={recipe_page}> {meals[4]}</button> 
-                    <button  onClick={route}>Go to Recipe page!</button>         
+                            <div>
+                                <input onChange={(e) => addToBoard(e.target.value) }type="checkbox" name="ingreds"
+                                        value="0"/>    
+                                <button className="recipe-button" value= {meal_ids[0] }onClick={ (e => recipe_page(e.target.value))}> {meals[0]}</button> 
+                            </div>
+                            <div>
+                                <input onChange={(e) => addToBoard(e.target.value) }type="checkbox" name="ingreds"
+                                        value="1"/>                 
+                                <button className="recipe-button" value= {meal_ids[1] }onClick={ (e => recipe_page(e.target.value))}> {meals[1]}</button> 
+                            </div>
+                            <div>
+                                <input onChange={(e) => addToBoard(e.target.value) }type="checkbox" name="ingreds"
+                                        value="2"/>  
+                                <button className="recipe-button" value= {meal_ids[2] }onClick={ (e => recipe_page(e.target.value))}> {meals[2]}</button> 
+                            </div>
+                            <div>
+                                <input onChange={(e) => addToBoard(e.target.value) }type="checkbox" name="ingreds"
+                                        value="3"/>  
+                                <button className="recipe-button" value= {meal_ids[3] }onClick={ (e => recipe_page(e.target.value))}> {meals[3]}</button> 
+                            </div>
+                            <div>
+                                <input onChange={(e) => addToBoard(e.target.value) }type="checkbox" name="ingreds"
+                                        value="4"/>  
+                                <button className="recipe-button" value= {meal_ids[4] }onClick={ (e => recipe_page(e.target.value))}> {meals[4]}</button> 
+                            </div>
+
+                            <div className="add-to-mb">
+                                        <select onChange={(e) => setDay(e.target.value)}  id="" name="" placeholder="Pick Day">
+                                            <option value="Monday">Monday</option>
+                                            <option value="Tuesday">Tuesday</option>
+                                            <option value="Wednesday">Wednesday</option>
+                                            <option value="Thursday">Thursday</option>
+                                            <option value="Friday">Friday</option>
+                                            <option value="Saturday">Saturday</option>
+                                            <option value="Sunday">Sunday</option>
+                                        </select>
+                                        <button onClick={(e) => addToDay(e.target.value)}>Add</button>
+                                    </div>
+                                
+                            <button  onClick={route}>Go to Recipe page!</button>         
                         </div>
                     </div>
                     <div className='col'>
                         <div className="monday">
                             <h3>Monday</h3>
+                            <div></div>
                         </div>
                     </div>
                     <div className='col'>
                         <div className="tuesday">
                             <h3>Tuesday</h3>
+                            <div></div>
                         </div>
                     </div>
                     <div className='col'>
                         <div className="wednesday">
                             <h3>Wednesday</h3>
+                            <div></div>
                         </div>
                     </div>
                     <div className='col'>
                         <div className="thursday">
                             <h3>Thursday</h3>
+                            <div></div>
                         </div>
                     </div>
                     <div className='col'>
                         <div className="friday">
                             <h3>Friday</h3>
+                            <div></div>
                         </div>
                     </div>
                     <div className='col'>
                         <div className="saturday">
                             <h3>Saturday</h3>
+                            <div></div>
                         </div>
                     </div>
                     <div className='col'>
                         <div className="sunday">
                             <h3>Sunday</h3>
+                            <div></div>
                         </div>
                      </div>      
                 </div>

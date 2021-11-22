@@ -119,6 +119,9 @@ body{
   min-width: 175px;
   max-width: 175px;
  }
+ .recipe-button{
+   width: 75%;
+ }
  #sub{
      margin-left: 6.5em;
  }

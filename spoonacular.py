@@ -99,7 +99,7 @@ def get_recipe_instructions(id):
     response = requests.get(url=BASE_URL + analyze_instructions, headers=HEADER)
     response_data = response.json()
 
-    instructions = []
+    instructions = {}
 
     length = len(response_data)
 

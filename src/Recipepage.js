@@ -1,6 +1,7 @@
 import './App.css'
 import { React, useEffect, useState } from 'react'
 import { useLocation } from 'react-router';
+import {useHistory } from 'react-router-dom';
 
 
 function Recipepage() {
@@ -33,11 +34,22 @@ function Recipepage() {
         setInstruction(location.state.detail.instruction);
     }, [location]);
 
+
+    const history = useHistory();
+    function route(){
+        let path = '/Recipebox';
+        history.push(
+           { pathname: path,
+             state: {detail: location.state.detail}
+         });
+ 
+     }
   
 
     return (
         <div>
-            
+            <button onClick={route}> Back </button> 
+
             <div className="row" style={{backgroundImage: "url(" + {recipeImg} + ")",backgroundPosition: 'center',backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat'}}>
                 <div className="col" id="left-side">

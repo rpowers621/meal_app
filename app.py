@@ -1,10 +1,18 @@
 import json
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session
 from dotenv import find_dotenv, load_dotenv
 import flask
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_login import (
+    UserMixin,
+    LoginManager,
+    login_user,
+    current_user,
+    login_required,
+    logout_user,
+)
+from flask_session import Session
 
 from spoonacular import *
 
@@ -82,37 +90,58 @@ def getSuggestions():
     return flask.jsonify(recipe_ids)
 
 
-@app.route("/recipepage")
+@bp.route("/recipepage", methods=["POST"])
 def recipe_page():
 
-    recipe_id = 782601
+    recipe_id = flask.request.json.get("id")
+    print("yes")
+    if recipe_id:
 
-    (
-        recipe_img,
-        recipe_title,
-        servings,
-        ready_in_mins,
-        source_url,
-        dish_types,
-        ingredients,
-    ) = get_recipe_info(recipe_id)
+        (
+            recipe_img,
+            recipe_title,
+            servings,
+            ready_in_mins,
+            source_url,
+            dish_types,
+            ingredients,
+        ) = get_recipe_info(recipe_id)
 
-    get_nutritional_breakdown_png(recipe_id)
+        instructions = get_recipe_instructions(recipe_id)
 
-    instructions = get_recipe_instructions(recipe_id)
+    else:
+        (
+            recipe_img,
+            recipe_title,
+            servings,
+            ready_in_mins,
+            source_url,
+            dish_types,
+            ingredients,
+            instructions,
+        ) = (
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+        )
+    DATA = {
+        "recipe_img": recipe_img,
+        "recipe_title": recipe_title,
+        "servings": servings,
+        "ready_in_mins": ready_in_mins,
+        "source_url": source_url,
+        "dish_types": dish_types,
+        "ingredients": ingredients,
+        "instructions": instructions,
+    }
+    data = json.dumps(DATA)
 
-    return render_template(
-        "recipepage.html",
-        recipe_img=recipe_img,
-        recipe_title=recipe_title,
-        servings=servings,
-        ready_in_mins=ready_in_mins,
-        source_url=source_url,
-        dish_types=dish_types,
-        length=len(dish_types),
-        ingredients=ingredients,
-        instructions=instructions,
-    )
+    return data
 
 
 app.register_blueprint(bp)
