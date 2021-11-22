@@ -45,17 +45,20 @@ function Recipebox() {
 
             setSuggestions(data);
 
-            for(const [key , value] of Object.entries(data)){
+            for(var [key , value] of Object.entries(data)){
                 setMeals([...meals, value]);
                 setMeal_ids([...meal_ids, key]);
+                setTimeout(()=> { console.log(meals)}, 1000);
+                console.log(meals);
             }
-          
+         
 
         });
     return; 
        
     } 
-    const history = useHistory();
+
+   
     function recipe_page(){
       
         fetch("/recipepage", {

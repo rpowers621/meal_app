@@ -103,13 +103,21 @@ body{
      margin-left: 1em;
      font-size: 9px;
  }
- .result-box{
+.suggestion-box{
      height:100%;
      background:radial-gradient( #CAF845 50%, #F7DC6F );
      border-style: solid;
      border-color: darkblue;
      min-width: 175px;
      max-width: 175px;
+ }
+ .monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday{
+  height:100%;
+  background:radial-gradient( #CAF845 50%, #F7DC6F );
+  border-style: solid;
+  border-color: darkblue;
+  min-width: 175px;
+  max-width: 175px;
  }
  #sub{
      margin-left: 6.5em;

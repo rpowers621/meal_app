@@ -1,21 +1,24 @@
+import { Link} from 'react-router-dom';
+
 const Navbar = () => {
   return (
     <nav className="navbar">
       <h1>Plan your Mealboard!</h1>
       <div className="links">
-        <a href="/" style={{
+        <Link to="/" style={{
           color: "white",
           backgroundColor: '#f1356d',
           borderRadius: '8px'
-        }}>Home</a>
-        <a href="/Recipebox" style={{
+        }}>Home</Link>
+        <Link to="./Recipebox" 
+          style={{
           color: "white",
           backgroundColor: '#f1356d',
           borderRadius: '8px'
-        }}>Meal Board</a>
+        }}>Meal Board</Link>
       </div>
     </nav>
   )
 }
 
-export default Navbar;
+export default Navbar

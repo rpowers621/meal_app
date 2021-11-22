@@ -37,6 +37,7 @@ function Recipepage() {
 
     return (
         <div>
+            
             <div className="row" style={{backgroundImage: "url(" + {recipeImg} + ")",backgroundPosition: 'center',backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat'}}>
                 <div className="col" id="left-side">
