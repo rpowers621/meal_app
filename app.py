@@ -12,7 +12,7 @@ from flask_login import (
     login_required,
     logout_user,
 )
-import numpy as np
+
 from spoonacular import *
 
 
