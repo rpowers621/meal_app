@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
+const clientId = process.env.REACT_APP_CLIENTID;
 
-const clientId = process.env.REACT_APP_clientId;
 
 function Login() {
+   
 
-    const [username, setusername] = useState();
-    const [useremail, setuseremail] = useState();
-    const [userimage, setuserimage] = useState();
+    const [username, setusername] = useState("");
+    const [useremail, setuseremail] = useState("");
+    const [userimage, setuserimage] = useState("");
 
     const [showloginButton, setShowloginButton] = useState(true);
     const [showlogoutButton, setShowlogoutButton] = useState(false);
@@ -18,6 +19,8 @@ function Login() {
         setusername(res.profileObj.name);
         setuseremail(res.profileObj.email);
         setuserimage(res.profileObj.imageUrl);
+        fetchEmail(res.profileObj.email);
+        
     };
 
     const onLoginFailure = (res) => {
@@ -31,10 +34,22 @@ function Login() {
         setShowlogoutButton(false);
     };
 
+    function fetchEmail(email){
+
+        fetch("/", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify( {'email': email}),
+          });
+   
+    }
+
     return (
         <div>
             <div className="user-info">
-                <img src={userimage} />
+                <img src={userimage} atl="" />
                 <p>{username}</p>
                 <p>{useremail}</p>
             </div>

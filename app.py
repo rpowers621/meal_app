@@ -16,15 +16,18 @@ from flask_session import Session
 
 from spoonacular import *
 
-app = Flask(__name__)
 
-app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+load_dotenv(find_dotenv())
+
 
 app = flask.Flask(__name__, static_folder="./build/static")
 bp = flask.Blueprint("bp", __name__, template_folder="./build")
 
-load_dotenv(find_dotenv())
+
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.secret_key = os.getenv("SECRET_KEY")
+
 
 url = os.getenv("DATABASE_URL")
 if url and url.startswith("postgres://"):
@@ -32,7 +35,13 @@ if url and url.startswith("postgres://"):
 
 app.config["SQLALCHEMY_DATABASE_URI"] = url
 
+Session(app)
 db = SQLAlchemy(app)
+login_manager = LoginManager()
+
+login_manager.login_view = "login"
+login_manager.init_app(app)
+
 
 user_recipes = db.Table(
     "user_recipes",
@@ -60,8 +69,32 @@ class Recipe(db.Model):
 db.create_all()
 
 
+@login_manager.user_loader
+def loadUser(user_name):
+    return User.query.get(user_name)
+
+
 @app.route("/")
 def main():
+
+    return flask.redirect(flask.url_for("bp.index"))
+
+
+@app.route("/", methods=["POST"])
+def login():
+    print("in login test2")
+    email = flask.request.json.get("email")
+    print(email)
+    user = User.query.filter_by(email=email).first()
+    if user:
+        print("already user")
+        pass
+    else:
+        user = User(email=email)
+        db.session.add(user)
+        db.session.commit()
+        print("user added")
+
     return flask.redirect(flask.url_for("bp.index"))
 
 
@@ -149,6 +182,6 @@ app.register_blueprint(bp)
 if __name__ == "__main__":
     app.run(
         # host=os.getenv("IP", "0.0.0.0"),
-        port=int(os.getenv("PORT", 5000)),
+        port=int(os.getenv("PORT", 3000)),
         debug=True,
     )
