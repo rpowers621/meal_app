@@ -30,4 +30,8 @@ class RecipeTests(unittest.TestCase):
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     unittest.main
+=======
+    unittest.main
+>>>>>>> mealboard_cont

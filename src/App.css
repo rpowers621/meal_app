@@ -56,8 +56,11 @@ body{
  }
  .row{
      display: flex;
+<<<<<<< HEAD
      padding:0;
      color: black;
+=======
+>>>>>>> mealboard_cont
  
  }
  .col{
@@ -100,6 +103,7 @@ body{
      border-color: darkblue;
      min-width: 230px;
      max-width: 230px;
+<<<<<<< HEAD
      margin: 0;
  }
  .suggestion-box{
@@ -119,12 +123,18 @@ body{
   min-width: 175px;
   max-width: 175px;
   margin:0;
+=======
+>>>>>>> mealboard_cont
  }
  .input-ingreds{
      margin-left: 1em;
      font-size: 9px;
  }
+<<<<<<< HEAD
  .result-box{
+=======
+.suggestion-box{
+>>>>>>> mealboard_cont
      height:100%;
      background:radial-gradient( #CAF845 50%, #F7DC6F );
      border-style: solid;
@@ -132,6 +142,20 @@ body{
      min-width: 175px;
      max-width: 175px;
  }
+<<<<<<< HEAD
+=======
+ .monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday{
+  height:100%;
+  background:radial-gradient( #CAF845 50%, #F7DC6F );
+  border-style: solid;
+  border-color: darkblue;
+  min-width: 175px;
+  max-width: 175px;
+ }
+ .recipe-button{
+   width: 75%;
+ }
+>>>>>>> mealboard_cont
  #sub{
      margin-left: 6.5em;
  }
@@ -141,7 +165,10 @@ body{
  .label-header{
      font-size: 12px;
  }
+<<<<<<< HEAD
  
 .recipe-button:focus{
   background-color: red;
 }
+=======
+>>>>>>> mealboard_cont
