@@ -1,10 +1,7 @@
 import './App.css'
 import { React, useEffect, useState } from 'react'
 import { useLocation } from 'react-router';
-<<<<<<< HEAD
-=======
 import {useHistory } from 'react-router-dom';
->>>>>>> mealboard_cont
 
 
 function Recipepage() {
@@ -37,8 +34,6 @@ function Recipepage() {
         setInstruction(location.state.detail.instruction);
     }, [location]);
 
-<<<<<<< HEAD
-=======
 
     const history = useHistory();
     function route(){
@@ -49,16 +44,12 @@ function Recipepage() {
          });
  
      }
->>>>>>> mealboard_cont
   
 
     return (
         <div>
-<<<<<<< HEAD
-=======
             <button onClick={route}> Back </button> 
 
->>>>>>> mealboard_cont
             <div className="row" style={{backgroundImage: "url(" + {recipeImg} + ")",backgroundPosition: 'center',backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat'}}>
                 <div className="col" id="left-side">
