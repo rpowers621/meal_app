@@ -11,7 +11,7 @@ from flask_login import (
     current_user,
     login_required,
     logout_user,
-
+)
 from spoonacular import *
 
 
