@@ -71,6 +71,10 @@ function Recipebox() {
 
     function add(e) {
         setSearchCriteria([...searchCriteria, e]);
+        setI(false);
+        setC(false);
+        setD(false);
+        setCU(false);
     }
 
     function refresh() {
@@ -80,7 +84,7 @@ function Recipebox() {
         setMeals('');
 
     }
-
+ 
     function send() {
 
         fetch("/getsuggestions", {
@@ -93,6 +97,11 @@ function Recipebox() {
             console.log(data);
             setMeals([...meals,data.key]);
             setMeal_ids([...meal_ids,data.value]);
+
+            setI(false);
+            setC(false);
+            setD(false);
+            setCU(false);
 
         });
         return;
@@ -203,7 +212,7 @@ function Recipebox() {
                         <h1>Search For Recipes</h1>
 
                         <div className="by_ingreds">
-                            <input onClick={() => {setSearchType('ingredients'); setI(true)}} defaultChecked={iSelect} type="checkbox" name="ingreds"
+                            <input onClick={() => {setSearchType('ingredients'); setI(true);}} checked={iSelect} type="checkbox" name="ingreds"
                                 value="Search by Ingredients" />
                             <label id="ingredients" className="label-header" htmlFor="ingreds">Search by Ingredients</label>
                             <br />
@@ -218,22 +227,22 @@ function Recipebox() {
                         </div>
 
                         <div className="by_calories">
-                            <input onChange={() => setSearchType('calories')} defaultchecked={cSelect} type="checkbox" name="calories"
+                            <input onChange={() => {setSearchType('calories'); setC(true);}} checked={cSelect} type="checkbox" name="calories"
                                 value="Search by Calories" />
                             <label className="label-header" htmlFor="calories">Search by Calories</label>
                             <br />
                             <label htmlFor="">Enter Calories Amount</label>
                             <input onChange={(e) => add(e.target.value)} id="calories" type="text" />
-                            <button onClick={send}>Add </button>
+                            <button onClick={send}>Add Calories</button>
                         </div>
 
                         <div className="by_diet">
-                            <input onChange={() => setSearchType('diet')} defaultchecked={dSelect} type="checkbox" name="diet"
+                            <input onClick={() => {setSearchType('diet'); setD(true);}} checked={dSelect} type="checkbox" name="diet"
                                 value="Search by Diet" />
                             <label className="label-header" htmlFor="diet">Search by Diet</label>
                             <br />
                             <div className="drop-diet">
-                                <select onChange={(e) => add(e.target.value)} id="diet" name="" placeholder=" ">
+                                <select onClick={(e) => add(e.target.value)} id="diet" name="" placeholder=" ">
                                     <option value="Gluten Free">Gluten Free</option>
                                     <option value="Ketogenic">Ketogenic</option>
                                     <option value="Vegetarian">Vegetarian</option>
@@ -251,7 +260,7 @@ function Recipebox() {
                         </div>
 
                         <div className="by_cuisine">
-                            <input onChange={() => setSearchType('cuisine')} defaultchecked={cuSelect} type="checkbox" name="cuisine"
+                            <input onChange={() => {setSearchType('cuisine'); setCU(true);}} checked={cuSelect} type="checkbox" name="cuisine"
                                 value="Search by Cuisine" />
                             <label className="label-header" htmlFor="cuisine">Search by Cuisine</label>
                             <br />
