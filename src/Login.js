@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import UserProfile from './UserProfile';
 const clientId = process.env.REACT_APP_CLIENTID;
-
 
 function Login() {
    
@@ -19,6 +19,8 @@ function Login() {
         setusername(res.profileObj.name);
         setuseremail(res.profileObj.email);
         setuserimage(res.profileObj.imageUrl);
+        UserProfile.setEmail(res.profileObj.email);
+        UserProfile.setName(res.profileObj.name);
         fetchEmail(res.profileObj.email);
         
     };

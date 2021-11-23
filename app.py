@@ -12,7 +12,6 @@ from flask_login import (
     login_required,
     logout_user,
 )
-from flask_session import Session
 
 from spoonacular import *
 
@@ -35,7 +34,7 @@ if url and url.startswith("postgres://"):
 
 app.config["SQLALCHEMY_DATABASE_URI"] = url
 
-Session(app)
+
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 
@@ -43,27 +42,24 @@ login_manager.login_view = "login"
 login_manager.init_app(app)
 
 
-user_recipes = db.Table(
-    "user_recipes",
-    db.Column("user_id", db.Integer, db.ForeignKey("user.user_id")),
-    db.Column("recipe_id", db.Integer, db.ForeignKey("recipe.recipe_id")),
-    db.Column("day", db.Integer),
-)
-
-
-class User(db.Model):
+class User(db.Model, UserMixin):
     user_id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    user_recipes = db.relationship(
-        "Recipe",
-        secondary="user_recipes",
-        backref=db.backref("user_recipes", lazy="dynamic"),
-    )
+
+    def __repr__(self):
+
+        return f"<User {self.user_id}>"
+
+    def get_id(self):
+        return self.user_id
 
 
-class Recipe(db.Model):
+class RecipeUser(db.Model):
+
     recipe_id = db.Column(db.Integer, primary_key=True)
     recipe_name = db.Column(db.String(120), nullable=False)
+    user_id = db.Column(db.Integer)
+    day = db.Column(db.Integer)
 
 
 db.create_all()
@@ -76,7 +72,6 @@ def loadUser(user_name):
 
 @app.route("/")
 def main():
-
     return flask.redirect(flask.url_for("bp.index"))
 
 
@@ -86,13 +81,17 @@ def login():
     email = flask.request.json.get("email")
     print(email)
     user = User.query.filter_by(email=email).first()
+
     if user:
         print("already user")
-        pass
+        login_user(user)
+
+        return flask.redirect(flask.url_for("bp.index"))
     else:
         user = User(email=email)
         db.session.add(user)
         db.session.commit()
+        login_user(user)
         print("user added")
 
     return flask.redirect(flask.url_for("bp.index"))
@@ -103,8 +102,23 @@ def index():
     return flask.render_template("index.html")
 
 
+@bp.route("/connectDB", methods=["POST"])
+def connect():
+    user = current_user.user_id
+    recipes = RecipeUser.query.filter_by(user_id=user).all()
+    rep_ids = [a.recipe_id for a in recipes]
+    has_artists_saved = len(rep_ids) > 0
+    if has_artists_saved:
+        print(recipes)
+    else:
+        print("no recipes")
+
+    return flask.jsonify("success")
+
+
 @bp.route("/getsuggestions", methods=["POST"])
 def getSuggestions():
+
     searchType = flask.request.json.get("searchType")
     searchCritria = flask.request.json.get("searchCritria")
     if searchType == "ingredients":
@@ -115,10 +129,6 @@ def getSuggestions():
         recipe_ids = get_recipe_by_diet(searchCritria)
     if searchType == "cuisine":
         recipe_ids = get_recipe_by_cuisine(searchCritria)
-    print(searchType)
-    print(searchCritria)
-    ids = recipe_ids.keys()
-    titles = recipe_ids.values()
 
     return flask.jsonify(recipe_ids)
 
@@ -127,7 +137,7 @@ def getSuggestions():
 def recipe_page():
 
     recipe_id = flask.request.json.get("id")
-    print("yes")
+
     if recipe_id:
 
         (

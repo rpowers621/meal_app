@@ -1,6 +1,7 @@
-import {React ,useState,} from 'react'
-import {useHistory, ReactDOM} from 'react-router-dom';
+import {React ,useState,useEffect} from 'react'
+import {useHistory, } from 'react-router-dom';
 import './App.css' 
+import UserProfile from './UserProfile';
 
 function Recipebox() {
     
@@ -11,11 +12,21 @@ function Recipebox() {
     const [recipeData, setRecipeData]= useState("");
     const [day,setDay] = useState('');
     
+    console.log(UserProfile.getName());
 
- 
+    useEffect(() => {
+          
+        fetch("/connectDB", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          }).then((response) => response.json()).then((data) => {
+            console.log(data);
+         
+        });
+    }, [])
 
-
-  
 
     function add(e){
         setSearchCriteria([...searchCriteria, e]);
@@ -28,9 +39,6 @@ function Recipebox() {
         setMeals('');
         
     }
-
-    
-
 
     function send(){
         
@@ -92,8 +100,9 @@ function Recipebox() {
     }
  
     return(
-       
+        
             <div className="box">
+                <h1> {UserProfile.getName()}&apos;s Mealboard</h1>
                 <div className="row">
                 
                     <div className="col">
