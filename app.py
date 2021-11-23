@@ -175,7 +175,7 @@ def connect():
         {
             "mon_ids": mon_ids,
             "mon_name": mon_name,
-            "tues_id": tues_ids,
+            "tues_ids": tues_ids,
             "tues_name": tues_name,
             "wed_ids": wed_ids,
             "wed_name": wed_name,
@@ -189,6 +189,52 @@ def connect():
             "sun_name": sun_name,
         }
     )
+
+
+@bp.route("/update", methods=["POST"])
+def update():
+    print("here")
+    user = current_user.user_id
+    update = flask.request.json.get("update")
+    title = flask.request.json.get("title")
+
+    id = ""
+    day = ""
+    for key in update:
+        if update[key] == "1":
+            id = key
+            day = update[key]
+            print(key)
+        if update[key] == "2":
+            id = key
+            day = update[key]
+            print(key)
+        if update[key] == "3":
+            id = key
+            day = update[key]
+            print(key)
+        if update[key] == "4":
+            id = key
+            day = update[key]
+            print(key)
+        if update[key] == "5":
+            id = key
+            day = update[key]
+            print(key)
+        if update[key] == "6":
+            id = key
+            day = update[key]
+            print(key)
+        if update[key] == "7":
+            id = key
+            day = update[key]
+            print(key)
+
+        db.session.add(
+            RecipeUser(recipe_id=id, recipe_name=title, user_id=user, day=day)
+        )
+        db.session.commit()
+    return flask.jsonify("success")
 
 
 @bp.route("/getsuggestions", methods=["POST"])
