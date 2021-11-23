@@ -12,7 +12,7 @@ from flask_login import (
     login_required,
     logout_user,
 )
-
+import numpy as np
 from spoonacular import *
 
 
@@ -103,15 +103,92 @@ def index():
 @bp.route("/connectDB", methods=["POST"])
 def connect():
     user = current_user.user_id
+
     recipes = RecipeUser.query.filter_by(user_id=user).all()
-    rep_ids = [a.recipe_id for a in recipes]
-    has_artists_saved = len(rep_ids) > 0
-    if has_artists_saved:
+
+    has_recipes_saved = len(recipes) > 0
+
+    mon = RecipeUser.query.filter_by(user_id=user, day=1)
+    mon_ids = [a.recipe_id for a in mon]
+    # mon_ids = np.array(m_rec_ids)
+    mon_name = [c.recipe_name for c in mon]
+    # mon_name = np.array(m_rec_name)
+
+    tues = RecipeUser.query.filter_by(user_id=user, day=2)
+    tues_ids = [a.recipe_id for a in tues]
+    # tues_ids = np.array(t_rec_ids)
+    tues_name = [c.recipe_name for c in tues]
+    # tues_name = np.array(t_rec_name)
+
+    wed = RecipeUser.query.filter_by(user_id=user, day=3)
+    wed_ids = [a.recipe_id for a in wed]
+    # wed_ids = np.array(w_rec_ids)
+    wed_name = [c.recipe_name for c in wed]
+    # wed_name = np.array(w_rec_name)
+
+    thur = RecipeUser.query.filter_by(user_id=user, day=4)
+    thur_ids = [a.recipe_id for a in thur]
+    # thur_ids = np.array(th_rec_ids)
+    thur_name = [c.recipe_name for c in thur]
+    # thur_name = np.array(th_rec_name)
+
+    fri = RecipeUser.query.filter_by(user_id=user, day=5)
+    fri_ids = [a.recipe_id for a in fri]
+    # fri_ids = np.array(f_rec_ids)
+    fri_name = [c.recipe_name for c in fri]
+    # fri_name = np.array(f_rec_name)
+
+    sat = RecipeUser.query.filter_by(user_id=user, day=6)
+    sat_ids = [a.recipe_id for a in sat]
+    # sat_ids = np.array(s_rec_ids)
+    sat_name = [c.recipe_name for c in sat]
+    # sat_name = np.array(s_rec_name)
+
+    sun = RecipeUser.query.filter_by(user_id=user, day=7)
+    sun_ids = [a.recipe_id for a in sun]
+    # sun_ids = np.array(sn_rec_ids)
+    sun_name = [c.recipe_name for c in sun]
+    # sun_name = np.array(sn_rec_name)
+
+    if has_recipes_saved:
         print(recipes)
+        pass
     else:
         print("no recipes")
 
-    return flask.jsonify("success")
+        mon_name = ["No meals saved for Monday"]
+        mon_ids = [""]
+        tues_name = ["No meals saved for Tuesday"]
+        tues_ids = [""]
+        wed_name = ["No meals saved for Wednesday"]
+        wed_ids = [""]
+        thur_name = ["No meals saved for Thursday"]
+        thur_ids = [""]
+        fri_name = ["No meals saved for Friday"]
+        fri_ids = [""]
+        sat_name = ["No meals saved for Saturday"]
+        sat_ids = [""]
+        sun_name = ["No meals saved for Sunday"]
+        sun_ids = [""]
+
+    return flask.jsonify(
+        {
+            "mon_ids": mon_ids,
+            "mon_name": mon_name,
+            "tues_id": tues_ids,
+            "tues_name": tues_name,
+            "wed_ids": wed_ids,
+            "wed_name": wed_name,
+            "thur_ids": thur_ids,
+            "thur_name": thur_name,
+            "fri_ids": fri_ids,
+            "fri_name": fri_name,
+            "sat_ids": sat_ids,
+            "sat_name": sat_name,
+            "sun_ids": sun_ids,
+            "sun_name": sun_name,
+        }
+    )
 
 
 @bp.route("/getsuggestions", methods=["POST"])
