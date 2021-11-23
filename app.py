@@ -250,7 +250,10 @@ def getSuggestions():
     if searchType == "cuisine":
         recipe_ids = get_recipe_by_cuisine(searchCritria)
 
-    return flask.jsonify(recipe_ids)
+    key = list(recipe_ids.values())
+    value = list(recipe_ids.keys())
+
+    return flask.jsonify({"key": key, "value": value})
 
 
 @bp.route("/recipepage", methods=["POST"])
@@ -310,6 +313,5 @@ def recipe_page():
 app.register_blueprint(bp)
 
 if __name__ == "__main__":
-    app.run(
-        host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)), debug=True
-    )
+    app.run(port=int(os.getenv("PORT", 3000)), debug=True)
+# host=os.getenv("IP", "0.0.0.0"),

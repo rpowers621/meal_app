@@ -10,7 +10,7 @@ BASE_URL = "https://api.spoonacular.com/"
 
 HEADER = {"Content-Type": "application/json"}
 # this is the number of recipes returned
-NUM_RECIPES = 5
+NUM_RECIPES = 1
 
 SIZE = "100x100"
 

@@ -36,6 +36,7 @@
 
 .g-signin{
   position: absolute;
+  
   top: 8%;
   right: 5%;
   margin-top: -50px;
@@ -44,6 +45,7 @@
 
 .user-info {
   position: absolute;
+  flex-direction: row;
   top: 150%;
   right: -70%;
 }
