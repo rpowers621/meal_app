@@ -30,6 +30,16 @@ function Recipebox() {
     const [update, setUpdate] = useState({});
     const [titles, setTitles] = useState({});
 
+    const [iSelect, setI] = useState(false);
+    const [cSelect, setC] = useState(false);
+    const [dSelect, setD] = useState(false);
+    const [cuSelect, setCU] = useState(false);
+
+    const [active, setActive] = useState();
+
+    const [cal, setCal]= useState("");
+    const [ingred, setIngred] = useState("");
+
     
 
     useEffect(() => {
@@ -63,17 +73,27 @@ function Recipebox() {
     
 
     function add(e) {
-        setSearchCriteria([...searchCriteria, e]);
+        console.log(e);
+        if( e !== ""){
+            setSearchCriteria([e]);
+        }
+       
+        setI(false);
+        setC(false);
+        setD(false);
+        setCU(false);
+        setCal("");
+        setIngred("");
     }
 
     function refresh() {
         setSearchCriteria('');
         setSearchType('');
-        setMeal_ids('');
-        setMeals('');
+        setMeal_ids(['']);
+        setMeals(['']);
 
     }
-
+ 
     function send() {
 
         fetch("/getsuggestions", {
@@ -84,14 +104,13 @@ function Recipebox() {
             body: JSON.stringify({ 'searchCritria': searchCriteria, "searchType": searchType }),
         }).then((response) => response.json()).then((data) => {
             console.log(data);
+            setMeals([...meals,data.key]);
+            setMeal_ids([...meal_ids,data.value]);
 
-            for (var [key, value] of Object.entries(data)) {
-                setMeals([...meals, value]);
-                setMeal_ids([...meal_ids, key]);
-
-                console.log(meals);
-            }
-
+            setI(false);
+            setC(false);
+            setD(false);
+            setCU(false);
 
         });
         return;
@@ -116,7 +135,7 @@ function Recipebox() {
     }
 
     function route() {
-        setTimeout(route, 2000);
+        
         let path = '/Recipepage';
 
         history.push(
@@ -157,39 +176,49 @@ function Recipebox() {
     }
 
 
+    var sug_box = []
+    for(var [index, value]of meals.entries()){
+        sug_box.push( <div>
+            <input onChange={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
+                value="1" />
+            <button style={active === index+1 ? {backgroundColor: 'red' }: {}}className="recipe-button" value={meal_ids[index+1]} onClick={(e) => {recipe_page(e.target.value); setActive(1)}}> {meals[index+1]}</button>
+        </div>)
+    }
+
+
     const mon_items = [];
     for(const [index,value]of mon.entries()){
-        mon_items.push(<button value={monId[index]} onClick={(e)=> {recipe_page(e.target.value);setTimeout(route, 2000); route() }}>{value}</button>)
+        mon_items.push(<button className="sug-but" style={active === index+"m" ? {backgroundColor: 'red' }: {}} value={monId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"m");}}>{value}</button>)
     }
 
     const tues_items = [];
     for(const [index,value]of tues.entries()){
-        tues_items.push(<button value={tuesId[index]} onClick={(e => recipe_page(e.target.value))}>{value}</button>)
+        tues_items.push(<button className="sug-but" style={active === index+"t" ? {backgroundColor: 'red' }: {}} value={tuesId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"t");}}>{value}</button>)
     }
 
     const wed_items = [];
     for(const [index,value]of wed.entries()){
-        wed_items.push(<button value={wedId[index]} onClick={(e => recipe_page(e.target.value))}>{value}</button>)
+        wed_items.push(<button className="sug-but" style={active === index+"w" ? {backgroundColor: 'red' }: {}} value={wedId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"w");}}>{value}</button>)
     }
 
     const thur_items = [];
     for(const [index,value]of thur.entries()){
-        thur_items.push(<button value={thurId[index]} onClick={(e => recipe_page(e.target.value))}>{value}</button>)
+        thur_items.push(<button  className="sug-but"style={active === index+"th" ? {backgroundColor: 'red' }: {}} value={thurId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"th");}}>{value}</button>)
     }
 
     const fri_items = [];
     for(const [index,value]of fri.entries()){
-        fri_items.push(<button value={friId[index]} onClick={(e => recipe_page(e.target.value))}>{value}</button>)
+        fri_items.push(<button className="sug-but" style={active === index+"f" ? {backgroundColor: 'red' }: {}} value={friId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"f");}}>{value}</button>)
     }
 
     const sat_items = [];
     for(const [index,value]of sat.entries()){
-        sat_items.push(<button value={satId[index]} onClick={(e => recipe_page(e.target.value))}>{value}</button>)
+        sat_items.push(<button  className="sug-but" style={active === index+"s" ? {backgroundColor: 'red' }: {}} value={satId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"s");}}>{value}</button>)
     }
 
     const sun_items = [];
     for(const [index,value]of sun.entries()){
-        sun_items.push(<button value={sunId[index]} onClick={(e => recipe_page(e.target.value))}>{value}</button>)
+        sun_items.push(<button className="sug-but" style={active === index+"sn" ? {backgroundColor: 'red' }: {}} value={sunId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"sn");}}>{value}</button>)
     }
     return (
 
@@ -202,14 +231,13 @@ function Recipebox() {
                         <h1>Search For Recipes</h1>
 
                         <div className="by_ingreds">
-                            <input onChange={() => setSearchType('ingredients')} type="checkbox" name="ingreds"
+                            <input onClick={() => {setSearchType('ingredients'); setI(true);}} checked={iSelect} type="checkbox" name="ingreds"
                                 value="Search by Ingredients" />
                             <label id="ingredients" className="label-header" htmlFor="ingreds">Search by Ingredients</label>
-                            <br />
-                            
-                            <br />
+                            <br></br>
                             <label htmlFor="">Enter Ingredient</label>
-                            <input data-testid="Enter_Ingredient" onChange={(e) => add(e.target.value)} id="ingreds" type="text" />
+                            <input data-testid="Enter_Ingredient" value={ingred} on onChangeCapture={(e) => {add(e.target.value); setIngred(e.target.value);}} id="ingreds" type="text" />
+                            
                             <button onClick={send}>Add Ingredients</button>
 
 
@@ -217,17 +245,17 @@ function Recipebox() {
                         </div>
 
                         <div className="by_calories">
-                            <input onChange={() => setSearchType('calories')} type="checkbox" name="calories"
+                            <input onInput={() => {setSearchType('calories'); setC(true);}} checked={cSelect} type="checkbox" name="calories"
                                 value="Search by Calories" />
                             <label className="label-header" htmlFor="calories">Search by Calories</label>
                             <br />
                             <label htmlFor="">Enter Calories Amount</label>
-                            <input onChange={(e) => add(e.target.value)} id="calories" type="text" />
-                            <button onClick={send}>Add </button>
+                            <input value={cal} onChange={(e) => {add(e.target.value); setCal(e.target.value);}} id="calories" type="text" />
+                            <button onClick={send}>Add Calories</button>
                         </div>
 
                         <div className="by_diet">
-                            <input onChange={() => setSearchType('diet')} type="checkbox" name="diet"
+                            <input onClick={() => {setSearchType('diet'); setD(true);}} checked={dSelect} type="checkbox" name="diet"
                                 value="Search by Diet" />
                             <label className="label-header" htmlFor="diet">Search by Diet</label>
                             <br />
@@ -250,7 +278,7 @@ function Recipebox() {
                         </div>
 
                         <div className="by_cuisine">
-                            <input onChange={() => setSearchType('cuisine')} type="checkbox" name="cuisine"
+                            <input onClick={() => {setSearchType('cuisine'); setCU(true);}} checked={cuSelect} type="checkbox" name="cuisine"
                                 value="Search by Cuisine" />
                             <label className="label-header" htmlFor="cuisine">Search by Cuisine</label>
                             <br />
@@ -280,7 +308,7 @@ function Recipebox() {
                                     <option value="Nordic">Nordic</option>
                                     <option value="Southern">Southern</option>
                                     <option value="Spanish">Spanish</option>
-                                    <option value="Thai"></option>
+                                    <option value="Thai">Thai</option>
                                     <option value="Vietnamese">Vietnamese</option>
                                 </select>
                             </div>
@@ -312,31 +340,7 @@ function Recipebox() {
                             
                         </div>
 
-                        <div>
-                            <input onClick={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
-                                value="0" />
-                            <button className="recipe-button" value={meal_ids[0]} onClick={(e => recipe_page(e.target.value))}> {meals[0]}</button>
-                        </div>
-                        <div>
-                            <input onClick={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
-                                value="1" />
-                            <button className="recipe-button" value={meal_ids[1]} onClick={(e => recipe_page(e.target.value))}> {meals[1]}</button>
-                        </div>
-                        <div>
-                            <input onClick={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
-                                value="2" />
-                            <button className="recipe-button" value={meal_ids[2]} onClick={(e => recipe_page(e.target.value))}> {meals[2]}</button>
-                        </div>
-                        <div>
-                            <input onClick={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
-                                value="3" />
-                            <button className="recipe-button" value={meal_ids[3]} onClick={(e => recipe_page(e.target.value))}> {meals[3]}</button>
-                        </div>
-                        <div>
-                            <input onClick={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
-                                value="4" />
-                            <button className="recipe-button" value={meal_ids[4]} onClick={(e => recipe_page(e.target.value))}> {meals[4]}</button>
-                        </div>
+                        {sug_box}
 
                        
 
@@ -348,57 +352,109 @@ function Recipebox() {
                 <div className='col'>
                     <div className="monday">
                         <h3>Monday</h3>
-                        <div>
-                        
-                        {mon_items}
+                        <div className="row">
+                            <div className="row-top">
+                                {mon_items}
+                            </div>
+                        </div>
+                        <div className='row'>
+                            <div className="row-bottom">
+                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className='col'>
                     <div className="tuesday">
                         <h3>Tuesday</h3>
-                        <div>
-                           {tues_items}
+                        <div className="row">
+                            <div className="row-top">
+                            {tues_items}
+                            </div>
                         </div>
+                        <div className='row'>
+                            <div className="row-bottom">
+                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
                 <div className='col'>
                     <div className="wednesday">
                         <h3>Wednesday</h3>
-                        <div>
+                        <div className="row">
+                            <div className="row-top">
                             {wed_items}
+                            </div>
                         </div>
+                        <div className='row'>
+                            <div className="row-bottom">
+                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
                 <div className='col'>
                     <div className="thursday">
                         <h3>Thursday</h3>
-                        <div>
-                           {thur_items}
+                        <div className="row">
+                            <div className="row-top">
+                            {thur_items}
+                            </div>
                         </div>
+                        <div className='row'>
+                            <div className="row-bottom">
+                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
+                            </div>
+                        </div>
+                    
                     </div>
                 </div>
                 <div className='col'>
                     <div className="friday">
                         <h3>Friday</h3>
-                        <div>
-                           {fri_items}
+                        <div className="row">
+                            <div className="row-top">
+                            {fri_items}
+                            </div>
                         </div>
+                        <div className='row'>
+                            <div className="row-bottom">
+                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
                 <div className='col'>
                     <div className="saturday">
                         <h3>Saturday</h3>
-                        <div>
+                        <div className="row">
+                            <div className="row-top">
                             {sat_items}
+                            </div>
+                        </div>
+                        <div className='row'>
+                            <div className="row-bottom">
+                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className='col'>
                     <div className="sunday">
                         <h3>Sunday</h3>
-                        <div>
+                        <div className="row">
+                            <div className="row-top">
                             {sun_items}
+                            </div>
+                        </div>
+                        <div className='row'>
+                            <div className="row-bottom">
+                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
+                            </div>
                         </div>
                     </div>
                 </div>

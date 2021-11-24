@@ -50,9 +50,8 @@ body{
      font-weight: bolder;
  }
  .box{
-     width: 35%;
      height: 100%;
-     max-width: 35%;
+     margin: auto;
  }
  .row{
      display: flex;
@@ -63,7 +62,7 @@ body{
  }
  .ingred{
     padding: 1em;
-    margin-left: 4em;
+    margin-left: 1em;
  }
  #nutrition{
      width: 50px;
@@ -74,13 +73,13 @@ body{
      margin-right: 4em;
  }
  footer{
-     text-align: center;
-     padding: 2em;
-     background:radial-gradient(#F7DC6F  50%, #CAF845 );
-     color: white;
-     text-shadow: 2px 2px black;
-     font-size: large;
- }
+  text-align: center;
+  padding: 2em;
+  background:radial-gradient(#F7DC6F  50%, #CAF845 );
+  color: white;
+  text-shadow: 2px 2px black;
+  font-size: large;
+}
  #recipe_pic{
      margin-top: 4em;
  }
@@ -90,14 +89,28 @@ body{
  a{
      color: white;
  }
- 
+ .row-top{
+   margin-top: 30px;
+   padding: 5px;
+   max-height: 400px;
+   min-height: 400px;
+ }
+ .sug-but{
+  padding: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  }
+  .rec-but{
+    margin: 5px;
+  }
  .recipe_search_box{
      height:100%;
      background:radial-gradient(#F7DC6F  50%, #CAF845);
      border-style: solid;
      border-color: darkblue;
-     min-width: 230px;
-     max-width: 230px;
+     min-width: 200px;
+     max-width: 200px;
+     align-items: flex-start;
  }
  .input-ingreds{
      margin-left: 1em;
@@ -108,16 +121,16 @@ body{
      background:radial-gradient( #CAF845 50%, #F7DC6F );
      border-style: solid;
      border-color: darkblue;
-     min-width: 175px;
-     max-width: 175px;
+     min-width: 130px;
+     max-width: 130px;
  }
  .monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday{
   height:100%;
   background:radial-gradient( #CAF845 50%, #F7DC6F );
   border-style: solid;
   border-color: darkblue;
-  min-width: 175px;
-  max-width: 175px;
+  min-width: 125px;
+  max-width: 125px;
  }
  .recipe-button{
    width: 75%;
