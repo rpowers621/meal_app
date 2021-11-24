@@ -73,8 +73,9 @@ function Recipebox() {
     
 
     function add(e) {
+        console.log(e);
         if( e !== ""){
-            setSearchCriteria([...searchCriteria, e]);
+            setSearchCriteria([e]);
         }
        
         setI(false);
@@ -88,8 +89,8 @@ function Recipebox() {
     function refresh() {
         setSearchCriteria('');
         setSearchType('');
-        setMeal_ids('');
-        setMeals('');
+        setMeal_ids(['']);
+        setMeals(['']);
 
     }
  
@@ -178,7 +179,7 @@ function Recipebox() {
     var sug_box = []
     for(var [index, value]of meals.entries()){
         sug_box.push( <div>
-            <input onClick={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
+            <input onChange={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
                 value="1" />
             <button style={active === index+1 ? {backgroundColor: 'red' }: {}}className="recipe-button" value={meal_ids[index+1]} onClick={(e) => {recipe_page(e.target.value); setActive(1)}}> {meals[index+1]}</button>
         </div>)
@@ -233,11 +234,10 @@ function Recipebox() {
                             <input onClick={() => {setSearchType('ingredients'); setI(true);}} checked={iSelect} type="checkbox" name="ingreds"
                                 value="Search by Ingredients" />
                             <label id="ingredients" className="label-header" htmlFor="ingreds">Search by Ingredients</label>
-                            <br />
-                            
-                            <br />
+                            <br></br>
                             <label htmlFor="">Enter Ingredient</label>
-                            <input data-testid="Enter_Ingredient" value={ingred} onChange={(e) => {add(e.target.value); setIngred(e.target.value);}} id="ingreds" type="text" />
+                            <input data-testid="Enter_Ingredient" value={ingred} on onChangeCapture={(e) => {add(e.target.value); setIngred(e.target.value);}} id="ingreds" type="text" />
+                            
                             <button onClick={send}>Add Ingredients</button>
 
 
@@ -245,7 +245,7 @@ function Recipebox() {
                         </div>
 
                         <div className="by_calories">
-                            <input onClick={() => {setSearchType('calories'); setC(true);}} checked={cSelect} type="checkbox" name="calories"
+                            <input onInput={() => {setSearchType('calories'); setC(true);}} checked={cSelect} type="checkbox" name="calories"
                                 value="Search by Calories" />
                             <label className="label-header" htmlFor="calories">Search by Calories</label>
                             <br />
@@ -260,7 +260,7 @@ function Recipebox() {
                             <label className="label-header" htmlFor="diet">Search by Diet</label>
                             <br />
                             <div className="drop-diet">
-                                <select onClick={(e) => add(e.target.value)} id="diet" name="" placeholder=" ">
+                                <select onChange={(e) => add(e.target.value)} id="diet" name="" placeholder=" ">
                                     <option value="Gluten Free">Gluten Free</option>
                                     <option value="Ketogenic">Ketogenic</option>
                                     <option value="Vegetarian">Vegetarian</option>
@@ -283,7 +283,7 @@ function Recipebox() {
                             <label className="label-header" htmlFor="cuisine">Search by Cuisine</label>
                             <br />
                             <div className="drop-cuisine">
-                                <select onClick={(e) => add(e.target.value)} id="cuisine" name="">
+                                <select onChange={(e) => add(e.target.value)} id="cuisine" name="">
                                     <option value="African">African</option>
                                     <option value="American">American</option>
                                     <option value="British">British</option>
@@ -308,7 +308,7 @@ function Recipebox() {
                                     <option value="Nordic">Nordic</option>
                                     <option value="Southern">Southern</option>
                                     <option value="Spanish">Spanish</option>
-                                    <option value="Thai"></option>
+                                    <option value="Thai">Thai</option>
                                     <option value="Vietnamese">Vietnamese</option>
                                 </select>
                             </div>

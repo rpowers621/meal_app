@@ -244,9 +244,11 @@ def getSuggestions():
     if searchType == "ingredients":
         recipe_ids = search_recipe_by_ingred(searchCritria)
     if searchType == "calories":
+        print(searchCritria)
         recipe_ids = search_recipe_by_calories(searchCritria)
     if searchType == "diet":
         recipe_ids = get_recipe_by_diet(searchCritria)
+        print(recipe_ids)
     if searchType == "cuisine":
         recipe_ids = get_recipe_by_cuisine(searchCritria)
 
