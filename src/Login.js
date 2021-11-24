@@ -51,7 +51,7 @@ function Login() {
     return (
         <div>
             <div className="user-info">
-                <img src={userimage} atl="" />
+                <img src={userimage} atl=""/>
                 <p>{username}</p>
                 <p>{useremail}</p>
             </div>

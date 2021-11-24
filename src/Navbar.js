@@ -1,4 +1,5 @@
 import { Link} from 'react-router-dom';
+import Login from './Login'
 
 const Navbar = () => {
   return (
@@ -17,6 +18,10 @@ const Navbar = () => {
           borderRadius: '8px'
         }}>Meal Board</Link>
       </div>
+      <div className="g-signin">
+        <Login/>
+      </div>
+     
     </nav>
   )
 }

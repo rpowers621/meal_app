@@ -10,7 +10,7 @@ BASE_URL = "https://api.spoonacular.com/"
 
 HEADER = {"Content-Type": "application/json"}
 # this is the number of recipes returned
-NUM_RECIPES = 5
+NUM_RECIPES = 1
 
 SIZE = "100x100"
 
@@ -143,7 +143,6 @@ def get_recipe_by_cuisine(str):
     return recipe_ids_by_cuisine
 
 
-# gluten-free, ketogenic, vegetarian, vegan
 def get_recipe_by_diet(str):
 
     diet_search = (
@@ -167,8 +166,8 @@ def get_recipe_by_diet(str):
                 break
 
         return recipe_ids_by_diet
-
-    return recipe_ids_by_diet
+    else:
+        return recipe_ids_by_diet
 
 
 def search_recipe_by_calories(str):
