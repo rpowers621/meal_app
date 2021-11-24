@@ -37,6 +37,9 @@ function Recipebox() {
 
     const [active, setActive] = useState();
 
+    const [cal, setCal]= useState("");
+    const [ingred, setIngred] = useState("");
+
     
 
     useEffect(() => {
@@ -70,11 +73,16 @@ function Recipebox() {
     
 
     function add(e) {
-        setSearchCriteria([...searchCriteria, e]);
+        if( e !== ""){
+            setSearchCriteria([...searchCriteria, e]);
+        }
+       
         setI(false);
         setC(false);
         setD(false);
         setCU(false);
+        setCal("");
+        setIngred("");
     }
 
     function refresh() {
@@ -167,6 +175,16 @@ function Recipebox() {
     }
 
 
+    var sug_box = []
+    for(var [index, value]of meals.entries()){
+        sug_box.push( <div>
+            <input onClick={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
+                value="1" />
+            <button style={active === index+1 ? {backgroundColor: 'red' }: {}}className="recipe-button" value={meal_ids[index+1]} onClick={(e) => {recipe_page(e.target.value); setActive(1)}}> {meals[index+1]}</button>
+        </div>)
+    }
+
+
     const mon_items = [];
     for(const [index,value]of mon.entries()){
         mon_items.push(<button style={active === index+"m" ? {backgroundColor: 'red' }: {}} value={monId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"m");}}>{value}</button>)
@@ -219,7 +237,7 @@ function Recipebox() {
                             
                             <br />
                             <label htmlFor="">Enter Ingredient</label>
-                            <input data-testid="Enter_Ingredient" onChange={(e) => add(e.target.value)} id="ingreds" type="text" />
+                            <input data-testid="Enter_Ingredient" value={ingred} onChange={(e) => {add(e.target.value); setIngred(e.target.value);}} id="ingreds" type="text" />
                             <button onClick={send}>Add Ingredients</button>
 
 
@@ -227,12 +245,12 @@ function Recipebox() {
                         </div>
 
                         <div className="by_calories">
-                            <input onChange={() => {setSearchType('calories'); setC(true);}} checked={cSelect} type="checkbox" name="calories"
+                            <input onClick={() => {setSearchType('calories'); setC(true);}} checked={cSelect} type="checkbox" name="calories"
                                 value="Search by Calories" />
                             <label className="label-header" htmlFor="calories">Search by Calories</label>
                             <br />
                             <label htmlFor="">Enter Calories Amount</label>
-                            <input onChange={(e) => add(e.target.value)} id="calories" type="text" />
+                            <input value={cal} onChange={(e) => {add(e.target.value); setCal(e.target.value);}} id="calories" type="text" />
                             <button onClick={send}>Add Calories</button>
                         </div>
 
@@ -260,12 +278,12 @@ function Recipebox() {
                         </div>
 
                         <div className="by_cuisine">
-                            <input onChange={() => {setSearchType('cuisine'); setCU(true);}} checked={cuSelect} type="checkbox" name="cuisine"
+                            <input onClick={() => {setSearchType('cuisine'); setCU(true);}} checked={cuSelect} type="checkbox" name="cuisine"
                                 value="Search by Cuisine" />
                             <label className="label-header" htmlFor="cuisine">Search by Cuisine</label>
                             <br />
                             <div className="drop-cuisine">
-                                <select onChange={(e) => add(e.target.value)} id="cuisine" name="">
+                                <select onClick={(e) => add(e.target.value)} id="cuisine" name="">
                                     <option value="African">African</option>
                                     <option value="American">American</option>
                                     <option value="British">British</option>
@@ -322,31 +340,7 @@ function Recipebox() {
                             
                         </div>
 
-                        <div>
-                            <input onClick={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
-                                value="1" />
-                            <button style={active === 1 ? {backgroundColor: 'red' }: {}}className="recipe-button" value={meal_ids[1]} onClick={(e) => {recipe_page(e.target.value); setActive(1)}}> {meals[1]}</button>
-                        </div>
-                        <div>
-                            <input onClick={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
-                                value="2" />
-                            <button style={active === 2 ? {backgroundColor: 'red' }: {} }className="recipe-button" value={meal_ids[2]} onClick={(e) => {recipe_page(e.target.value); setActive(2)}}> {meals[2]}</button>
-                        </div>
-                        <div>
-                            <input onClick={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
-                                value="3" />
-                            <button style={active === 3 ? {backgroundColor: 'red' }: {} } className="recipe-button" value={meal_ids[3]} onClick={(e) => {recipe_page(e.target.value); setActive(3)}}> {meals[3]}</button>
-                        </div>
-                        <div>
-                            <input onClick={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
-                                value="4" />
-                            <button style={active === 4 ? {backgroundColor: 'red' }: {} } className="recipe-button" value={meal_ids[4]} onClick={(e) => {recipe_page(e.target.value); setActive(4)}}> {meals[4]}</button>
-                        </div>
-                        <div>
-                            <input onClick={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
-                                value="5" />
-                            <button style={active === 5 ? {backgroundColor: 'red' }: {} } className="recipe-button" value={meal_ids[5]} onClick={(e) => {recipe_page(e.target.value); setActive(5)}}> {meals[5]}</button>
-                        </div>
+                        {sug_box}
 
                        
 
