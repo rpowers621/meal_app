@@ -11,6 +11,12 @@ const Navbar = () => {
           backgroundColor: '#f1356d',
           borderRadius: '8px'
         }}>Home</Link>
+        <Link to="./About" 
+          style={{
+          color: "white",
+          backgroundColor: '#f1356d',
+          borderRadius: '8px'
+        }}>About</Link>
         <Link to="./Recipebox" 
           style={{
           color: "white",

@@ -50,3 +50,26 @@
   right: 70%;
 }
 
+.About {
+  display: flex;
+}
+
+.About .Container {
+  width: 100%;
+  margin-top: 130px;
+  font-size: 30px;
+  margin: 100px 0 0 0;
+}
+
+.About .Container2 {
+  width: 50%;
+  margin-left: 15%;
+  margin-top: 140px;
+}
+
+.About .Photo {
+  position: absolute;
+  flex-direction: row;
+  top: 37%;
+  right: 15%;
+}
