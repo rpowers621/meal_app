@@ -1,5 +1,5 @@
 import React from 'react';
-import coffee from './coffee.jpeg';
+import coffee from '../img/coffee.jpeg';
 
 function About() {
     return (
