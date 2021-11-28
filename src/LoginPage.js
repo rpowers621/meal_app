@@ -1,16 +1,18 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from 'react-router';
+import { Context } from "./Store/appContext";
 
-function LoginPage() {
-  // const { store, actions } = useContext(Context);
+function LoginPage() {  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const token = sessionStorage.getItem("token");
   const history = useHistory(); 
 
-
   console.log("this is your token", token);
   const handleClick = () => {
+    actions.login(email, password).then(() => {
+      history.push("/");
+    })
     const opts = {
       method: "POST",
       headers: {
