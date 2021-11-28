@@ -13,6 +13,9 @@ function App() {
   return (
     <Router>
     <Navbar />
+    <div className="g-signin">
+      <Login />
+    </div>
     <div className="App">
       <Switch>
         <Route path ="/Recipebox"><Recipebox /></Route>
