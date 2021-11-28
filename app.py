@@ -12,26 +12,40 @@ from flask_login import (
     login_required,
     logout_user,
 )
+
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
+
+
 from spoonacular import *
 
+app = flask.Flask(__name__, static_folder="./build/static") 
+bp = flask.Blueprint("bp", __name__, template_folder="./build") # confused about this
 
-app = flask.Flask(__name__, static_folder="./build/static")
-bp = flask.Blueprint("bp", __name__, template_folder="./build")
 
+# JWT exteded configuration secret key and initalization
+app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET")
+jwt = JWTManager(app)
+
+
+# to acccess data from the environment variables file
 load_dotenv(find_dotenv())
 
+# app configurations
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.secret_key = os.getenv("SECRET_KEY")
 
-
+# access database with postgresql url
 url = os.getenv("DATABASE_URL")
 if url and url.startswith("postgres://"):
     url = url.replace("postgres://", "postgresql://", 1)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = url
 
-
+# intialize the db structure using SQLAlchemy and LoginManager
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 
@@ -39,6 +53,7 @@ login_manager.login_view = "login"
 login_manager.init_app(app)
 
 
+# User table to store the user's who login to app
 class User(db.Model, UserMixin):
     user_id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -50,7 +65,7 @@ class User(db.Model, UserMixin):
     def get_id(self):
         return self.user_id
 
-
+# Recipes associated with the user that is currently logged in
 class RecipeUser(db.Model):
 
     recipe_id = db.Column(db.Integer, primary_key=True)
@@ -58,7 +73,7 @@ class RecipeUser(db.Model):
     user_id = db.Column(db.Integer)
     day = db.Column(db.Integer)
 
-
+# create tables
 db.create_all()
 
 
@@ -66,24 +81,27 @@ db.create_all()
 def loadUser(user_name):
     return User.query.get(user_name)
 
-
+# starting route when app is intially launched
 @app.route("/")
 def main():
-    return flask.redirect(flask.url_for("bp.index"))
+    return flask.redirect(flask.url_for("bp.index")) # confused about this
 
-
+# starting route when app is launched -- user is trying to login
 @app.route("/", methods=["POST"])
 def login():
     print("in login test2")
-    email = flask.request.json.get("email")
+    email = flask.request.json.get("email") # need to find out where this email is getting requested from
     print(email)
     user = User.query.filter_by(email=email).first()
 
+    # checks to see if the user exists in database? (refer to flask_login docs)
     if user:
         print("already user")
         login_user(user)
 
         return flask.redirect(flask.url_for("bp.index"))
+
+    # if new user, add to database
     else:
         user = User(email=email)
         db.session.add(user)
@@ -94,10 +112,23 @@ def login():
     return flask.redirect(flask.url_for("bp.index"))
 
 
+# Create a route to authenticate your users and return JWTs. The
+# create_access_token() function is used to actually generate the JWT.
+@app.route("/token", methods=["POST", "GET"])
+def create_token():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    if email != "test" or password != "test":
+        return flask.jsonify({"msg": "Bad email or password"}), 401
+
+    access_token = create_access_token(identity=email)
+    return flask.jsonify(access_token=access_token)
+
+    # return flask.jsonify(response.body), 200
+
 @bp.route("/index", methods=["GET", "POST"])
 def index():
     return flask.render_template("index.html")
-
 
 @bp.route("/connectDB", methods=["POST"])
 def connect():

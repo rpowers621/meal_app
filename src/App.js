@@ -4,6 +4,7 @@ import About from './About';
 import Contact from './Contact';
 import Recipebox from "./Recipebox";
 import Recipepage from "./Recipepage";
+import LoginPage from "./LoginPage";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 
@@ -13,12 +14,14 @@ function App() {
   return (
     <Router>
     <Navbar />
+    {/* <LoginPage /> */}
     <div className="App">
       <Switch>
         <Route path ="/Recipebox"><Recipebox /></Route>
         <Route path ="/Recipepage"><Recipepage /></Route>
         <Route path ="/About"><About /></Route>
         <Route path="/Contact"><Contact /></Route>
+        <Route path="/LoginPage"><LoginPage /></Route>
       </Switch>
     </div>
   </Router>

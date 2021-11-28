@@ -29,10 +29,18 @@ const Navbar = () => {
           backgroundColor: '#f1356d',
           borderRadius: '8px'
         }}>Meal Board</Link>
+        <Link to="./LoginPage" 
+          style={{
+          color: "white",
+          backgroundColor: '#f1356d',
+          borderRadius: '8px'
+        }}>Login</Link>
       </div>
-      <div className="g-signin">
+      {/* <div className="g-signin">
         <Login/>
-      </div>
+      </div> */}
+      
+      
      
     </nav>
   )
