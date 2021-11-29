@@ -71,3 +71,12 @@ header ul li a {
 .content .textBox p {
 	color: #000000;
 }
+
+.content .imgBox {
+	position: relative;
+	top: 150px;
+	width: 600px;
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 50px;
+}
