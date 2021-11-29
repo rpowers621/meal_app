@@ -3,10 +3,11 @@ import { GoogleLogin, GoogleLogout, useGoogleLogin } from "react-google-login";
 import UserProfile from "./UserProfile";
 const clientId = process.env.REACT_APP_CLIENTID;
 const redirectUri = process.env.REDIRECT_URI;
+// added redirect for google api
 
 function Login() {
 
-  
+
   const [username, setusername] = useState("");
   const [useremail, setuseremail] = useState("");
   const [userimage, setuserimage] = useState("");
@@ -36,6 +37,7 @@ function Login() {
     setShowlogoutButton(false);
   };
 
+  // useState for google api
   const { signIn, loaded } = useGoogleLogin({
     onSuccess: onLoginSuccess,
     clientId: clientId,
