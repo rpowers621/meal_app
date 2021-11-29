@@ -46,3 +46,28 @@ header ul li a {
 	margin-left: 50px;
 	text-decoration: none;
 }
+.content {
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+}
+
+.content .textBox {
+	position: relative;
+	top: 200px;
+	max-width: 600px;
+	padding-left: 100px;
+}
+
+.content .textBox h2 {
+	color: #4A8140;
+	font-size: 4em;
+	font-weight: 700;
+
+}
+
+.content .textBox p {
+	color: #000000;
+}
