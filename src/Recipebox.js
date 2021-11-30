@@ -224,7 +224,7 @@ function Recipebox() {
         sug_box.push( <div>
             <input checked={iSelect} onChange={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
                value={index+1}/>
-            <button  style={active === index+1 ? {backgroundColor: 'red' }: {}}className="recipe-button" value={meal_ids[index+1]} onClick={(e) => {recipe_page(e.target.value); setActive(1)}}> {meals[index+1]}{meal_ids[index+1]}</button>
+            <button  style={active === value ? {backgroundColor: 'red' }: {}}className="recipe-button" value={meal_ids[index+1]} onClick={(e) => {recipe_page(e.target.value); setActive(value)}}> {meals[index+1]}</button>
         </div>)
     }
 
@@ -376,7 +376,6 @@ function Recipebox() {
 
                         <button onClick={addToDB}>Add</button>
 
-                        <button onClick={route}>Go to Recipe page!</button>
                     </div>
                 </div>
                 <div className='col'>
@@ -387,11 +386,7 @@ function Recipebox() {
                                 {mon_items}
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className="row-bottom">
-                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
-                            </div>
-                        </div>
+               
                     </div>
                 </div>
                 <div className='col'>
@@ -402,11 +397,7 @@ function Recipebox() {
                             {tues_items}
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className="row-bottom">
-                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
-                            </div>
-                        </div>
+               
                         
                     </div>
                 </div>
@@ -418,11 +409,7 @@ function Recipebox() {
                             {wed_items}
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className="row-bottom">
-                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
-                            </div>
-                        </div>
+                  
                         
                     </div>
                 </div>
@@ -434,11 +421,7 @@ function Recipebox() {
                             {thur_items}
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className="row-bottom">
-                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
-                            </div>
-                        </div>
+                 
                     
                     </div>
                 </div>
@@ -450,11 +433,7 @@ function Recipebox() {
                             {fri_items}
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className="row-bottom">
-                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
-                            </div>
-                        </div>
+                
                         
                     </div>
                 </div>
@@ -466,11 +445,7 @@ function Recipebox() {
                             {sat_items}
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className="row-bottom">
-                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
-                            </div>
-                        </div>
+                     
                     </div>
                 </div>
                 <div className='col'>
@@ -481,17 +456,14 @@ function Recipebox() {
                             {sun_items}
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className="row-bottom">
-                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
-                            </div>
-                        </div>
+                     
                     </div>
                 </div>
             </div>
             <br></br>
             <div> 
                 <button onClick={resetMealboard}>Reset Mealboard</button> 
+                <button onClick={route}>Go to Recipe page!</button>
             </div>
         </div>
     );

@@ -360,9 +360,11 @@ def recipe_page():
             source_url,
             dish_types,
             ingredients,
+            ingred_imgs,
         ) = get_recipe_info(recipe_id)
 
         instructions = get_recipe_instructions(recipe_id)
+        get_nutritional_breakdown_png(recipe_id)
 
     else:
         (
@@ -374,7 +376,11 @@ def recipe_page():
             dish_types,
             ingredients,
             instructions,
+            ingred_imgs,
+            id,
         ) = (
+            None,
+            None,
             None,
             None,
             None,
@@ -393,6 +399,8 @@ def recipe_page():
         "dish_types": dish_types,
         "ingredients": ingredients,
         "instructions": instructions,
+        "ingred_imgs": ingred_imgs,
+        "id": recipe_id,
     }
     data = json.dumps(DATA)
 

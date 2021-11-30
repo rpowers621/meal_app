@@ -53,11 +53,13 @@ def get_recipe_info(id):
 
     length = len(response_data["extendedIngredients"])
 
-    ingredients = {}
+    ingredients = []
+    ingred_imgs = []
     for i in range(length):
         try:
             if response_data["extendedIngredients"][i]["image"]:
-                ingredients[response_data["extendedIngredients"][i]["name"]] = (
+                ingredients.append(response_data["extendedIngredients"][i]["name"])
+                ingred_imgs.append(
                     IMG_URL + response_data["extendedIngredients"][i]["image"]
                 )
 
@@ -73,6 +75,7 @@ def get_recipe_info(id):
         source_url,
         dish_types,
         ingredients,
+        ingred_imgs,
     )
 
 
@@ -84,7 +87,7 @@ def get_nutritional_breakdown_png(id):
 
     response = requests.get(url=BASE_URL + price_breakdown, headers=img_header)
     if response.status_code == 200:
-        with open("static/nutritional_breakdown.png", "wb") as f:
+        with open("public/nutritional_breakdown.png", "wb") as f:
             f.write(response.content)
 
     # return "True"
@@ -99,7 +102,7 @@ def get_recipe_instructions(id):
     response = requests.get(url=BASE_URL + analyze_instructions, headers=HEADER)
     response_data = response.json()
 
-    instructions = {}
+    instructions = []
 
     length = len(response_data)
 
@@ -108,7 +111,7 @@ def get_recipe_instructions(id):
             len2 = len(response_data[i]["steps"])
             for j in range(len2):
                 try:
-                    instructions[f"step {j+1}"] = response_data[i]["steps"][j]["step"]
+                    instructions.append(response_data[i]["steps"][j]["step"])
                 except KeyError:
                     print(KeyError)
                     break
