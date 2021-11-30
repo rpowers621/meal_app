@@ -40,6 +40,8 @@ function Recipebox() {
     const [cal, setCal]= useState("");
     const [ingred, setIngred] = useState("");
 
+    const [toDelete, setDelete] = useState('');
+
     
 
     useEffect(() => {
@@ -147,13 +149,14 @@ function Recipebox() {
     }
 
     function addToBoard(e) {
-        console.log(meal_ids[e]);
+        console.log(e);
         console.log(day);
      
         update[meal_ids[e]]= day;
     
 
         setUpdate(update);
+        console.log(meal_ids[e]);
         setTitles(meals[e]);
     }
 
@@ -218,50 +221,80 @@ function Recipebox() {
         });
     }
 
+    function deleteMeal(){
+        fetch("/delete", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "delete": toDelete}),
+        }).then((response) => response.json()).then((data) => {
+            console.log(data);
+       
+            setMon(data.mon_name);
+            setMonId(data.mon_ids);
+            setTues(data.tues_name);
+            setTuesId(data.tues_ids);
+            setWed(data.wed_name);
+            setWedId(data.wed_ids);
+            setThur(data.thur_name);
+            setThurId(data.thur_ids);
+            setFri(data.fri_name);
+            setFriId(data.fri_ids);
+            setSat(data.sat_name);
+            setSatId(data.sat_ids);
+            setSun(data.sun_name);
+            setSunId(data.sun_ids);
+          
+           
+        });
+    
+    }
+
 
     var sug_box = []
     for(var [index, value]of meals.entries()){
         sug_box.push( <div>
-            <input checked={iSelect} onChange={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
-               value={index+1}/>
-            <button  style={active === value ? {backgroundColor: 'red' }: {}}className="recipe-button" value={meal_ids[index+1]} onClick={(e) => {recipe_page(e.target.value); setActive(value)}}> {meals[index+1]}</button>
+            <button  style={active === index+"b" ? {backgroundColor: 'red' }: {}} className="recipe-button" value={meal_ids[index+1]} onClick={(e) => {recipe_page(e.target.value); setActive(index-1+"b"); addToBoard(index-1)}}> {meals[index+1]}</button>
         </div>)
+    
     }
+
 
 
     const mon_items = [];
     for(const [index,value]of mon.entries()){
-        mon_items.push(<button className="sug-but" style={active === index+"m" ? {backgroundColor: 'red' }: {}} value={monId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"m");}}>{value}</button>)
+        mon_items.push(<button className="sug-but" style={active === index+"m" ? {backgroundColor: 'red' }: {}} value={monId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"m"); setDelete(e.target.value);}}>{value}</button>)
     }
 
     const tues_items = [];
     for(const [index,value]of tues.entries()){
-        tues_items.push(<button className="sug-but" style={active === index+"t" ? {backgroundColor: 'red' }: {}} value={tuesId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"t");}}>{value}</button>)
+        tues_items.push(<button className="sug-but" style={active === index+"t" ? {backgroundColor: 'red' }: {}} value={tuesId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"t");setDelete(e.target.value);}}>{value}</button>)
     }
 
     const wed_items = [];
     for(const [index,value]of wed.entries()){
-        wed_items.push(<button className="sug-but" style={active === index+"w" ? {backgroundColor: 'red' }: {}} value={wedId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"w");}}>{value}</button>)
+        wed_items.push(<button className="sug-but" style={active === index+"w" ? {backgroundColor: 'red' }: {}} value={wedId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"w");setDelete(e.target.value);}}>{value}</button>)
     }
 
     const thur_items = [];
     for(const [index,value]of thur.entries()){
-        thur_items.push(<button  className="sug-but"style={active === index+"th" ? {backgroundColor: 'red' }: {}} value={thurId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"th");}}>{value}</button>)
+        thur_items.push(<button  className="sug-but"style={active === index+"th" ? {backgroundColor: 'red' }: {}} value={thurId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"th");setDelete(e.target.value);}}>{value}</button>)
     }
 
     const fri_items = [];
     for(const [index,value]of fri.entries()){
-        fri_items.push(<button className="sug-but" style={active === index+"f" ? {backgroundColor: 'red' }: {}} value={friId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"f");}}>{value}</button>)
+        fri_items.push(<button className="sug-but" style={active === index+"f" ? {backgroundColor: 'red' }: {}} value={friId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"f");setDelete(e.target.value);}}>{value}</button>)
     }
 
     const sat_items = [];
     for(const [index,value]of sat.entries()){
-        sat_items.push(<button  className="sug-but" style={active === index+"s" ? {backgroundColor: 'red' }: {}} value={satId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"s");}}>{value}</button>)
+        sat_items.push(<button  className="sug-but" style={active === index+"s" ? {backgroundColor: 'red' }: {}} value={satId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"s");setDelete(e.target.value);}}>{value}</button>)
     }
 
     const sun_items = [];
     for(const [index,value]of sun.entries()){
-        sun_items.push(<button className="sug-but" style={active === index+"sn" ? {backgroundColor: 'red' }: {}} value={sunId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"sn");}}>{value}</button>)
+        sun_items.push(<button className="sug-but" style={active === index+"sn" ? {backgroundColor: 'red' }: {}} value={sunId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"sn");setDelete(e.target.value);}}>{value}</button>)
     }
     return (
 
@@ -369,7 +402,6 @@ function Recipebox() {
                             </select>
                             
                         </div>
-
                         {sug_box}
 
                        
@@ -464,6 +496,7 @@ function Recipebox() {
             <div> 
                 <button onClick={resetMealboard}>Reset Mealboard</button> 
                 <button onClick={route}>Go to Recipe page!</button>
+                <button onClick={deleteMeal}> Delete Recipe</button>
             </div>
         </div>
     );

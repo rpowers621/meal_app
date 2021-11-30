@@ -43,8 +43,10 @@ def get_recipe_info(id):
 
     response = requests.get(url=BASE_URL + recep_info, headers=HEADER)
     response_data = response.json()
-
-    recipe_img = response_data["image"]
+    if response_data["image"]:
+        recipe_img = response_data["image"]
+    else:
+        recipe_img = None
     recipe_title = response_data["title"]
     servings = response_data["servings"]
     ready_in_mins = response_data["readyInMinutes"]
