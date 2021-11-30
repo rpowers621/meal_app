@@ -380,7 +380,6 @@ function Recipebox() {
                                     <option value="British">British</option>
                                     <option value="Cajun">Cajun</option>
                                     <option value="Caribbean">Caribbean</option>
-                                    <option value="Chinese">Chinese</option>
                                     <option value="Eastern European">Eastern European</option>
                                     <option value="European">European</option>
                                     <option value="French">French</option>

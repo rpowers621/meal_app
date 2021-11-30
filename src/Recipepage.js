@@ -24,6 +24,8 @@ function Recipepage() {
     const [id, setId] =useState("");
     const [update, setUpdate] = useState({});
     const [titles, setTitles] = useState({});
+
+    const [message, setMessage] = useState("");
     
 
 
@@ -75,6 +77,7 @@ function Recipepage() {
             body: JSON.stringify({ "update": update, "title" : title }),
         }).then((response) => response.json()).then((data) => {
             console.log(data);
+            setMessage("Recipe Added!");
           
     });
 }
@@ -116,6 +119,7 @@ for(const [index,value]of ingredients.entries()){
                                 <option value="7">Sunday</option>
                             </select>
                             <button onClick={addToDB}>Add recipe!</button>
+                            <p>{message}</p>
                             
                     </div>
                 
@@ -124,17 +128,21 @@ for(const [index,value]of ingredients.entries()){
                 </div>
 
             </div>
-            <div className="row" style={{display:'flex'}}>
-                <h3> Ingredients </h3>
+            <h3> Ingredients </h3>
                 <br></br>
                 <br></br>
+            <div>
+               
                 <ul>{ingredsList}</ul>
             </div>
             <br></br>
             <br></br>      
             <div>
                 {instruction.map((value, index)=>(
-                    <p> Step {index+1}: {value}</p>
+                    <div>
+                        <p> Step {index+1}: {value}</p>
+                        <br></br>  
+                    </div>
                 ))}
             </div>
           
