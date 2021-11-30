@@ -172,6 +172,49 @@ function Recipebox() {
             setDay("");
             setUpdate({});
             setTitles("");
+            setMon(data.mon_name);
+            setMonId(data.mon_ids);
+            setTues(data.tues_name);
+            setTuesId(data.tues_ids);
+            setWed(data.wed_name);
+            setWedId(data.wed_ids);
+            setThur(data.thur_name);
+            setThurId(data.thur_ids);
+            setFri(data.fri_name);
+            setFriId(data.fri_ids);
+            setSat(data.sat_name);
+            setSatId(data.sat_ids);
+            setSun(data.sun_name);
+            setSunId(data.sun_ids);
+          
+        });
+    }
+
+    function resetMealboard(){
+        fetch("/reset", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then((response) => response.json()).then((data) => {
+            console.log(data);
+       
+            setMon(data.mon_name);
+            setMonId(data.mon_ids);
+            setTues(data.tues_name);
+            setTuesId(data.tues_ids);
+            setWed(data.wed_name);
+            setWedId(data.wed_ids);
+            setThur(data.thur_name);
+            setThurId(data.thur_ids);
+            setFri(data.fri_name);
+            setFriId(data.fri_ids);
+            setSat(data.sat_name);
+            setSatId(data.sat_ids);
+            setSun(data.sun_name);
+            setSunId(data.sun_ids);
+          
+           
         });
     }
 
@@ -179,9 +222,9 @@ function Recipebox() {
     var sug_box = []
     for(var [index, value]of meals.entries()){
         sug_box.push( <div>
-            <input onChange={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
-                value="1" />
-            <button style={active === index+1 ? {backgroundColor: 'red' }: {}}className="recipe-button" value={meal_ids[index+1]} onClick={(e) => {recipe_page(e.target.value); setActive(1)}}> {meals[index+1]}</button>
+            <input checked={iSelect} onChange={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
+               value={index+1}/>
+            <button  style={active === index+1 ? {backgroundColor: 'red' }: {}}className="recipe-button" value={meal_ids[index+1]} onClick={(e) => {recipe_page(e.target.value); setActive(1)}}> {meals[index+1]}{meal_ids[index+1]}</button>
         </div>)
     }
 
@@ -244,15 +287,6 @@ function Recipebox() {
                             <br />
                         </div>
 
-                        <div className="by_calories">
-                            <input onInput={() => {setSearchType('calories'); setC(true);}} checked={cSelect} type="checkbox" name="calories"
-                                value="Search by Calories" />
-                            <label className="label-header" htmlFor="calories">Search by Calories</label>
-                            <br />
-                            <label htmlFor="">Enter Calories Amount</label>
-                            <input value={cal} onChange={(e) => {add(e.target.value); setCal(e.target.value);}} id="calories" type="text" />
-                            <button onClick={send}>Add Calories</button>
-                        </div>
 
                         <div className="by_diet">
                             <input onClick={() => {setSearchType('diet'); setD(true);}} checked={dSelect} type="checkbox" name="diet"
@@ -316,16 +350,12 @@ function Recipebox() {
 
                             <button onClick={refresh}> refresh</button>
 
-                            <p>Please first select how you'd like to search, then press add to see a suggestion!</p>
-                            <p> To get another recipe deselect and start again!</p>
                         </div>
                     </div>
                 </div>
                 <div className='col'>
                     <div className="suggestion-box">
-                        <h3>Suggestion Box</h3>
-                        <p> To view a Recipe please slect recipe and click Go to Recipe Page! </p>
-                        
+                        <h3>Suggestion Box</h3>   
                         <div className="add-to-mb">
                             <select onChange={(e) => setDay(e.target.value)} >
                                 <option value='default' disabled> Pick Day </option>
@@ -458,6 +488,10 @@ function Recipebox() {
                         </div>
                     </div>
                 </div>
+            </div>
+            <br></br>
+            <div> 
+                <button onClick={resetMealboard}>Reset Mealboard</button> 
             </div>
         </div>
     );

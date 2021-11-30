@@ -1,5 +1,4 @@
 import React from 'react';
-import Login from './Login';
 import Navbar from './Navbar';
 import Recipebox from "./Recipebox";
 import Recipepage from "./Recipepage";
