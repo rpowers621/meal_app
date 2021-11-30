@@ -22,6 +22,8 @@ function Recipepage() {
 
     const [day, setDay] = useState('');
     const [id, setId] =useState("");
+    const [update, setUpdate] = useState({});
+    const [titles, setTitles] = useState({});
     
 
 
@@ -62,19 +64,26 @@ function Recipepage() {
 
 
     function addToDB() {
+        update[id]= day;
+        setUpdate(update);
     
         fetch("/update", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ "update": id, "title" : day }),
+            body: JSON.stringify({ "update": update, "title" : title }),
         }).then((response) => response.json()).then((data) => {
             console.log(data);
           
     });
 }
-  
+
+
+const ingredsList = [];
+for(const [index,value]of ingredients.entries()){
+    ingredsList.push(<li key={index}>{value}</li>)
+}
 
     return (
         <div>
@@ -116,17 +125,13 @@ function Recipepage() {
 
             </div>
             <div className="row" style={{display:'flex'}}>
-                        {ingredients.map((value, index) => (
-
-                            <div>
-                            <p style={{fontSize:15}}> {value} </p>
-                            <p> </p>
-            
-                            </div>
-                        ))}
-
+                <h3> Ingredients </h3>
+                <br></br>
+                <br></br>
+                <ul>{ingredsList}</ul>
             </div>
-                  
+            <br></br>
+            <br></br>      
             <div>
                 {instruction.map((value, index)=>(
                     <p> Step {index+1}: {value}</p>

@@ -1,5 +1,6 @@
 import os
 import requests
+import random
 from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
@@ -10,7 +11,7 @@ BASE_URL = "https://api.spoonacular.com/"
 
 HEADER = {"Content-Type": "application/json"}
 # this is the number of recipes returned
-NUM_RECIPES = 1
+NUM_RECIPES = 5
 
 SIZE = "100x100"
 
@@ -26,15 +27,18 @@ def search_recipe_by_ingred(str):
 
     recipe_ids = {}
     length = len(response_data)
+    if length > 0:
+        for i in range(length):
+            try:
+                recipe_ids[response_data[i]["id"]] = response_data[i]["title"]
+            except KeyError:
+                print(KeyError)
+                break
+        id = random.choice(list(recipe_ids.items()))
 
-    for i in range(length):
-        try:
-            recipe_ids[response_data[i]["id"]] = response_data[i]["title"]
-        except KeyError:
-            print(KeyError)
-            break
-
-    return recipe_ids
+        return id
+    else:
+        return ""
 
 
 def get_recipe_info(id):
@@ -43,7 +47,8 @@ def get_recipe_info(id):
 
     response = requests.get(url=BASE_URL + recep_info, headers=HEADER)
     response_data = response.json()
-    if response_data["image"]:
+
+    if "image" in response_data:
         recipe_img = response_data["image"]
     else:
         recipe_img = None
@@ -91,8 +96,6 @@ def get_nutritional_breakdown_png(id):
     if response.status_code == 200:
         with open("public/nutritional_breakdown.png", "wb") as f:
             f.write(response.content)
-
-    # return "True"
 
 
 def get_recipe_instructions(id):
@@ -144,8 +147,9 @@ def get_recipe_by_cuisine(str):
         except KeyError:
             print(KeyError)
             break
-
-    return recipe_ids_by_cuisine
+    id = random.choice(list(recipe_ids_by_cuisine.items()))
+    print(id)
+    return id
 
 
 def get_recipe_by_diet(str):
@@ -169,8 +173,11 @@ def get_recipe_by_diet(str):
             except KeyError:
                 print(KeyError)
                 break
+        print(recipe_ids_by_diet)
 
-        return recipe_ids_by_diet
+        id = random.choice(list(recipe_ids_by_diet.items()))
+        print(id)
+        return id
     else:
         return recipe_ids_by_diet
 
@@ -195,3 +202,6 @@ def search_recipe_by_calories(str):
             break
 
     return recipe_ids_by_calories
+
+
+search_recipe_by_ingred("sdfsd")

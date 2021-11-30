@@ -42,6 +42,8 @@ function Recipebox() {
 
     const [toDelete, setDelete] = useState('');
 
+    const[error, setError] = useState('');
+
     
 
     useEffect(() => {
@@ -86,6 +88,7 @@ function Recipebox() {
         setCU(false);
         setCal("");
         setIngred("");
+        setError('');
     }
 
     function refresh() {
@@ -93,6 +96,12 @@ function Recipebox() {
         setSearchType('');
         setMeal_ids(['']);
         setMeals(['']);
+            
+        setI(false);
+        setC(false);
+        setD(false);
+        setCU(false);
+        setError('');
 
     }
  
@@ -106,13 +115,20 @@ function Recipebox() {
             body: JSON.stringify({ 'searchCritria': searchCriteria, "searchType": searchType }),
         }).then((response) => response.json()).then((data) => {
             console.log(data);
-            setMeals([...meals,data.key]);
-            setMeal_ids([...meal_ids,data.value]);
-
-            setI(false);
-            setC(false);
-            setD(false);
-            setCU(false);
+            if(data.error){
+                console.log("error");
+                setError(data.error);
+            }else{
+                setMeals([...meals,data.key]);
+                setMeal_ids([...meal_ids,data.value]);
+    
+                setI(false);
+                setC(false);
+                setD(false);
+                setCU(false);
+                setError('');
+            }
+        
 
         });
         return;
@@ -151,13 +167,15 @@ function Recipebox() {
     function addToBoard(e) {
         console.log(e);
         console.log(day);
-     
+        setUpdate({});
+        console.log("test" + update);
         update[meal_ids[e]]= day;
     
 
         setUpdate(update);
         console.log(meal_ids[e]);
         setTitles(meals[e]);
+        setError('');
     }
 
     function addToDB() {
@@ -189,6 +207,7 @@ function Recipebox() {
             setSatId(data.sat_ids);
             setSun(data.sun_name);
             setSunId(data.sun_ids);
+            setError('');
           
         });
     }
@@ -216,6 +235,9 @@ function Recipebox() {
             setSatId(data.sat_ids);
             setSun(data.sun_name);
             setSunId(data.sun_ids);
+            setError('');
+
+            refresh();
           
            
         });
@@ -255,7 +277,7 @@ function Recipebox() {
     var sug_box = []
     for(var [index, value]of meals.entries()){
         sug_box.push( <div>
-            <button  style={active === index+"b" ? {backgroundColor: 'red' }: {}} className="recipe-button" value={meal_ids[index+1]} onClick={(e) => {recipe_page(e.target.value); setActive(index-1+"b"); addToBoard(index-1)}}> {meals[index+1]}</button>
+            <button  style={active === index+"b" ? {backgroundColor: 'red' }: {}} className="recipe-button" value={meal_ids[index+1]} onClick={(e) => {recipe_page(e.target.value); setActive(index-1+"b"); addToBoard(index+1)}}> {meals[index+1]}</button>
         </div>)
     
     }
@@ -313,7 +335,7 @@ function Recipebox() {
                             <br></br>
                             <label htmlFor="">Enter Ingredient</label>
                             <input data-testid="Enter_Ingredient" value={ingred} on onChangeCapture={(e) => {add(e.target.value); setIngred(e.target.value);}} id="ingreds" type="text" />
-                            
+                            <p> {error} </p>
                             <button onClick={send}>Add Ingredients</button>
 
 
@@ -328,6 +350,7 @@ function Recipebox() {
                             <br />
                             <div className="drop-diet">
                                 <select onChange={(e) => add(e.target.value)} id="diet" name="" placeholder=" ">
+                                    <option value='default'> Pick Diet </option>
                                     <option value="Gluten Free">Gluten Free</option>
                                     <option value="Ketogenic">Ketogenic</option>
                                     <option value="Vegetarian">Vegetarian</option>
@@ -351,6 +374,7 @@ function Recipebox() {
                             <br />
                             <div className="drop-cuisine">
                                 <select onChange={(e) => add(e.target.value)} id="cuisine" name="">
+                                    <option value='default'> Pick Cuisine </option>
                                     <option value="African">African</option>
                                     <option value="American">American</option>
                                     <option value="British">British</option>
@@ -381,7 +405,7 @@ function Recipebox() {
                             </div>
                             <button onClick={send}>Add Cuisine</button>
 
-                            <button onClick={refresh}> refresh</button>
+                            <button onClick={refresh}> Clear Suggestions</button>
 
                         </div>
                     </div>
@@ -391,7 +415,7 @@ function Recipebox() {
                         <h3>Suggestion Box</h3>   
                         <div className="add-to-mb">
                             <select onChange={(e) => setDay(e.target.value)} >
-                                <option value='default' disabled> Pick Day </option>
+                                <option value='default'> Pick Day </option>
                                 <option value="1">Monday</option>
                                 <option value="2">Tuesday</option>
                                 <option value="3">Wednesday</option>

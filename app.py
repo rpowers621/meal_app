@@ -448,11 +448,15 @@ def getSuggestions():
         print(recipe_ids)
     if searchType == "cuisine":
         recipe_ids = get_recipe_by_cuisine(searchCritria)
+    print("test")
+    print(recipe_ids)
+    if len(recipe_ids) > 0:
+        value = recipe_ids[0]
+        key = recipe_ids[1]
 
-    key = list(recipe_ids.values())
-    value = list(recipe_ids.keys())
-
-    return flask.jsonify({"key": key, "value": value})
+        return flask.jsonify({"key": key, "value": value})
+    else:
+        return flask.jsonify({"error": "Incorrect Ingredient"})
 
 
 @bp.route("/recipepage", methods=["POST"])
