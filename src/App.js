@@ -17,7 +17,7 @@ function App() {
     </div>
     <div className="App">
       <Switch>
-        <Route path="/Home"><Home /></Route>
+        <Route exact path="/"><Home /></Route>
         <Route path ="/Recipebox"><Recipebox /></Route>
         <Route path ="/Recipepage"><Recipepage /></Route>
         <Route path ="/About"><About /></Route>
