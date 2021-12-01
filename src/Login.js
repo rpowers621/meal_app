@@ -34,6 +34,17 @@ function Login() {
         console.clear();
         setShowloginButton(true);
         setShowlogoutButton(false);
+        UserProfile.setEmail("");
+        UserProfile.setName("");
+        setusername('');
+        setuseremail('');
+        setuserimage('');
+        fetch("/logout", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
     };
 
     function fetchEmail(email){

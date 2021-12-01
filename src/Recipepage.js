@@ -2,8 +2,7 @@ import './App.css'
 import { React, useEffect, useState } from 'react'
 import { useLocation } from 'react-router';
 import {useHistory } from 'react-router-dom';
-import {BrowserRouter, Route, Link} from 'react-router-dom';
-import Nutrition from './Nutritionbreakdown';
+
 
 
 function Recipepage() {
@@ -56,13 +55,6 @@ function Recipepage() {
          });
  
      }
-     const history2 = useHistory();
-    function nutrition(){
-        let path2 = '/nutritionbreakdown';
-        history2.push(
-           { pathname: path2}
-        );
-    } 
 
 
     function addToDB() {
@@ -147,10 +139,7 @@ for(const [index,value]of ingredients.entries()){
             </div>
           
             <footer>
-                <BrowserRouter>
-                    <Route path='/Nutritionbreakdown' component={Nutrition}/>
-                    <Link to='/Nutritionbreakdown'>Nutritional Breakdown</Link>
-                </BrowserRouter>
+              
             </footer>
         </div >
     );

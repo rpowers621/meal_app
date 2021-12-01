@@ -118,6 +118,16 @@ def loadUser(user_name):
     return User.query.get(user_name)
 
 
+@app.route("/logout", methods=["POST"])
+@login_required
+def logout():
+    logout_user()
+
+    print("out")
+
+    return flask.redirect(flask.url_for("bp.index"))
+
+
 @app.route("/")
 def main():
     return flask.redirect(flask.url_for("bp.index"))
@@ -125,9 +135,7 @@ def main():
 
 @app.route("/", methods=["POST"])
 def login():
-    print("in login test2")
     email = flask.request.json.get("email")
-    print(email)
     user = User.query.filter_by(email=email).first()
 
     if user:
@@ -228,7 +236,7 @@ def connect():
 
 @bp.route("/update", methods=["POST"])
 def update():
-    print("here")
+
     user = current_user.user_id
     update = flask.request.json.get("update")
     title = flask.request.json.get("title")
@@ -440,16 +448,16 @@ def getSuggestions():
     searchCritria = flask.request.json.get("searchCritria")
     if searchType == "ingredients":
         recipe_ids = search_recipe_by_ingred(searchCritria)
+
     if searchType == "calories":
-        print(searchCritria)
         recipe_ids = search_recipe_by_calories(searchCritria)
+
     if searchType == "diet":
         recipe_ids = get_recipe_by_diet(searchCritria)
-        print(recipe_ids)
+
     if searchType == "cuisine":
         recipe_ids = get_recipe_by_cuisine(searchCritria)
-    print("test")
-    print(recipe_ids)
+
     if len(recipe_ids) > 0:
         value = recipe_ids[0]
         key = recipe_ids[1]
@@ -525,4 +533,3 @@ app.register_blueprint(bp)
 
 if __name__ == "__main__":
     app.run(port=int(os.getenv("PORT", 3000)), debug=True)
-# host=os.getenv("IP", "0.0.0.0"),
