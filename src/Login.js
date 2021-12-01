@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import UserProfile from './UserProfile';
+import './App.css'
+
 const clientId = process.env.REACT_APP_CLIENTID;
 
 function Login() {
@@ -60,12 +62,13 @@ function Login() {
     }
 
     return (
-        <div>
-            <div className="user-info">
-                <img src={userimage} atl=""/>
+        <div className="row">
+            <div className="col">
+                <img src={userimage} width="40" atl=""/>
                 <p>{username}</p>
                 <p>{useremail}</p>
             </div>
+            <div className='col'>
             { showloginButton ?
                 <GoogleLogin
                     clientId={clientId}
@@ -84,6 +87,7 @@ function Login() {
                 >
                 </GoogleLogout> : null
             }
+            </div>
         </div>
     );
 }

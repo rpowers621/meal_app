@@ -210,6 +210,8 @@ function Recipebox() {
             setSunId(data.sun_ids);
             setError('');
             setActive('');
+            setMeal_ids(['']);
+            setMeals(['']);
           
         });
     }
@@ -280,7 +282,7 @@ function Recipebox() {
     for(var [index, value]of meals.entries()){
         if(value){
             sug_box.push( <div>
-                <button  style={active === index+"b" ? {backgroundColor: 'red' }: {}} className="recipe-button" value={value} onClick={(e) => {recipe_page(e.target.value); setActive(index+"b"); addToBoard(index)}}> {value}</button>
+                <button  style={active === index+"b" ? {backgroundColor: 'red' }: {}} className="recipe-button" value={value} onClick={(e) => {recipe_page(meal_ids[index]); setActive(index+"b"); addToBoard(index)}}> {value}</button>
                 
             </div>)
         }else{
