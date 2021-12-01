@@ -7,7 +7,7 @@ const Navbar = () => {
     <nav className="navbar">
       <h1>Plan your Mealboard!</h1>
       <div className="links">
-        <Link to="/Home" style={{
+        <Link to="/" style={{
           color: "white",
           backgroundColor: '#f1356d',
           borderRadius: '8px'
