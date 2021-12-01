@@ -8,10 +8,7 @@ import Recipebox from "./Recipebox";
 import Recipepage from "./Recipepage";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-
-
 function App() {
-  
   return (
     <Router>
     <Navbar />
