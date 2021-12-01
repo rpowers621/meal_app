@@ -15,9 +15,10 @@ function App() {
     <div className="g-signin">
       <Login />
     </div>
+    
     <div className="App">
       <Switch>
-        <Route exact path="/"><Home /></Route>
+        <Route exact path="/home"><Home /></Route> 
         <Route path ="/Recipebox"><Recipebox /></Route>
         <Route path ="/Recipepage"><Recipepage /></Route>
         <Route path ="/About"><About /></Route>

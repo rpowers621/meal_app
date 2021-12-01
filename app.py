@@ -123,14 +123,12 @@ def loadUser(user_name):
 def logout():
     logout_user()
 
-    print("out")
-
-    return flask.redirect(flask.url_for("bp.index"))
+    return flask.redirect(flask.url_for("bp.home"))
 
 
 @app.route("/")
 def main():
-    return flask.redirect(flask.url_for("bp.index"))
+    return flask.redirect(flask.url_for("bp.home"))
 
 
 @app.route("/", methods=["POST"])
@@ -142,7 +140,7 @@ def login():
         print("already user")
         login_user(user)
 
-        return flask.redirect(flask.url_for("bp.index"))
+        return flask.redirect(flask.url_for("bp.home"))
     else:
         user = User(email=email)
         db.session.add(user)
@@ -150,11 +148,11 @@ def login():
         login_user(user)
         print("user added")
 
-    return flask.redirect(flask.url_for("bp.index"))
+    return flask.redirect(flask.url_for("bp.home"))
 
 
-@bp.route("/index", methods=["GET", "POST"])
-def index():
+@bp.route("/home", methods=["GET", "POST"])
+def home():
     return flask.render_template("index.html")
 
 
