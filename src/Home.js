@@ -1,7 +1,7 @@
 import React from "react";
 import "./Home.css";
 import logo from './logo.png';
-import bowl from './bowl.png';
+import meal from './meal.png';
 
 function Homepage() {
     return (
@@ -20,7 +20,7 @@ function Homepage() {
                     <p> Are you in need of a weekly meal plan but can't seem to find one that fits you? The Culinary Army allows you browse through tons of weekly meal plan ideas to find one that suits you or you can create your own delicious meals customized to your preference. The possibilities are endless! </p>
                 </div>
                 <div class="image2">
-                    <img className="bowl" src={bowl} alt="bowl"></img>
+                    <img className="meal" src={meal} alt="meal"></img>
                 </div>
             </div>
         </div>
