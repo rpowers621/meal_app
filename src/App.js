@@ -6,17 +6,16 @@ import About from './About';
 import Contact from './Contact';
 import Recipebox from "./Recipebox";
 import Recipepage from "./Recipepage";
-import logo from './logo.png';
-import meal from './meal.png';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import'./App.css'
-
 
 function App() {
   return (
-    <>
     <Router>
     <Navbar />
+    <div className="g-signin">
+      <Login />
+    </div>
+    <div className="App">
       <Switch>
         <Route path="/Home"><Home /></Route>
         <Route path ="/Recipebox"><Recipebox /></Route>
@@ -24,22 +23,8 @@ function App() {
         <Route path ="/About"><About /></Route>
         <Route path="/Contact"><Contact /></Route>
       </Switch>
-  </Router>
-
-    <div className="content">
-  
-      <div className="text">
-          <img className="logo" src={logo} alt="logo"></img>
-          <h2> Meal Planning Made Easy</h2>
-          <p> Are you in need of a weekly meal plan but can't seem to find one that fits you? The Culinary Army allows you browse through tons of weekly meal plan ideas to find one that suits you or you can create your own delicious meals customized to your preference. The possibilities are endless! </p>
-      </div>
-      <div class="image2">
-          <img className="bowl" src={meal} alt="bowl"></img>
-      </div>
     </div>
-</>
-  
-
+  </Router>
   );
 }
 export default App;
