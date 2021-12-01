@@ -40,6 +40,10 @@ function Recipebox() {
     const [cal, setCal]= useState("");
     const [ingred, setIngred] = useState("");
 
+    const [toDelete, setDelete] = useState('');
+
+    const[error, setError] = useState('');
+
     
 
     useEffect(() => {
@@ -84,6 +88,7 @@ function Recipebox() {
         setCU(false);
         setCal("");
         setIngred("");
+        setError('');
     }
 
     function refresh() {
@@ -91,6 +96,12 @@ function Recipebox() {
         setSearchType('');
         setMeal_ids(['']);
         setMeals(['']);
+            
+        setI(false);
+        setC(false);
+        setD(false);
+        setCU(false);
+        setError('');
 
     }
  
@@ -104,13 +115,20 @@ function Recipebox() {
             body: JSON.stringify({ 'searchCritria': searchCriteria, "searchType": searchType }),
         }).then((response) => response.json()).then((data) => {
             console.log(data);
-            setMeals([...meals,data.key]);
-            setMeal_ids([...meal_ids,data.value]);
-
-            setI(false);
-            setC(false);
-            setD(false);
-            setCU(false);
+            if(data.error){
+                console.log("error");
+                setError(data.error);
+            }else{
+                setMeals([...meals,data.key]);
+                setMeal_ids([...meal_ids,data.value]);
+    
+                setI(false);
+                setC(false);
+                setD(false);
+                setCU(false);
+                setError('');
+            }
+        
 
         });
         return;
@@ -147,14 +165,17 @@ function Recipebox() {
     }
 
     function addToBoard(e) {
-        console.log(meal_ids[e]);
+        console.log(e);
         console.log(day);
-     
+        setUpdate({});
+        console.log("test" + update);
         update[meal_ids[e]]= day;
     
 
         setUpdate(update);
+        console.log(meal_ids[e]);
         setTitles(meals[e]);
+        setError('');
     }
 
     function addToDB() {
@@ -186,6 +207,7 @@ function Recipebox() {
             setSatId(data.sat_ids);
             setSun(data.sun_name);
             setSunId(data.sun_ids);
+            setError('');
           
         });
     }
@@ -213,55 +235,88 @@ function Recipebox() {
             setSatId(data.sat_ids);
             setSun(data.sun_name);
             setSunId(data.sun_ids);
+            setError('');
+
+            refresh();
           
            
         });
+    }
+
+    function deleteMeal(){
+        fetch("/delete", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "delete": toDelete}),
+        }).then((response) => response.json()).then((data) => {
+            console.log(data);
+       
+            setMon(data.mon_name);
+            setMonId(data.mon_ids);
+            setTues(data.tues_name);
+            setTuesId(data.tues_ids);
+            setWed(data.wed_name);
+            setWedId(data.wed_ids);
+            setThur(data.thur_name);
+            setThurId(data.thur_ids);
+            setFri(data.fri_name);
+            setFriId(data.fri_ids);
+            setSat(data.sat_name);
+            setSatId(data.sat_ids);
+            setSun(data.sun_name);
+            setSunId(data.sun_ids);
+          
+           
+        });
+    
     }
 
 
     var sug_box = []
     for(var [index, value]of meals.entries()){
         sug_box.push( <div>
-            <input checked={iSelect} onChange={(e) => addToBoard(e.target.value)} type="checkbox" name="ingreds"
-               value={index+1}/>
-            <button  style={active === index+1 ? {backgroundColor: 'red' }: {}}className="recipe-button" value={meal_ids[index+1]} onClick={(e) => {recipe_page(e.target.value); setActive(1)}}> {meals[index+1]}{meal_ids[index+1]}</button>
+            <button  style={active === index+"b" ? {backgroundColor: 'red' }: {}} className="recipe-button" value={meal_ids[index+1]} onClick={(e) => {recipe_page(e.target.value); setActive(index-1+"b"); addToBoard(index+1)}}> {meals[index+1]}</button>
         </div>)
+    
     }
+
 
 
     const mon_items = [];
     for(const [index,value]of mon.entries()){
-        mon_items.push(<button className="sug-but" style={active === index+"m" ? {backgroundColor: 'red' }: {}} value={monId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"m");}}>{value}</button>)
+        mon_items.push(<button className="sug-but" style={active === index+"m" ? {backgroundColor: 'red' }: {}} value={monId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"m"); setDelete(e.target.value);}}>{value}</button>)
     }
 
     const tues_items = [];
     for(const [index,value]of tues.entries()){
-        tues_items.push(<button className="sug-but" style={active === index+"t" ? {backgroundColor: 'red' }: {}} value={tuesId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"t");}}>{value}</button>)
+        tues_items.push(<button className="sug-but" style={active === index+"t" ? {backgroundColor: 'red' }: {}} value={tuesId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"t");setDelete(e.target.value);}}>{value}</button>)
     }
 
     const wed_items = [];
     for(const [index,value]of wed.entries()){
-        wed_items.push(<button className="sug-but" style={active === index+"w" ? {backgroundColor: 'red' }: {}} value={wedId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"w");}}>{value}</button>)
+        wed_items.push(<button className="sug-but" style={active === index+"w" ? {backgroundColor: 'red' }: {}} value={wedId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"w");setDelete(e.target.value);}}>{value}</button>)
     }
 
     const thur_items = [];
     for(const [index,value]of thur.entries()){
-        thur_items.push(<button  className="sug-but"style={active === index+"th" ? {backgroundColor: 'red' }: {}} value={thurId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"th");}}>{value}</button>)
+        thur_items.push(<button  className="sug-but"style={active === index+"th" ? {backgroundColor: 'red' }: {}} value={thurId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"th");setDelete(e.target.value);}}>{value}</button>)
     }
 
     const fri_items = [];
     for(const [index,value]of fri.entries()){
-        fri_items.push(<button className="sug-but" style={active === index+"f" ? {backgroundColor: 'red' }: {}} value={friId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"f");}}>{value}</button>)
+        fri_items.push(<button className="sug-but" style={active === index+"f" ? {backgroundColor: 'red' }: {}} value={friId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"f");setDelete(e.target.value);}}>{value}</button>)
     }
 
     const sat_items = [];
     for(const [index,value]of sat.entries()){
-        sat_items.push(<button  className="sug-but" style={active === index+"s" ? {backgroundColor: 'red' }: {}} value={satId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"s");}}>{value}</button>)
+        sat_items.push(<button  className="sug-but" style={active === index+"s" ? {backgroundColor: 'red' }: {}} value={satId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"s");setDelete(e.target.value);}}>{value}</button>)
     }
 
     const sun_items = [];
     for(const [index,value]of sun.entries()){
-        sun_items.push(<button className="sug-but" style={active === index+"sn" ? {backgroundColor: 'red' }: {}} value={sunId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"sn");}}>{value}</button>)
+        sun_items.push(<button className="sug-but" style={active === index+"sn" ? {backgroundColor: 'red' }: {}} value={sunId[index]} onClick={(e)=> {recipe_page(e.target.value); setActive(index+"sn");setDelete(e.target.value);}}>{value}</button>)
     }
     return (
 
@@ -280,7 +335,7 @@ function Recipebox() {
                             <br></br>
                             <label htmlFor="">Enter Ingredient</label>
                             <input data-testid="Enter_Ingredient" value={ingred} on onChangeCapture={(e) => {add(e.target.value); setIngred(e.target.value);}} id="ingreds" type="text" />
-                            
+                            <p> {error} </p>
                             <button onClick={send}>Add Ingredients</button>
 
 
@@ -295,6 +350,7 @@ function Recipebox() {
                             <br />
                             <div className="drop-diet">
                                 <select onChange={(e) => add(e.target.value)} id="diet" name="" placeholder=" ">
+                                    <option value='default'> Pick Diet </option>
                                     <option value="Gluten Free">Gluten Free</option>
                                     <option value="Ketogenic">Ketogenic</option>
                                     <option value="Vegetarian">Vegetarian</option>
@@ -318,12 +374,12 @@ function Recipebox() {
                             <br />
                             <div className="drop-cuisine">
                                 <select onChange={(e) => add(e.target.value)} id="cuisine" name="">
+                                    <option value='default'> Pick Cuisine </option>
                                     <option value="African">African</option>
                                     <option value="American">American</option>
                                     <option value="British">British</option>
                                     <option value="Cajun">Cajun</option>
                                     <option value="Caribbean">Caribbean</option>
-                                    <option value="Chinese">Chinese</option>
                                     <option value="Eastern European">Eastern European</option>
                                     <option value="European">European</option>
                                     <option value="French">French</option>
@@ -348,7 +404,7 @@ function Recipebox() {
                             </div>
                             <button onClick={send}>Add Cuisine</button>
 
-                            <button onClick={refresh}> refresh</button>
+                            <button onClick={refresh}> Clear Suggestions</button>
 
                         </div>
                     </div>
@@ -358,7 +414,7 @@ function Recipebox() {
                         <h3>Suggestion Box</h3>   
                         <div className="add-to-mb">
                             <select onChange={(e) => setDay(e.target.value)} >
-                                <option value='default' disabled> Pick Day </option>
+                                <option value='default'> Pick Day </option>
                                 <option value="1">Monday</option>
                                 <option value="2">Tuesday</option>
                                 <option value="3">Wednesday</option>
@@ -369,14 +425,12 @@ function Recipebox() {
                             </select>
                             
                         </div>
-
                         {sug_box}
 
                        
 
                         <button onClick={addToDB}>Add</button>
 
-                        <button onClick={route}>Go to Recipe page!</button>
                     </div>
                 </div>
                 <div className='col'>
@@ -387,11 +441,7 @@ function Recipebox() {
                                 {mon_items}
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className="row-bottom">
-                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
-                            </div>
-                        </div>
+               
                     </div>
                 </div>
                 <div className='col'>
@@ -402,11 +452,7 @@ function Recipebox() {
                             {tues_items}
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className="row-bottom">
-                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
-                            </div>
-                        </div>
+               
                         
                     </div>
                 </div>
@@ -418,11 +464,7 @@ function Recipebox() {
                             {wed_items}
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className="row-bottom">
-                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
-                            </div>
-                        </div>
+                  
                         
                     </div>
                 </div>
@@ -434,11 +476,7 @@ function Recipebox() {
                             {thur_items}
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className="row-bottom">
-                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
-                            </div>
-                        </div>
+                 
                     
                     </div>
                 </div>
@@ -450,11 +488,7 @@ function Recipebox() {
                             {fri_items}
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className="row-bottom">
-                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
-                            </div>
-                        </div>
+                
                         
                     </div>
                 </div>
@@ -466,11 +500,7 @@ function Recipebox() {
                             {sat_items}
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className="row-bottom">
-                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
-                            </div>
-                        </div>
+                     
                     </div>
                 </div>
                 <div className='col'>
@@ -481,17 +511,15 @@ function Recipebox() {
                             {sun_items}
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className="row-bottom">
-                                <button className="rec-but" onClick={route}>Go to Recipe page!</button>
-                            </div>
-                        </div>
+                     
                     </div>
                 </div>
             </div>
             <br></br>
             <div> 
                 <button onClick={resetMealboard}>Reset Mealboard</button> 
+                <button onClick={route}>Go to Recipe page!</button>
+                <button onClick={deleteMeal}> Delete Recipe</button>
             </div>
         </div>
     );

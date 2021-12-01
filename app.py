@@ -62,6 +62,57 @@ class RecipeUser(db.Model):
 db.create_all()
 
 
+def getDBInfo():
+    user = current_user.user_id
+
+    mon = RecipeUser.query.filter_by(user_id=user, day=1)
+    mon_ids = [a.recipe_id for a in mon]
+    mon_name = [c.recipe_name for c in mon]
+
+    tues = RecipeUser.query.filter_by(user_id=user, day=2)
+    tues_ids = [a.recipe_id for a in tues]
+    tues_name = [c.recipe_name for c in tues]
+
+    wed = RecipeUser.query.filter_by(user_id=user, day=3)
+    wed_ids = [a.recipe_id for a in wed]
+    wed_name = [c.recipe_name for c in wed]
+
+    thur = RecipeUser.query.filter_by(user_id=user, day=4)
+    thur_ids = [a.recipe_id for a in thur]
+    thur_name = [c.recipe_name for c in thur]
+
+    fri = RecipeUser.query.filter_by(user_id=user, day=5)
+    fri_ids = [a.recipe_id for a in fri]
+    fri_name = [c.recipe_name for c in fri]
+
+    sat = RecipeUser.query.filter_by(user_id=user, day=6)
+    sat_ids = [a.recipe_id for a in sat]
+    sat_name = [c.recipe_name for c in sat]
+
+    sun = RecipeUser.query.filter_by(user_id=user, day=7)
+    sun_ids = [a.recipe_id for a in sun]
+    sun_name = [c.recipe_name for c in sun]
+
+    return flask.jsonify(
+        {
+            "mon_ids": mon_ids,
+            "mon_name": mon_name,
+            "tues_ids": tues_ids,
+            "tues_name": tues_name,
+            "wed_ids": wed_ids,
+            "wed_name": wed_name,
+            "thur_ids": thur_ids,
+            "thur_name": thur_name,
+            "fri_ids": fri_ids,
+            "fri_name": fri_name,
+            "sat_ids": sat_ids,
+            "sat_name": sat_name,
+            "sun_ids": sun_ids,
+            "sun_name": sun_name,
+        }
+    )
+
+
 @login_manager.user_loader
 def loadUser(user_name):
     return User.query.get(user_name)
@@ -323,6 +374,65 @@ def reset():
     )
 
 
+@bp.route("/delete", methods=["POST"])
+def deleteMeal():
+    user = current_user.user_id
+    toDelete = flask.request.json.get("delete")
+
+    db.session.delete(
+        RecipeUser.query.filter_by(user_id=user, recipe_id=toDelete).first()
+    )
+
+    db.session.commit()
+
+    mon = RecipeUser.query.filter_by(user_id=user, day=1)
+    mon_ids = [a.recipe_id for a in mon]
+    mon_name = [c.recipe_name for c in mon]
+
+    tues = RecipeUser.query.filter_by(user_id=user, day=2)
+    tues_ids = [a.recipe_id for a in tues]
+    tues_name = [c.recipe_name for c in tues]
+
+    wed = RecipeUser.query.filter_by(user_id=user, day=3)
+    wed_ids = [a.recipe_id for a in wed]
+    wed_name = [c.recipe_name for c in wed]
+
+    thur = RecipeUser.query.filter_by(user_id=user, day=4)
+    thur_ids = [a.recipe_id for a in thur]
+    thur_name = [c.recipe_name for c in thur]
+
+    fri = RecipeUser.query.filter_by(user_id=user, day=5)
+    fri_ids = [a.recipe_id for a in fri]
+    fri_name = [c.recipe_name for c in fri]
+
+    sat = RecipeUser.query.filter_by(user_id=user, day=6)
+    sat_ids = [a.recipe_id for a in sat]
+    sat_name = [c.recipe_name for c in sat]
+
+    sun = RecipeUser.query.filter_by(user_id=user, day=7)
+    sun_ids = [a.recipe_id for a in sun]
+    sun_name = [c.recipe_name for c in sun]
+
+    return flask.jsonify(
+        {
+            "mon_ids": mon_ids,
+            "mon_name": mon_name,
+            "tues_ids": tues_ids,
+            "tues_name": tues_name,
+            "wed_ids": wed_ids,
+            "wed_name": wed_name,
+            "thur_ids": thur_ids,
+            "thur_name": thur_name,
+            "fri_ids": fri_ids,
+            "fri_name": fri_name,
+            "sat_ids": sat_ids,
+            "sat_name": sat_name,
+            "sun_ids": sun_ids,
+            "sun_name": sun_name,
+        }
+    )
+
+
 @bp.route("/getsuggestions", methods=["POST"])
 def getSuggestions():
 
@@ -338,11 +448,15 @@ def getSuggestions():
         print(recipe_ids)
     if searchType == "cuisine":
         recipe_ids = get_recipe_by_cuisine(searchCritria)
+    print("test")
+    print(recipe_ids)
+    if len(recipe_ids) > 0:
+        value = recipe_ids[0]
+        key = recipe_ids[1]
 
-    key = list(recipe_ids.values())
-    value = list(recipe_ids.keys())
-
-    return flask.jsonify({"key": key, "value": value})
+        return flask.jsonify({"key": key, "value": value})
+    else:
+        return flask.jsonify({"error": "Incorrect Ingredient"})
 
 
 @bp.route("/recipepage", methods=["POST"])
@@ -360,9 +474,11 @@ def recipe_page():
             source_url,
             dish_types,
             ingredients,
+            ingred_imgs,
         ) = get_recipe_info(recipe_id)
 
         instructions = get_recipe_instructions(recipe_id)
+        get_nutritional_breakdown_png(recipe_id)
 
     else:
         (
@@ -374,7 +490,11 @@ def recipe_page():
             dish_types,
             ingredients,
             instructions,
+            ingred_imgs,
+            id,
         ) = (
+            None,
+            None,
             None,
             None,
             None,
@@ -393,6 +513,8 @@ def recipe_page():
         "dish_types": dish_types,
         "ingredients": ingredients,
         "instructions": instructions,
+        "ingred_imgs": ingred_imgs,
+        "id": recipe_id,
     }
     data = json.dumps(DATA)
 
