@@ -65,51 +65,73 @@ db.create_all()
 def getDBInfo():
     user = current_user.user_id
 
-    mon = RecipeUser.query.filter_by(user_id=user, day=1)
-    mon_ids = [a.recipe_id for a in mon]
-    mon_name = [c.recipe_name for c in mon]
+    recipes = RecipeUser.query.filter_by(user_id=user).all()
 
-    tues = RecipeUser.query.filter_by(user_id=user, day=2)
-    tues_ids = [a.recipe_id for a in tues]
-    tues_name = [c.recipe_name for c in tues]
+    has_recipes_saved = len(recipes) > 0
 
-    wed = RecipeUser.query.filter_by(user_id=user, day=3)
-    wed_ids = [a.recipe_id for a in wed]
-    wed_name = [c.recipe_name for c in wed]
+    if has_recipes_saved:
 
-    thur = RecipeUser.query.filter_by(user_id=user, day=4)
-    thur_ids = [a.recipe_id for a in thur]
-    thur_name = [c.recipe_name for c in thur]
+        mon = RecipeUser.query.filter_by(user_id=user, day=1)
+        mon_ids = [a.recipe_id for a in mon]
+        mon_name = [c.recipe_name for c in mon]
 
-    fri = RecipeUser.query.filter_by(user_id=user, day=5)
-    fri_ids = [a.recipe_id for a in fri]
-    fri_name = [c.recipe_name for c in fri]
+        tues = RecipeUser.query.filter_by(user_id=user, day=2)
+        tues_ids = [a.recipe_id for a in tues]
+        tues_name = [c.recipe_name for c in tues]
 
-    sat = RecipeUser.query.filter_by(user_id=user, day=6)
-    sat_ids = [a.recipe_id for a in sat]
-    sat_name = [c.recipe_name for c in sat]
+        wed = RecipeUser.query.filter_by(user_id=user, day=3)
+        wed_ids = [a.recipe_id for a in wed]
+        wed_name = [c.recipe_name for c in wed]
 
-    sun = RecipeUser.query.filter_by(user_id=user, day=7)
-    sun_ids = [a.recipe_id for a in sun]
-    sun_name = [c.recipe_name for c in sun]
+        thur = RecipeUser.query.filter_by(user_id=user, day=4)
+        thur_ids = [a.recipe_id for a in thur]
+        thur_name = [c.recipe_name for c in thur]
 
-    return flask.jsonify(
-        {
-            "mon_ids": mon_ids,
-            "mon_name": mon_name,
-            "tues_ids": tues_ids,
-            "tues_name": tues_name,
-            "wed_ids": wed_ids,
-            "wed_name": wed_name,
-            "thur_ids": thur_ids,
-            "thur_name": thur_name,
-            "fri_ids": fri_ids,
-            "fri_name": fri_name,
-            "sat_ids": sat_ids,
-            "sat_name": sat_name,
-            "sun_ids": sun_ids,
-            "sun_name": sun_name,
-        }
+        fri = RecipeUser.query.filter_by(user_id=user, day=5)
+        fri_ids = [a.recipe_id for a in fri]
+        fri_name = [c.recipe_name for c in fri]
+
+        sat = RecipeUser.query.filter_by(user_id=user, day=6)
+        sat_ids = [a.recipe_id for a in sat]
+        sat_name = [c.recipe_name for c in sat]
+
+        sun = RecipeUser.query.filter_by(user_id=user, day=7)
+        sun_ids = [a.recipe_id for a in sun]
+        sun_name = [c.recipe_name for c in sun]
+
+    else:
+        print("no recipes")
+
+        mon_name = [""]
+        mon_ids = [""]
+        tues_name = [""]
+        tues_ids = [""]
+        wed_name = [""]
+        wed_ids = [""]
+        thur_name = [""]
+        thur_ids = [""]
+        fri_name = [""]
+        fri_ids = [""]
+        sat_name = [""]
+        sat_ids = [""]
+        sun_name = [""]
+        sun_ids = [""]
+
+    return (
+        mon_ids,
+        mon_name,
+        tues_ids,
+        tues_name,
+        wed_ids,
+        wed_name,
+        thur_ids,
+        thur_name,
+        fri_ids,
+        fri_name,
+        sat_ids,
+        sat_name,
+        sun_ids,
+        sun_name,
     )
 
 
@@ -158,59 +180,22 @@ def home():
 
 @bp.route("/connectDB", methods=["POST"])
 def connect():
-    user = current_user.user_id
-
-    recipes = RecipeUser.query.filter_by(user_id=user).all()
-
-    has_recipes_saved = len(recipes) > 0
-
-    mon = RecipeUser.query.filter_by(user_id=user, day=1)
-    mon_ids = [a.recipe_id for a in mon]
-    mon_name = [c.recipe_name for c in mon]
-
-    tues = RecipeUser.query.filter_by(user_id=user, day=2)
-    tues_ids = [a.recipe_id for a in tues]
-    tues_name = [c.recipe_name for c in tues]
-
-    wed = RecipeUser.query.filter_by(user_id=user, day=3)
-    wed_ids = [a.recipe_id for a in wed]
-    wed_name = [c.recipe_name for c in wed]
-
-    thur = RecipeUser.query.filter_by(user_id=user, day=4)
-    thur_ids = [a.recipe_id for a in thur]
-    thur_name = [c.recipe_name for c in thur]
-
-    fri = RecipeUser.query.filter_by(user_id=user, day=5)
-    fri_ids = [a.recipe_id for a in fri]
-    fri_name = [c.recipe_name for c in fri]
-
-    sat = RecipeUser.query.filter_by(user_id=user, day=6)
-    sat_ids = [a.recipe_id for a in sat]
-    sat_name = [c.recipe_name for c in sat]
-
-    sun = RecipeUser.query.filter_by(user_id=user, day=7)
-    sun_ids = [a.recipe_id for a in sun]
-    sun_name = [c.recipe_name for c in sun]
-
-    if has_recipes_saved:
-        pass
-    else:
-        print("no recipes")
-
-        mon_name = [""]
-        mon_ids = [""]
-        tues_name = [""]
-        tues_ids = [""]
-        wed_name = [""]
-        wed_ids = [""]
-        thur_name = [""]
-        thur_ids = [""]
-        fri_name = [""]
-        fri_ids = [""]
-        sat_name = [""]
-        sat_ids = [""]
-        sun_name = [""]
-        sun_ids = [""]
+    (
+        mon_ids,
+        mon_name,
+        tues_ids,
+        tues_name,
+        wed_ids,
+        wed_name,
+        thur_ids,
+        thur_name,
+        fri_ids,
+        fri_name,
+        sat_ids,
+        sat_name,
+        sun_ids,
+        sun_name,
+    ) = getDBInfo()
 
     return flask.jsonify(
         {
@@ -276,33 +261,22 @@ def update():
         )
         db.session.commit()
 
-    mon = RecipeUser.query.filter_by(user_id=user, day=1)
-    mon_ids = [a.recipe_id for a in mon]
-    mon_name = [c.recipe_name for c in mon]
-
-    tues = RecipeUser.query.filter_by(user_id=user, day=2)
-    tues_ids = [a.recipe_id for a in tues]
-    tues_name = [c.recipe_name for c in tues]
-
-    wed = RecipeUser.query.filter_by(user_id=user, day=3)
-    wed_ids = [a.recipe_id for a in wed]
-    wed_name = [c.recipe_name for c in wed]
-
-    thur = RecipeUser.query.filter_by(user_id=user, day=4)
-    thur_ids = [a.recipe_id for a in thur]
-    thur_name = [c.recipe_name for c in thur]
-
-    fri = RecipeUser.query.filter_by(user_id=user, day=5)
-    fri_ids = [a.recipe_id for a in fri]
-    fri_name = [c.recipe_name for c in fri]
-
-    sat = RecipeUser.query.filter_by(user_id=user, day=6)
-    sat_ids = [a.recipe_id for a in sat]
-    sat_name = [c.recipe_name for c in sat]
-
-    sun = RecipeUser.query.filter_by(user_id=user, day=7)
-    sun_ids = [a.recipe_id for a in sun]
-    sun_name = [c.recipe_name for c in sun]
+        (
+            mon_ids,
+            mon_name,
+            tues_ids,
+            tues_name,
+            wed_ids,
+            wed_name,
+            thur_ids,
+            thur_name,
+            fri_ids,
+            fri_name,
+            sat_ids,
+            sat_name,
+            sun_ids,
+            sun_name,
+        ) = getDBInfo()
 
     return flask.jsonify(
         {
@@ -332,33 +306,22 @@ def reset():
 
     db.session.commit()
 
-    mon = RecipeUser.query.filter_by(user_id=user, day=1)
-    mon_ids = [a.recipe_id for a in mon]
-    mon_name = [c.recipe_name for c in mon]
-
-    tues = RecipeUser.query.filter_by(user_id=user, day=2)
-    tues_ids = [a.recipe_id for a in tues]
-    tues_name = [c.recipe_name for c in tues]
-
-    wed = RecipeUser.query.filter_by(user_id=user, day=3)
-    wed_ids = [a.recipe_id for a in wed]
-    wed_name = [c.recipe_name for c in wed]
-
-    thur = RecipeUser.query.filter_by(user_id=user, day=4)
-    thur_ids = [a.recipe_id for a in thur]
-    thur_name = [c.recipe_name for c in thur]
-
-    fri = RecipeUser.query.filter_by(user_id=user, day=5)
-    fri_ids = [a.recipe_id for a in fri]
-    fri_name = [c.recipe_name for c in fri]
-
-    sat = RecipeUser.query.filter_by(user_id=user, day=6)
-    sat_ids = [a.recipe_id for a in sat]
-    sat_name = [c.recipe_name for c in sat]
-
-    sun = RecipeUser.query.filter_by(user_id=user, day=7)
-    sun_ids = [a.recipe_id for a in sun]
-    sun_name = [c.recipe_name for c in sun]
+    (
+        mon_ids,
+        mon_name,
+        tues_ids,
+        tues_name,
+        wed_ids,
+        wed_name,
+        thur_ids,
+        thur_name,
+        fri_ids,
+        fri_name,
+        sat_ids,
+        sat_name,
+        sun_ids,
+        sun_name,
+    ) = getDBInfo()
 
     return flask.jsonify(
         {
@@ -391,33 +354,22 @@ def deleteMeal():
 
     db.session.commit()
 
-    mon = RecipeUser.query.filter_by(user_id=user, day=1)
-    mon_ids = [a.recipe_id for a in mon]
-    mon_name = [c.recipe_name for c in mon]
-
-    tues = RecipeUser.query.filter_by(user_id=user, day=2)
-    tues_ids = [a.recipe_id for a in tues]
-    tues_name = [c.recipe_name for c in tues]
-
-    wed = RecipeUser.query.filter_by(user_id=user, day=3)
-    wed_ids = [a.recipe_id for a in wed]
-    wed_name = [c.recipe_name for c in wed]
-
-    thur = RecipeUser.query.filter_by(user_id=user, day=4)
-    thur_ids = [a.recipe_id for a in thur]
-    thur_name = [c.recipe_name for c in thur]
-
-    fri = RecipeUser.query.filter_by(user_id=user, day=5)
-    fri_ids = [a.recipe_id for a in fri]
-    fri_name = [c.recipe_name for c in fri]
-
-    sat = RecipeUser.query.filter_by(user_id=user, day=6)
-    sat_ids = [a.recipe_id for a in sat]
-    sat_name = [c.recipe_name for c in sat]
-
-    sun = RecipeUser.query.filter_by(user_id=user, day=7)
-    sun_ids = [a.recipe_id for a in sun]
-    sun_name = [c.recipe_name for c in sun]
+    (
+        mon_ids,
+        mon_name,
+        tues_ids,
+        tues_name,
+        wed_ids,
+        wed_name,
+        thur_ids,
+        thur_name,
+        fri_ids,
+        fri_name,
+        sat_ids,
+        sat_name,
+        sun_ids,
+        sun_name,
+    ) = getDBInfo()
 
     return flask.jsonify(
         {
@@ -530,6 +482,5 @@ def recipe_page():
 app.register_blueprint(bp)
 
 if __name__ == "__main__":
-    app.run(
-        host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)), debug=True
-    )
+    app.run(port=int(os.getenv("PORT", 3000)), debug=True)
+# host=os.getenv("IP", "0.0.0.0"),

@@ -14,15 +14,15 @@ function Recipepage() {
     const [readyMins, setReadyMins] =useState('');
     const [recipeImg, setRecipeImg]= useState('');
     const [sourceURL, setSoureURL] =useState('');
-    const [dishType, setDishType]= useState('');
+
     const [ingredients, setIngredients] =useState([]);
-    const [ingred_imgs, setIngredImg] = useState([]);
+   
     const [instruction, setInstruction]= useState([]);
 
     const [day, setDay] = useState('');
     const [id, setId] =useState("");
     const [update, setUpdate] = useState({});
-    const [titles, setTitles] = useState({});
+   
 
     const [message, setMessage] = useState("");
     
@@ -38,9 +38,7 @@ function Recipepage() {
         setReadyMins(location.state.detail.ready_in_mins);
         setRecipeImg(location.state.detail.recipe_img);
         setSoureURL(location.state.detail.source_url);
-        setDishType(location.state.detail.dish_type);
         setIngredients(location.state.detail.ingredients);
-        setIngredImg(location.state.detail.ingred_imgs);
         setInstruction(location.state.detail.instructions);
         setId(location.state.detail.id)
     }, [location]);

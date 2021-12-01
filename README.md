@@ -54,6 +54,8 @@ This README.md explains how to take Spoonacular web API and use them to create a
 > installs React Routing version 5.2.0 
 11. npm i react-google-login
 > install required library for Google Login logic
+12. npm install @formspree/react
+> install required library for the Contact Page
 
 
 
