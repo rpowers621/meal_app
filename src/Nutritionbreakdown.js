@@ -11,5 +11,3 @@ function Nutrition(){
         </div>
     );
 } export default Nutrition;
-   
- 

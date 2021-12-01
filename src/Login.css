@@ -1,0 +1,15 @@
+.g-signin{
+    position: absolute;
+  
+    top: 8%;
+    right: 1%;
+    margin-top: -50px;
+    margin-left: -50px;
+  }
+  
+  .user-info {
+    position: absolute;
+    flex-direction: row;
+    top: -50%;
+    right: 70%;
+  }

@@ -1,94 +1,88 @@
-import React, { useState } from 'react';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
-import UserProfile from './UserProfile';
-import './App.css'
-
+import React, { useState } from "react";
+import { GoogleLogin, GoogleLogout, useGoogleLogin } from "react-google-login";
+import UserProfile from "./UserProfile";
+import "./Login.css";
 const clientId = process.env.REACT_APP_CLIENTID;
+const redirectUri = process.env.REDIRECT_URI;
+// added redirect for google api
 
 function Login() {
-   
 
-    const [username, setusername] = useState("");
-    const [useremail, setuseremail] = useState("");
-    const [userimage, setuserimage] = useState("");
 
-    const [showloginButton, setShowloginButton] = useState(true);
-    const [showlogoutButton, setShowlogoutButton] = useState(false);
-    const onLoginSuccess = (res) => {
-        console.log('Login Success:', res.profileObj);
-        setShowloginButton(false);
-        setShowlogoutButton(true);
-        setusername(res.profileObj.name);
-        setuseremail(res.profileObj.email);
-        setuserimage(res.profileObj.imageUrl);
-        UserProfile.setEmail(res.profileObj.email);
-        UserProfile.setName(res.profileObj.name);
-        fetchEmail(res.profileObj.email);
-        
-    };
+  const [username, setusername] = useState("");
+  const [useremail, setuseremail] = useState("");
+  const [userimage, setuserimage] = useState("");
 
-    const onLoginFailure = (res) => {
-        console.log('Login Failed:', res);
-    };
+  const [showloginButton, setShowloginButton] = useState(true);
+  const [showlogoutButton, setShowlogoutButton] = useState(false);
+  const onLoginSuccess = (res) => {
+    console.log("Login Success:", res.profileObj);
+    setShowloginButton(false);
+    setShowlogoutButton(true);
+    setusername(res.profileObj.name);
+    setuseremail(res.profileObj.email);
+    setuserimage(res.profileObj.imageUrl);
+    UserProfile.setEmail(res.profileObj.email);
+    UserProfile.setName(res.profileObj.name);
+    fetchEmail(res.profileObj.email);
+  };
 
-    const onSignoutSuccess = () => {
-        alert("You have been logged out successfully");
-        console.clear();
-        setShowloginButton(true);
-        setShowlogoutButton(false);
-        UserProfile.setEmail("");
-        UserProfile.setName("");
-        setusername('');
-        setuseremail('');
-        setuserimage('');
-        fetch("/logout", {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-    };
+  const onLoginFailure = (res) => {
+    console.log("Login Failed:", res);
+  };
 
-    function fetchEmail(email){
+  const onSignoutSuccess = () => {
+    alert("You have been logged out successfully");
+    console.clear();
+    setShowloginButton(true);
+    setShowlogoutButton(false);
+  };
 
-        fetch("/", {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify( {'email': email}),
-          });
-   
-    }
+  // useState for google api
+  const { signIn, loaded } = useGoogleLogin({
+    onSuccess: onLoginSuccess,
+    clientId: clientId,
+    onFailure: onLoginFailure,
+    redirectUri: redirectUri,
+  });
 
-    return (
-        <div className="row">
-            <div className="col">
-                <img src={userimage} width="40" atl=""/>
-                <p>{username}</p>
-                <p>{useremail}</p>
-            </div>
-            <div className='col'>
-            { showloginButton ?
-                <GoogleLogin
-                    clientId={clientId}
-                    buttonText="Sign In"
-                    onSuccess={onLoginSuccess}
-                    onFailure={onLoginFailure}
-                    cookiePolicy={'single_host_origin'}
-                    isSignedIn={true}
-                /> : null}
+  function fetchEmail(email) {
+    fetch("/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email }),
+    });
+  }
 
-            { showlogoutButton ?
-                <GoogleLogout
-                    clientId={clientId}
-                    buttonText="Sign Out"
-                    onLogoutSuccess={onSignoutSuccess}
-                >
-                </GoogleLogout> : null
-            }
-            </div>
-        </div>
-    );
+  return (
+    <div>
+      <div className="user-info">
+        <img src={userimage} atl="" />
+        <p>{username}</p>
+        <p>{useremail}</p>
+      </div>
+      {showloginButton ? (
+        // <GoogleLogin
+        //   clientId={clientId}
+        //   buttonText="Sign In"
+        //   onSuccess={onLoginSuccess}
+        //   onFailure={onLoginFailure}
+        //   cookiePolicy={"single_host_origin"}
+        //   isSignedIn={true}
+        // />
+        <button onClick={signIn}>Button</button>
+      ) : null}
+
+      {showlogoutButton ? (
+        <GoogleLogout
+          clientId={clientId}
+          buttonText="Sign Out"
+          onLogoutSuccess={onSignoutSuccess}
+        ></GoogleLogout>
+      ) : null}
+    </div>
+  );
 }
 export default Login;

@@ -1,5 +1,9 @@
 import React from 'react';
 import Navbar from './Navbar';
+import Login from './Login';
+import Home from './Home';
+import About from './About';
+import Contact from './Contact';
 import Recipebox from "./Recipebox";
 import Recipepage from "./Recipepage";
 import logo from './logo.png';
@@ -8,17 +12,17 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import'./App.css'
 
 
-
-
 function App() {
-  
   return (
     <>
     <Router>
     <Navbar />
       <Switch>
+        <Route path="/Home"><Home /></Route>
         <Route path ="/Recipebox"><Recipebox /></Route>
         <Route path ="/Recipepage"><Recipepage /></Route>
+        <Route path ="/About"><About /></Route>
+        <Route path="/Contact"><Contact /></Route>
       </Switch>
   </Router>
 
@@ -38,5 +42,4 @@ function App() {
 
   );
 }
-
 export default App;
