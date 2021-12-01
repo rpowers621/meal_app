@@ -89,6 +89,7 @@ function Recipebox() {
         setCal("");
         setIngred("");
         setError('');
+        setActive('');
     }
 
     function refresh() {
@@ -127,6 +128,7 @@ function Recipebox() {
                 setD(false);
                 setCU(false);
                 setError('');
+                setActive('');
             }
         
 
@@ -168,7 +170,6 @@ function Recipebox() {
         console.log(e);
         console.log(day);
         setUpdate({});
-        console.log("test" + update);
         update[meal_ids[e]]= day;
     
 
@@ -208,6 +209,7 @@ function Recipebox() {
             setSun(data.sun_name);
             setSunId(data.sun_ids);
             setError('');
+            setActive('');
           
         });
     }
@@ -276,11 +278,21 @@ function Recipebox() {
 
     var sug_box = []
     for(var [index, value]of meals.entries()){
-        sug_box.push( <div>
-            <button  style={active === index+"b" ? {backgroundColor: 'red' }: {}} className="recipe-button" value={meal_ids[index+1]} onClick={(e) => {recipe_page(e.target.value); setActive(index-1+"b"); addToBoard(index+1)}}> {meals[index+1]}</button>
-        </div>)
+        if(value){
+            sug_box.push( <div>
+                <button  style={active === index+"b" ? {backgroundColor: 'red' }: {}} className="recipe-button" value={value} onClick={(e) => {recipe_page(e.target.value); setActive(index+"b"); addToBoard(index)}}> {value}</button>
+                
+            </div>)
+        }else{
+            continue;
+        }
     
     }
+    const greeting = [];
+    if(UserProfile.getName()){
+        greeting.push( <h1> {UserProfile.getName()}&apos;s Mealboard</h1>)
+    }
+   
 
 
 
@@ -321,9 +333,9 @@ function Recipebox() {
     return (
 
         <div className="box">
-            <h1> {UserProfile.getName()}&apos;s Mealboard</h1>
+           {greeting}
             <div className="row">
-
+             
                 <div className="col">
                     <div className="recipe_search_box">
                         <h1>Search For Recipes</h1>
