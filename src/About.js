@@ -1,5 +1,6 @@
 import React from 'react';
 import coffee from './coffee.jpeg';
+import "./About.css";
 
 function About() {
     return (

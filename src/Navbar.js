@@ -1,12 +1,13 @@
 import { Link} from 'react-router-dom';
-import Login from './Login'
+import "./Navbar.css";
+
 
 const Navbar = () => {
   return (
     <nav className="navbar">
       <h1>Plan your Mealboard!</h1>
       <div className="links">
-        <Link to="/" style={{
+        <Link to="/Home" style={{
           color: "white",
           backgroundColor: '#f1356d',
           borderRadius: '8px'

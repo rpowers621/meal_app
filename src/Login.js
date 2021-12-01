@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { GoogleLogin, GoogleLogout, useGoogleLogin } from "react-google-login";
 import UserProfile from "./UserProfile";
+import "./Login.css";
 const clientId = process.env.REACT_APP_CLIENTID;
 const redirectUri = process.env.REDIRECT_URI;
 // added redirect for google api
