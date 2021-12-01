@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 function App() {
   
   return (
+    
     <Router>
     <Navbar />
     <div className="g-signin">
@@ -30,5 +31,4 @@ function App() {
   </Router>
   );
 }
-
 export default App;
