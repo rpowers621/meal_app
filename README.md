@@ -1,6 +1,15 @@
-<<<<<<< HEAD
+
 
 # Spoonacular API web app with Google Login
+
+## App Demo
+
+Click the link to see a demo of this app!
+### Sprint 1 
+https://fierce-meadow-64401.herokuapp.com/
+
+### Sprint 2
+http://meal-kanban-app.herokuapp.com/home 
 
 ## Description
 
@@ -107,13 +116,6 @@ psycopg2-binary = (the version of your psycopg2-binary)`
 13. To setup CLI in heroku execute the following in the command line `curl https://cli-assets.heroku.com/install.sh | sh`
 
 > This concludes how to setup this app on your personal machine. 
-
-## App Demo
-
-Click the link to see a demo of this app!
-
-https://fierce-meadow-64401.herokuapp.com/
-
 
 
 
