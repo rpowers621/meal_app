@@ -4,7 +4,6 @@ import UserProfile from "./UserProfile";
 import "./Login.css";
 const clientId = process.env.REACT_APP_CLIENTID;
 const redirectUri = process.env.REDIRECT_URI;
-// added redirect for google api
 
 function Login() {
 
@@ -38,7 +37,6 @@ function Login() {
     setShowlogoutButton(false);
   };
 
-  // useState for google api
   const { signIn, loaded } = useGoogleLogin({
     onSuccess: onLoginSuccess,
     clientId: clientId,
@@ -64,15 +62,15 @@ function Login() {
         <p>{useremail}</p>
       </div>
       {showloginButton ? (
-        // <GoogleLogin
-        //   clientId={clientId}
-        //   buttonText="Sign In"
-        //   onSuccess={onLoginSuccess}
-        //   onFailure={onLoginFailure}
-        //   cookiePolicy={"single_host_origin"}
-        //   isSignedIn={true}
-        // />
-        <button onClick={signIn}>Button</button>
+         <GoogleLogin
+           clientId={clientId}
+           buttonText="Sign In"
+           onSuccess={onLoginSuccess}
+           onFailure={onLoginFailure}
+           cookiePolicy={"single_host_origin"}
+           isSignedIn={true}
+         />
+        //<button onClick={signIn}>Button</button>
       ) : null}
 
       {showlogoutButton ? (

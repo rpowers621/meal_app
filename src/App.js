@@ -15,7 +15,6 @@ function App() {
     <div className="g-signin">
       <Login />
     </div>
-    
     <div className="App">
       <Switch>
         <Route exact path="/home"><Home /></Route> 
