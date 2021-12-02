@@ -35,6 +35,11 @@ function Login() {
     console.clear();
     setShowloginButton(true);
     setShowlogoutButton(false);
+    UserProfile.setEmail("");
+    UserProfile.setName("");
+    setusername("");
+    setuseremail("");
+    setuserimage("");
   };
 
   const { signIn, loaded } = useGoogleLogin({
