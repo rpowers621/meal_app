@@ -7,17 +7,17 @@
 	font-family: 'Poppins', sans-serif;
 }
 
-.content {
+.Homepage {
 	position: relative;
 	width: 100%;
 	justify-content: space-between;
 	align-items: center;
 }
 
-.image {
+.Container {
 	position: absolute;
 	top: 0;
-  padding-left: 70px;
+  	padding-left: 70px;
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -30,17 +30,17 @@
 	padding: 30px 100px;
 }
 
-.image ul {
+.Container ul {
 	position: relative;
 	display: flex;
 	right: 150px;
 }
 
-.image ul li {
+.Container ul li {
 	list-style: none;
 }
 
-.image ul li a {
+.Container ul li a {
 	display: inline-block;
 	color: #000000;
 	font-weight: 400;
@@ -48,7 +48,7 @@
 	text-decoration: none;
 }
 
-.content {
+.Container2 {
 	position: relative;
 	width: 100%;
 	display: flex;
@@ -76,7 +76,7 @@
 
 .image2 {
 	position: relative;
-	top: 150px;
+	top: 200px;
 	width: 600px;
 	display: flex;
 	justify-content: flex-end;
