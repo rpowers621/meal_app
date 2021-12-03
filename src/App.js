@@ -11,20 +11,20 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 function App() {
   return (
     <Router>
-    <Navbar />
-    <div className="g-signin">
-      <Login />
-    </div>
-    <div className="App">
-      <Switch>
-        <Route exact path="/home"><Home /></Route> 
-        <Route path ="/Recipebox"><Recipebox /></Route>
-        <Route path ="/Recipepage"><Recipepage /></Route>
-        <Route path ="/About"><About /></Route>
-        <Route path="/Contact"><Contact /></Route>
-      </Switch>
-    </div>
-  </Router>
+      <Navbar />
+      <div className="g-signin">
+        <Login />
+      </div>
+      <div className="App">
+        <Switch>
+          <Route exact path="/home"><Home /></Route>
+          <Route path="/Recipebox"><Recipebox /></Route>
+          <Route path="/Recipepage"><Recipepage /></Route>
+          <Route path="/About"><About /></Route>
+          <Route path="/Contact"><Contact /></Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 export default App;
