@@ -202,6 +202,3 @@ def search_recipe_by_calories(str):
             break
 
     return recipe_ids_by_calories
-
-
-search_recipe_by_ingred("sdfsd")
