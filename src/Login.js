@@ -62,9 +62,9 @@ function Login() {
   return (
     <div>
       <div className="user-info">
-        <img src={userimage} atl="" />
-        <p>{username}</p>
-        <p>{useremail}</p>
+        <img id="user-image" src={userimage} atl="" />
+        <p id="user-name">{username}</p>
+        {/* <p>{useremail}</p> */}
       </div>
       {showloginButton ? (
         <GoogleLogin
