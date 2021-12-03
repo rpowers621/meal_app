@@ -15,14 +15,14 @@ function Contact() {
           alt="smiling-emoji"
         />
         <br />
-        <p>Thanks for your message! I will be contacting you if necessary</p>
+        <p>Thanks for your message! We will be contacting you if necessary.</p>
       </div>
     );
   }
   return (
     <div className="contact">
       <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email : </label>
+        <label htmlFor="email">Email: </label>
         <input
           id="email"
           type="email"
@@ -44,15 +44,11 @@ function Contact() {
           errors={state.errors}
         />
         <br />
-        <button type="submit" disabled={state.submitting}>
-          Send Message
-        </button>
+        <button type="submit" disabled={state.submitting}> Send Message </button>
       </form>
       <br />
       <div className="contact_text">
-        <p>
-          Let us know of any issues or suggestions!
-        </p>
+        <p>Let us know of any issues or suggestions!</p>
       </div>
     </div>
   );

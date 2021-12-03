@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 30vmin;
   pointer-events: none;
 }
 
@@ -36,6 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
 body{
   margin-top: 1em;
   font-family:'Courier New', Courier, monospace;
@@ -43,7 +44,7 @@ body{
  header{
      padding: 30px;
      text-align: center;
-     background:radial-gradient(#F7DC6F  50%, #CAF845);
+     background-color: #B7CDB3;
      color: white;
      font-size: 60px;
      text-shadow: 2px 2px black;
@@ -75,7 +76,7 @@ body{
  footer{
   text-align: center;
   padding: 2em;
-  background:radial-gradient(#F7DC6F  50%, #CAF845 );
+  background-color: #B7CDB3;
   color: white;
   text-shadow: 2px 2px black;
   font-size: large;
@@ -105,9 +106,9 @@ body{
   }
  .recipe_search_box{
      height:100%;
-     background:radial-gradient(#F7DC6F  50%, #CAF845);
+     background-color: #B7CDB3;
      border-style: solid;
-     border-color: darkblue;
+     border-color: #4A8140;
      min-width: 200px;
      max-width: 200px;
      align-items: flex-start;
@@ -118,17 +119,17 @@ body{
  }
 .suggestion-box{
      height:100%;
-     background:radial-gradient( #CAF845 50%, #F7DC6F );
+     background-color: #B7CDB3;
      border-style: solid;
-     border-color: darkblue;
+     border-color: #4A8140;
      min-width: 130px;
      max-width: 130px;
  }
  .monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday{
   height:100%;
-  background:radial-gradient( #CAF845 50%, #F7DC6F );
+  background-color: #B7CDB3;
   border-style: solid;
-  border-color: darkblue;
+  border-color: #4A8140;
   min-width: 125px;
   max-width: 125px;
  }
@@ -148,3 +149,9 @@ body{
    position: relative;
    left:auto;
  }
+
+ .divider{
+  width: 10px;
+  height: auto;
+  display: inline-block;
+}
